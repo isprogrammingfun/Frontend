@@ -1,7 +1,15 @@
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {View} from 'react-native';
+import MainNavigator from './src/MainNavigator';
+import {RootProvider} from './src/RootProvider';
 
 const App = () => {
-  return <View />;
+  return (
+    <RootProvider>
+      <NavigationContainer>
+        <MainNavigator />
+      </NavigationContainer>
+    </RootProvider>
+  );
 };
 export default App;
