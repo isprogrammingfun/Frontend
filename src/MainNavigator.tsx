@@ -11,6 +11,7 @@ import {useRootContext} from './RootProvider';
 export default function MainNavigator() {
   const Tab = createBottomTabNavigator();
   const context = useRootContext();
+
   const scOpt = ({route}: {route: RouteProp<ParamListBase, string>}) => {
     return {
       headerShown: false,
@@ -32,7 +33,7 @@ export default function MainNavigator() {
   // if (context.user.token === null || context.user.token === '')
   //   return <AuthNavigator />;
   return (
-    <Tab.Navigator screenOptions={scOpt}>
+    <Tab.Navigator screenOptions={scOpt} initialRouteName={'HomeNavigator'}>
       <Tab.Screen name="ProfileNavigator" component={ProfileNavigator} />
       <Tab.Screen name="HomeNavigator" component={HomeNavigator} />
       <Tab.Screen name="RetroNavigator" component={RetroNavigator} />
