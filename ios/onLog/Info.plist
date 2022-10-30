@@ -26,6 +26,23 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>Fonts provided by application</key>
+		<dict>
+			<key>New item</key>
+			<string>Fonts/NanumSquareNeo-aLt.ttf</string>
+			<key>New item - 2</key>
+			<string>Fonts/NanumSquareNeo-bRg.ttf</string>
+			<key>New item - 3</key>
+			<string>Fonts/NanumSquareNeo-cBd.ttf</string>
+			<key>New item - 4</key>
+			<string>Fonts/SpoqaHanSansNeo-Light.otf</string>
+			<key>New item - 5</key>
+			<string>Fonts/SpoqaHanSansNeo-Regular.otf</string>
+			<key>New item - 6</key>
+			<string>Fonts/SpoqaHanSansNeo-Bold.otf</string>
+			<key>New item - 7</key>
+			<string>Fonts/SpoqaHanSansNeo-Medium.otf</string>
+		</dict>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>localhost</key>
@@ -37,14 +54,13 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SpoqaHanSansNeo-Regular.otf</string>
+		<string>SpoqaHanSansNeo-Medium.otf</string>
+		<string>SpoqaHanSansNeo-Light.otf</string>
+		<string>SpoqaHanSansNeo-Bold.otf</string>
+		<string>NanumSquareNeoOTF-bRg.otf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
@@ -60,6 +76,12 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
