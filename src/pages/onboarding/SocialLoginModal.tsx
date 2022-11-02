@@ -16,7 +16,7 @@ const onPressNaver = () => {
 const onPressKakao = () => {
   // TODO 기능 추가
 };
-const onPressFacebook = () => {
+const onPressGoogle = () => {
   // TODO 기능 추가
 };
 
@@ -39,9 +39,9 @@ export default ({isVisible, openModal, closeModal, onModalHide}: Props) => {
         <Margin._40 />
         <OnboardingCmpt.SocialLoginBox
           loginLoading={false}
+          onPressGoogle={onPressGoogle}
           onPressNaver={onPressNaver}
           onPressKakao={onPressKakao}
-          onPressFacebook={onPressFacebook}
         />
         <Margin._50 />
       </View>

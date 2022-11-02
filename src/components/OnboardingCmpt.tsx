@@ -10,7 +10,6 @@ export type LOGIN_LOADING_TYPE =
   | 'isNaverLoading'
   | 'isFacebookLoading';
 
-const defaultLoginBtnMarginBottom = 16;
 const loginBtnWidth = 290;
 const loginBtnHeight = 48;
 
@@ -81,7 +80,7 @@ const CircleNaverLoginBtn = ({
     </CircleLoginButtonContainer>
   );
 };
-const CircleFacebookLoginBtn = ({
+const CircleGoogleLoginBtn = ({
   loading,
   disabled = false,
   onPress,
@@ -91,13 +90,13 @@ const CircleFacebookLoginBtn = ({
       disabled={disabled}
       onPress={onPress}
       activeOpacity={0.5}
-      bg={'#4566BD'}>
+      bg={'#F5F5F5'}>
       {loading ? (
         <ActivityIndicator color={'white'} />
       ) : (
         <>
           <ImageIcon
-            source={require('../assets/image/facebook_icon.png')}
+            source={require('../assets/image/google_icon.png')}
             width={loginBtnWidth * 0.5}
             height={loginBtnHeight * 0.5}
             resizeMode="contain"
@@ -111,27 +110,26 @@ const SocialLoginBox = ({
   loginLoading,
   onPressNaver,
   onPressKakao,
-  onPressFacebook,
-  loginBtnMarginBottom = defaultLoginBtnMarginBottom,
+  onPressGoogle,
 }: {
   loginLoading: LOGIN_LOADING_TYPE;
   onPressKakao: () => void;
   onPressNaver: () => void;
-  onPressFacebook: () => void;
+  onPressGoogle: () => void;
   loginViewStyle?: ViewStyle;
   loginBtnMarginBottom?: number;
 }) => {
   // val
   const isKakaoLoading = loginLoading === 'isKakaoLoading';
   const isNaverLoading = loginLoading === 'isNaverLoading';
-  const isFacebookLoading = loginLoading === 'isFacebookLoading';
+  const isGoogleLoading = loginLoading === 'isGoogleLoading';
   const isLoginLoading = loginLoading !== false; // 네이버, 카카오, 페이스북 하나라도 로딩중이다.
 
   return (
     <View style={{flexDirection: 'row'}}>
-      <CircleNaverLoginBtn
-        onPress={onPressNaver}
-        loading={isNaverLoading}
+      <CircleGoogleLoginBtn
+        onPress={onPressGoogle}
+        loading={isGoogleLoading}
         disabled={isLoginLoading}
       />
       <Margin.CustomWidth margin={24} />
@@ -141,9 +139,9 @@ const SocialLoginBox = ({
         disabled={isLoginLoading}
       />
       <Margin.CustomWidth margin={24} />
-      <CircleFacebookLoginBtn
-        onPress={onPressFacebook}
-        loading={isFacebookLoading}
+      <CircleNaverLoginBtn
+        onPress={onPressNaver}
+        loading={isNaverLoading}
         disabled={isLoginLoading}
       />
     </View>
