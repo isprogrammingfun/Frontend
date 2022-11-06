@@ -244,6 +244,48 @@ export const NText = {
       />
     );
   },
+  SB23: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'B'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={23}
+      />
+    );
+  },
+  SB18: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'B'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={18}
+      />
+    );
+  },
   SB15: ({
     style,
     color,
@@ -262,6 +304,69 @@ export const NText = {
         numberOfLines={numberOfLines}
         onTextLayout={onTextLayout}
         fontSize={15}
+      />
+    );
+  },
+  SM18: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'M'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={18}
+      />
+    );
+  },
+  SM14: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'M'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={14}
+      />
+    );
+  },
+  SM11: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'M'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={11}
       />
     );
   },

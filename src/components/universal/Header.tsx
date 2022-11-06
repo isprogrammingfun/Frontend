@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {Image, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {Source} from 'react-native-fast-image';
 import styled from 'styled-components/native';
+import {ImageIcon} from './Basic';
 import {NText} from './NText';
 
 interface HeaderContainerProps {
@@ -16,14 +17,14 @@ const HeaderContainer = styled.View<HeaderContainerProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: ${props => props.height}px;
-  padding-left: ${props => (props.hasGoBack ? 0 : headerPaddingHorizontal)}px;
-  padding-right: ${14};
+  height: ${props => props.height};
+  padding-left: ${props => (props.hasGoBack ? 0 : headerPaddingHorizontal)};
+  padding-right: 14;
   background-color: ${props => props.backgroundColor};
 `;
 
 interface HeaderProps {
-  title: string;
+  title?: string;
   // optional cmpnt
   subTitle?: string;
   titleImgSource?: Source | number;
@@ -107,15 +108,14 @@ export const Header = ({
           <TouchableOpacity onPress={onPressGoBack} style={goBackButtonStyle}>
             <Image
               source={require('../../assets/image/left_arrow.png')}
-              width={28}
-              aspectRatio={1}
               resizeMode="contain"
+              style={{width: 28, height: 28}}
             />
           </TouchableOpacity>
         )}
         {titleImgSource ? (
           <View style={titleImgStyle}>
-            <Image
+            <ImageIcon
               source={titleImgSource}
               width={28}
               height={2}
@@ -126,7 +126,7 @@ export const Header = ({
         {title ? (
           <>
             <TouchableOpacity onPress={onPressTitle} activeOpacity={1}>
-              <NText.SB15 text={title} color={'black'} numberOfLines={1} />
+              <NText.SB23 text={title} color={'black'} numberOfLines={1} />
             </TouchableOpacity>
           </>
         ) : null}

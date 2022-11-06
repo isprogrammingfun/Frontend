@@ -236,6 +236,12 @@ const _100 = (props: TouchableProps) => (
 const _150 = (props: TouchableProps) => (
   <Touchable {...props} height={pixel(150)} />
 );
+const _180 = (props: TouchableProps) => (
+  <Touchable {...props} height={pixel(180)} />
+);
+const _200 = (props: TouchableProps) => (
+  <Touchable {...props} height={pixel(200)} />
+);
 
 export const Margin = {
   BottomSpace: MarginBottomSpace,
@@ -296,4 +302,6 @@ export const Margin = {
   _90,
   _100,
   _150,
+  _180,
+  _200,
 };
