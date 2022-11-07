@@ -6,8 +6,8 @@ import {colors} from '../../components';
 
 const Divider = styled.View`
   width: 80%;
-  border-width: 1;
-  margin-top: 8;
+  border-width: 1px;
+  margin-top: 8px;
   border-color: ${props => props.borderColor};
 `;
 export default function Notice({navigation}: any) {

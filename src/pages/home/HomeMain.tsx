@@ -1,9 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {
   SafeAreaView,
-  Text,
   View,
-  StyleSheet,
   TouchableOpacity,
   ScrollView,
   Image,
@@ -21,17 +19,27 @@ import styled from 'styled-components/native';
 
 const Divider = styled.View`
   width: 100%;
-  padding-right: 19;
-  padding-left: 19;
-  border-width: 1;
+  padding-right: 19px;
+  padding-left: 19px;
+  border-width: 1px;
   border-color: ${props => props.borderColor};
   align-self: center;
 `;
 const timeTableHeight = 92;
+const EyeWash = styled.TouchableOpacity`
+  height: ${timeTableHeight};
+  width: 13%;
+  border-left-width: 1px;
+  border-top-width: 1px;
+  border-color: #efefef;
+  padding-top: 9px;
+  padding-left: 6px;
+`;
 
 export default function HomeMain({navigation}: any) {
-  const week = [1, 2, 3, 4, 5];
-
+  const week: number[] = [];
+  const days: number[] = [];
+  const DayArr = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const monthArray = [
     {monthNumber: 1, monthName: '1월'},
     {monthNumber: 2, monthName: '2월'},
@@ -48,41 +56,64 @@ export default function HomeMain({navigation}: any) {
   ];
 
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [selected, setSelected] = useState(monthArray);
-  const [data, setData] = useState(monthArray);
   const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
   const [year, setYear] = useState<number>(new Date().getFullYear());
-
-  const Block = ({v, i}: {v: string; i: number | null}) => (
-    <TouchableOpacity
-      onLongPress={() => {}}
-      onPress={() => {
-        setModalVisible(true);
-        setSelected(v);
-      }}
-    />
+  const monthLastDate = new Date(year, month, 0);
+  const calendaronthLastDate = monthLastDate.getDate();
+  const monthStartDate = new Date(year, month, 1);
+  const calendarMonthStartDate = monthStartDate.getDate();
+  const calendarWeekCount = Math.ceil(
+    (calendarMonthStartDate + calendaronthLastDate) / 7,
   );
+
+  for (let i = 0; i < calendarWeekCount; i++) {
+    // 주 계산
+    week.push(i);
+  }
+
+  for (let i = 1; i <= calendaronthLastDate + 1; i++) {
+    if (calendarMonthStartDate < calendaronthLastDate) {
+      days.push(i);
+    }
+  }
+
+  const onPressPrevYear = () => {
+    setMonth(0);
+    setYear(year - 1);
+  };
+  const onPressNextYear = () => {
+    setMonth(0);
+    setYear(year + 1);
+  };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'space-between',
           alignItems: 'center',
           padding: 25,
         }}>
         <NText.SB23 text="홍길동님의 나날" color={'#2C2C2C'} />
+        <Margin.CustomWidth margin={55} />
         <Image
           source={require('../../assets/image/retro_complete.png')}
           style={{width: 27, height: 9}}
         />
+        <Margin.CustomWidth margin={10} />
         <NText.SB15 text="X 19" color="#5E5E5E" />
+        <Margin.CustomWidth margin={30} />
         <TouchableOpacity onPress={() => navigation.navigate('Notice')}>
-          <Ionicons name="notifications-outline" size={22} color="#151515" />
+          <Ionicons
+            name="notifications-outline"
+            size={22}
+            color={colors.textUnavailableGray}
+          />
         </TouchableOpacity>
       </View>
       <Margin._15 />
+
+      {/* 날짜 */}
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
         style={{
@@ -105,13 +136,38 @@ export default function HomeMain({navigation}: any) {
           color={colors.textUnavailableGray}
         />
       </TouchableOpacity>
-      <Margin._28 />
+
+      {/* 캘린더 */}
       <ScrollView
         contentContainerStyle={{
           flexDirection: 'row',
           marginHorizontal: 5,
-          paddingVertical: 10,
+          paddingVertical: 55,
         }}>
+        {/* 회고의 날 */}
+        <View
+          style={{
+            padding: 8,
+            backgroundColor: colors.primaryLight,
+            width: 88,
+            height: 30,
+            borderRadius: 6,
+            position: 'absolute',
+            top: 0,
+            right: 28,
+          }}>
+          <NText.B10 text="내일은 회고의 날" color={colors.primary} />
+        </View>
+        <Image
+          source={require('../../assets/image/pros_4.png')}
+          style={{
+            width: 45,
+            height: 25,
+            position: 'absolute',
+            top: 30,
+            right: 28,
+          }}
+        />
         <View style={{flex: 1}}>
           {/* 요일 */}
           <View
@@ -119,61 +175,77 @@ export default function HomeMain({navigation}: any) {
               flexDirection: 'row',
               justifyContent: 'space-around',
               borderTopWidth: 0.5,
+              borderLeftWidth: 0.5,
               marginHorizontal: 25,
               paddingVertical: 12,
               borderColor: '#EFEFEF',
+              borderRightWidth: 0.5,
             }}>
-            {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((v, i) => (
-              <Text style={styles.text} key={'daysText' + i}>
-                {v}
-              </Text>
+            {DayArr.map((v, i) => (
+              <NText.B10
+                text={v}
+                color={
+                  i === DayArr.length - 1
+                    ? colors.primary
+                    : colors.textUnavailableGray
+                }
+              />
             ))}
           </View>
           {/* 날짜 */}
           <View
             style={{
-              borderTopWidth: 1,
-              borderBottomWidth: 1,
               borderColor: '#EFEFEF',
               alignItems: 'center',
+              flexDirection: 'row',
               marginHorizontal: 25,
+              width: '96%',
+              flexWrap: 'wrap',
             }}>
-            {week.map((v, i) => (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: timeTableHeight,
-                }}
-                key={'weekRow' + i}>
-                {[0, 1, 2, 3, 4, 5, 6].map((v, i) => (
-                  <View
+            <EyeWash>
+              <NText.B12 text="30" color={colors.textUnavailableGray} />
+              <Image
+                source={require('../../assets/image/calendar_bg.png')}
+                style={{width: 310, height: 48}}
+              />
+            </EyeWash>
+            <EyeWash>
+              <NText.B12 text="31" color={colors.textUnavailableGray} />
+            </EyeWash>
+            {days.map((v, i) => {
+              const firstIndex = i === 0;
+              const fixIndex = i === 6 || i === 13 || i === 20 || i === 27;
+              return (
+                !firstIndex && (
+                  <TouchableOpacity
+                    onPress={() => console.log(i)}
                     key={'daysColumn' + i}
                     style={{
-                      width: '14.5%',
-                      borderTopWidth: 1,
+                      height: timeTableHeight,
+                      width: '13%',
+                      borderTopWidth: 0.5,
+                      borderRightWidth: 0.5,
+                      borderBottomWidth: 0.5,
+                      borderLeftWidth: 0.5,
                       borderColor: '#EFEFEF',
                       paddingTop: 9,
                       paddingLeft: 6,
-                      borderLeftWidth: i !== 0 && 0.5,
                     }}>
                     <NText.SB15 text={i.toString()} color={'#B5B5B5'} />
-                  </View>
-                ))}
-              </View>
-            ))}
-            {data.map((v, i) => {
-              return v.monthNumber ? (
-                <Block
-                  v={v.monthNumber}
-                  i={i}
-                  day={v.monthName}
-                  key={'data' + i + v.monthNumber}
-                />
-              ) : undefined;
+                    {fixIndex && (
+                      <Image
+                        source={require('../../assets/image/calendar_bg.png')}
+                        style={{width: 310, height: 48}}
+                      />
+                    )}
+                  </TouchableOpacity>
+                )
+              );
             })}
           </View>
         </View>
       </ScrollView>
+
       {/* 모달 */}
       <BaseModal
         isVisible={modalVisible}
@@ -194,7 +266,7 @@ export default function HomeMain({navigation}: any) {
                 justifyContent: 'center',
                 paddingLeft: 20,
               }}
-              onPress={() => setYear(year - 1)}>
+              onPress={onPressPrevYear}>
               <Icon
                 name="caret-back-outline"
                 size={20}
@@ -210,7 +282,7 @@ export default function HomeMain({navigation}: any) {
                 alignItems: 'flex-end',
                 paddingRight: 20,
               }}
-              onPress={() => setYear(year + 1)}>
+              onPress={onPressNextYear}>
               <Icon
                 name="caret-forward-outline"
                 size={20}
@@ -267,11 +339,3 @@ export default function HomeMain({navigation}: any) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  text: {
-    color: '#B5B5B5',
-    fontSize: 12,
-    fontWeight: '300',
-  },
-});
