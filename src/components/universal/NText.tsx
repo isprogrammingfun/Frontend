@@ -6,7 +6,7 @@ import {
   TextStyle,
 } from 'react-native';
 
-export type NTextFontWeight = 'B' | 'R' | 'M' | 'L';
+export type NTextFontWeight = 'EB' | 'B' | 'R' | 'M' | 'L';
 
 interface SpoqaHanSansNeoProps {
   text: string;
@@ -145,6 +145,42 @@ const NanumSquareNeo = ({
   onTextLayout,
 }: NanumSquareNeoProps) => {
   switch (weight) {
+    case 'EB':
+      return (
+        <Text
+          style={[
+            {
+              lineHeight: lineHeightMultipleValue * fontSize,
+              color,
+              fontSize,
+              fontFamily: 'NanumSquareNeo-dEb',
+              fontWeight: '900',
+            },
+            style,
+          ]}
+          numberOfLines={numberOfLines}
+          onTextLayout={onTextLayout}>
+          {text}
+        </Text>
+      );
+    case 'B':
+      return (
+        <Text
+          style={[
+            {
+              lineHeight: lineHeightMultipleValue * fontSize,
+              color,
+              fontSize,
+              fontFamily: 'NanumSquareNeo-cBd',
+              fontWeight: '700',
+            },
+            style,
+          ]}
+          numberOfLines={numberOfLines}
+          onTextLayout={onTextLayout}>
+          {text}
+        </Text>
+      );
     case 'R':
       return (
         <Text
@@ -198,7 +234,7 @@ interface NTextCustomProps extends NTextProps {
 }
 
 {
-  /* 디폴트는 나눔스퀘어네오 (R)만 사용, 스포카는 S(L | R | M | B)로 사용 */
+  /* 디폴트는 나눔스퀘어네오(EB | B | R)로 사용, 스포카는 S(L | R | M | B)로 사용 */
 }
 export const NText = {
   Custom: ({
@@ -220,6 +256,27 @@ export const NText = {
         lineHeightMultipleValue={lineHeightMultipleValue}
         numberOfLines={numberOfLines}
         fontSize={fontSize}
+      />
+    );
+  },
+  B10: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <NanumSquareNeo
+        style={style}
+        color={color}
+        weight={'B'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={10}
       />
     );
   },
