@@ -7,4 +7,11 @@ export const colors = {
   textUnavailableGray: '#B5B5B5',
   buttonGray: '#C9C9C9',
   lineGray: '#EFEFEF',
+  UnavailableGray: '#E6E6E6',
+  textTop: '#2C2C2C',
+  textMiddle: '#5E5E5E',
+  textButtonGray: '#5E5E5E',
+  primaryLight: '#FFF4E2',
+  lightgray: '#CFCFCF',
+  navButton: '#5E5E5E',
 };

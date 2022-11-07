@@ -259,6 +259,27 @@ export const NText = {
       />
     );
   },
+  B12: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <NanumSquareNeo
+        style={style}
+        color={color}
+        weight={'B'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={12}
+      />
+    );
+  },
   B10: ({
     style,
     color,
@@ -298,6 +319,27 @@ export const NText = {
         numberOfLines={numberOfLines}
         onTextLayout={onTextLayout}
         fontSize={36}
+      />
+    );
+  },
+  R12: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <NanumSquareNeo
+        style={style}
+        color={color}
+        weight={'R'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={12}
       />
     );
   },
