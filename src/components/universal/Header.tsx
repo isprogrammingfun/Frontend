@@ -19,7 +19,7 @@ const HeaderContainer = styled.View<HeaderContainerProps>`
   width: 100%;
   height: ${props => props.height};
   padding-left: ${props => (props.hasGoBack ? 0 : headerPaddingHorizontal)};
-  padding-right: 14;
+  padding-right: 14px;
   background-color: ${props => props.backgroundColor};
 `;
 

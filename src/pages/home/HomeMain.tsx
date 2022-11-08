@@ -1,4 +1,5 @@
-import React, {useRef, useState} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,25 +7,12 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import {
-  BaseModal,
-  colors,
-  Margin,
-  NText,
-  SRowContainer,
-} from '../../components';
+import {colors, Margin, NText} from '../../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
+import NotRecordModal from './NotRecordModal';
+import YearNMonthModal from './YearNMonthModal';
 
-const Divider = styled.View`
-  width: 100%;
-  padding-right: 19px;
-  padding-left: 19px;
-  border-width: 1px;
-  border-color: ${props => props.borderColor};
-  align-self: center;
-`;
 const timeTableHeight = 92;
 const EyeWash = styled.TouchableOpacity`
   height: ${timeTableHeight};
@@ -40,24 +28,14 @@ export default function HomeMain({navigation}: any) {
   const week: number[] = [];
   const days: number[] = [];
   const DayArr = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  const monthArray = [
-    {monthNumber: 1, monthName: '1월'},
-    {monthNumber: 2, monthName: '2월'},
-    {monthNumber: 3, monthName: '3월'},
-    {monthNumber: 4, monthName: '4월'},
-    {monthNumber: 5, monthName: '5월'},
-    {monthNumber: 6, monthName: '6월'},
-    {monthNumber: 7, monthName: '7월'},
-    {monthNumber: 8, monthName: '8월'},
-    {monthNumber: 9, monthName: '9월'},
-    {monthNumber: 10, monthName: '10월'},
-    {monthNumber: 11, monthName: '11월'},
-    {monthNumber: 12, monthName: '12월'},
-  ];
 
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [isYearNMonthModalVisible, setIsYearNMonthModalVisible] =
+    useState<boolean>(false);
+  const [isNotRecordModalVisible, setIsNotRecordModalVisible] =
+    useState<boolean>(false);
   const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
   const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [day, setDay] = useState<number>(0);
   const monthLastDate = new Date(year, month, 0);
   const calendaronthLastDate = monthLastDate.getDate();
   const monthStartDate = new Date(year, month, 1);
@@ -77,6 +55,10 @@ export default function HomeMain({navigation}: any) {
     }
   }
 
+  // func
+  const onBackdropPress = () => {
+    setIsYearNMonthModalVisible(false);
+  };
   const onPressPrevYear = () => {
     setMonth(0);
     setYear(year - 1);
@@ -84,6 +66,12 @@ export default function HomeMain({navigation}: any) {
   const onPressNextYear = () => {
     setMonth(0);
     setYear(year + 1);
+  };
+  const onPressNotRecordModal = () => {
+    setIsNotRecordModalVisible(true);
+  };
+  const onPressYearNMonthModal = () => {
+    setIsYearNMonthModalVisible(true);
   };
 
   return (
@@ -115,7 +103,7 @@ export default function HomeMain({navigation}: any) {
 
       {/* 날짜 */}
       <TouchableOpacity
-        onPress={() => setModalVisible(true)}
+        onPress={onPressYearNMonthModal}
         style={{
           borderRadius: 7,
           width: 147,
@@ -215,10 +203,18 @@ export default function HomeMain({navigation}: any) {
             {days.map((v, i) => {
               const firstIndex = i === 0;
               const fixIndex = i === 6 || i === 13 || i === 20 || i === 27;
+              const notRecordIndex = i === 25;
+              const prosWeek =
+                i === 20 ||
+                i === 21 ||
+                i === 22 ||
+                i === 23 ||
+                i === 24 ||
+                i === 26;
               return (
                 !firstIndex && (
                   <TouchableOpacity
-                    onPress={() => console.log(i)}
+                    onPress={() => setDay(i)}
                     key={'daysColumn' + i}
                     style={{
                       height: timeTableHeight,
@@ -230,13 +226,45 @@ export default function HomeMain({navigation}: any) {
                       borderColor: '#EFEFEF',
                       paddingTop: 9,
                       paddingLeft: 6,
+                      backgroundColor:
+                        (prosWeek && 'rgba(255, 245, 229, 0.7)') ||
+                        (notRecordIndex && 'rgba(255, 165, 22, 0.7)'),
                     }}>
-                    <NText.SB15 text={i.toString()} color={'#B5B5B5'} />
+                    <NText.B12
+                      text={i.toString()}
+                      color={
+                        prosWeek || notRecordIndex
+                          ? colors.textMiddle
+                          : colors.lightgray
+                      }
+                    />
                     {fixIndex && (
                       <Image
                         source={require('../../assets/image/calendar_bg.png')}
                         style={{width: 310, height: 48}}
                       />
+                    )}
+                    {/* 기록 안한 날 + 버튼 */}
+                    {notRecordIndex && (
+                      <TouchableOpacity
+                        onPress={onPressNotRecordModal}
+                        style={{
+                          height: 39,
+                          width: 37,
+                          marginTop: 2,
+                          backgroundColor: colors.white,
+                          borderTopRightRadius: 6,
+                          borderBottomLeftRadius: 6,
+                          borderBottomRightRadius: 6,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Ionicons
+                          name="add-outline"
+                          color={colors.primary}
+                          size={30}
+                        />
+                      </TouchableOpacity>
                     )}
                   </TouchableOpacity>
                 )
@@ -246,96 +274,24 @@ export default function HomeMain({navigation}: any) {
         </View>
       </ScrollView>
 
-      {/* 모달 */}
-      <BaseModal
-        isVisible={modalVisible}
-        onBackdropPress={() => setModalVisible(false)}>
-        {/* 달 */}
-        <View
-          style={{
-            borderRadius: 11,
-            backgroundColor: colors.white,
-            padding: 22,
-          }}>
-          <NText.SM11 text="Year" color={colors.textUnavailableGray} />
-          <SRowContainer justifyContent="space-between" alignItems="center">
-            <TouchableOpacity
-              style={{
-                height: 50,
-                width: '33%',
-                justifyContent: 'center',
-                paddingLeft: 20,
-              }}
-              onPress={onPressPrevYear}>
-              <Icon
-                name="caret-back-outline"
-                size={20}
-                color={colors.primary}
-              />
-            </TouchableOpacity>
-            <NText.SM18 text={year} color={colors.black} />
-            <TouchableOpacity
-              style={{
-                height: 50,
-                width: '33%',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-                paddingRight: 20,
-              }}
-              onPress={onPressNextYear}>
-              <Icon
-                name="caret-forward-outline"
-                size={20}
-                color={colors.primary}
-              />
-            </TouchableOpacity>
-          </SRowContainer>
-          <Margin._13 />
-          <Divider borderColor={colors.lineGray} />
-          <Margin._13 />
-          <NText.SM11 text="Month" color={colors.textUnavailableGray} />
-          {/* 월 */}
-          <View
-            style={{
-              flexDirection: 'row',
-              flexWrap: 1,
-            }}>
-            {monthArray.map((element, index) => {
-              return (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: 'row',
-                    width: '25%',
-                    height: 50,
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => setMonth(element.monthNumber)}>
-                    {/** TODO 글씨체 수정 */}
-                    <NText.SM14
-                      text={element.monthName}
-                      color={
-                        element.monthNumber === month
-                          ? colors.white
-                          : colors.black
-                      }
-                      style={{
-                        backgroundColor:
-                          element.monthNumber === month
-                            ? colors.primary
-                            : colors.lineGray,
-                        padding: 7,
-                      }}
-                    />
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
-          </View>
-        </View>
-      </BaseModal>
+      {/* 달 & 월 모달 */}
+      <YearNMonthModal
+        isVisible={isYearNMonthModalVisible}
+        onBackdropPress={onBackdropPress}
+        onPressNextYear={onPressNextYear}
+        onPressPrevYear={onPressPrevYear}
+        year={year}
+        month={month}
+        setMonth={setMonth}
+      />
+      {/* 기록 안한 날 모달 */}
+      <NotRecordModal
+        isVisible={isNotRecordModalVisible}
+        onBackdropPress={() => setIsNotRecordModalVisible(false)}
+        year={year}
+        month={month}
+        day={day}
+      />
     </SafeAreaView>
   );
 }

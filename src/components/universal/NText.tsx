@@ -259,6 +259,27 @@ export const NText = {
       />
     );
   },
+  B15: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <NanumSquareNeo
+        style={style}
+        color={color}
+        weight={'B'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={15}
+      />
+    );
+  },
   B12: ({
     style,
     color,
@@ -385,6 +406,27 @@ export const NText = {
       />
     );
   },
+  SB16: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'B'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={16}
+      />
+    );
+  },
   SB15: ({
     style,
     color,
@@ -403,6 +445,48 @@ export const NText = {
         numberOfLines={numberOfLines}
         onTextLayout={onTextLayout}
         fontSize={15}
+      />
+    );
+  },
+  SB13: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'B'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={13}
+      />
+    );
+  },
+  SB12: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'B'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={12}
       />
     );
   },
@@ -427,6 +511,27 @@ export const NText = {
       />
     );
   },
+  SM15: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'M'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={15}
+      />
+    );
+  },
   SM14: ({
     style,
     color,
@@ -445,6 +550,27 @@ export const NText = {
         numberOfLines={numberOfLines}
         onTextLayout={onTextLayout}
         fontSize={14}
+      />
+    );
+  },
+  SM12: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'M'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={12}
       />
     );
   },
