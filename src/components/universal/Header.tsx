@@ -62,7 +62,7 @@ export const Header = ({
     () => ({
       height,
       justifyContent: 'center',
-      paddingLeft: 12,
+      paddingLeft: 20,
       paddingRight: 10,
     }),
     [],

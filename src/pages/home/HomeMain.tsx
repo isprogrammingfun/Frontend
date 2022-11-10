@@ -80,7 +80,8 @@ export default function HomeMain({navigation}: any) {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          padding: 25,
+          paddingLeft: 25,
+          paddingTop: 25,
         }}>
         <NText.SB23 text="홍길동님의 나날" color={'#2C2C2C'} />
         <Margin.CustomWidth margin={55} />
