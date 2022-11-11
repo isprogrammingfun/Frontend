@@ -12,12 +12,17 @@ import {colors, Header, Margin, NText} from '../../components';
 import DiaryStep1 from './DiaryStep1';
 import DiaryStep2 from './DiaryStep2';
 import DiaryStep3 from './DiaryStep3';
+import KeywordModal from './KeywordModal';
 
 export default function DiaryMain({route, navigation}: any) {
   const {year, month, day} = route.params;
-  const [text, setText] = useState<string>('');
   const [textNum, setTextNum] = useState<number>(0);
   const [step, setStep] = useState<number>(1);
+  const [isKeywordModalVisible, setIsKeywordModalVisible] =
+    useState<boolean>(false);
+
+  const [text, setText] = useState<string>('');
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     setTextNum(text.length);
@@ -26,16 +31,33 @@ export default function DiaryMain({route, navigation}: any) {
   }, [text, step, setStep]);
 
   const onPressNext = () => {
+    if (step === 2) {
+      setIsKeywordModalVisible(true);
+    } else if (step == 3) {
+      // TODO 완료 화면으로
+    }
     setStep(step + 1);
+  };
+  const onPressGoBack = () => {
+    if (step === 1) {
+      navigation.goBack();
+    } else {
+      setStep(step - 1);
+    }
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.white}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <KeyboardAvoidingView style={{height: '100%'}} behavior="position">
         <StatusBar />
+        {/* TODO 수정 */}
+        <KeywordModal
+          isVisible={isKeywordModalVisible}
+          onBackdropPress={() => setIsKeywordModalVisible(false)}
+        />
         <Header
           hasGoBack={true}
-          onPressGoBack={() => navigation.goBack()}
+          onPressGoBack={onPressGoBack}
           headerCenterCmpnt={
             <>
               <NText.SB18
@@ -48,11 +70,16 @@ export default function DiaryMain({route, navigation}: any) {
           headerRightCmpnt={
             <>
               <TouchableOpacity
+                disabled={!text}
                 style={{paddingRight: 24}}
                 onPress={onPressNext}>
                 <NText.SB16
                   text="다음"
-                  color={text ? colors.primary : colors.textUnavailableGray}
+                  color={
+                    (text && step === 1) || keyword
+                      ? colors.primary
+                      : colors.textUnavailableGray
+                  }
                 />
               </TouchableOpacity>
             </>
@@ -89,9 +116,9 @@ export default function DiaryMain({route, navigation}: any) {
           ) : step === 2 ? (
             <DiaryStep2
               text={text}
-              setText={setText}
+              keyword={keyword}
               step={step}
-              textNum={textNum}
+              setKeyword={setKeyword}
             />
           ) : (
             <DiaryStep3
