@@ -14,4 +14,5 @@ export const colors = {
   primaryLight: '#FFF4E2',
   lightgray: '#CFCFCF',
   navButton: '#5E5E5E',
+  sectionGray: '#F4F4F4',
 };

@@ -42,7 +42,6 @@ interface HeaderProps {
 export const Header = ({
   title,
   titleImgSource,
-  height = 48,
   hasGoBack,
   onPressGoBack,
   headerLeftCmpnt,
@@ -60,7 +59,7 @@ export const Header = ({
   );
   const goBackButtonStyle: ViewStyle = useMemo(
     () => ({
-      height,
+      height: 48,
       justifyContent: 'center',
       paddingLeft: 20,
       paddingRight: 10,
@@ -76,7 +75,7 @@ export const Header = ({
   );
   const leftCmpntStyle: ViewStyle = useMemo(
     () => ({
-      height,
+      height: 48,
       flex: 1, // headerCenter, headerRight 사용 안한다고 가정하고 flex: 1 로 잡음.
       justifyContent: 'center',
     }),
@@ -86,20 +85,20 @@ export const Header = ({
     () => ({
       position: 'absolute',
       width: '100%',
-      height,
+      height: 48,
       justifyContent: 'center',
       alignItems: 'center',
     }),
     [],
   );
   const rightCmpntStyle: ViewStyle = useMemo(
-    () => ({height, justifyContent: 'center'}),
+    () => ({height: 48, justifyContent: 'center'}),
     [],
   );
 
   return (
     <HeaderContainer
-      height={height}
+      height={48}
       backgroundColor={backgroundColor}
       hasGoBack={hasGoBack}>
       {/* 뒤로가기 & 타이틀 */}
