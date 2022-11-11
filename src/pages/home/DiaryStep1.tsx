@@ -82,6 +82,7 @@ export default function DiaryStep1({text, setText, step, textNum}: Props) {
             marginHorizontal: 29,
             marginTop: 13,
             backgroundColor: colors.primaryLight,
+            height: 430,
           }}>
           <NText.SM12
             text={`(${textNum}자 / 300자)`}
@@ -90,14 +91,13 @@ export default function DiaryStep1({text, setText, step, textNum}: Props) {
           />
           <TextInput
             value={text}
-            placeholder="여기에다가 적어주세요"
+            placeholder={`나날이의 영양분이 될,\n당신의 하루를 이야기 해주세요!`}
             onChangeText={v => setText(v)}
             maxLength={300}
             multiline={true}
             style={{
               flexShrink: 1,
               paddingHorizontal: 21,
-              height: '170%',
               paddingTop: 40,
             }}
           />

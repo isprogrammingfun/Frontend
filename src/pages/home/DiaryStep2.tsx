@@ -1,16 +1,108 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors, Divider, Margin, NText, SRowContainer} from '../../components';
 
 interface Props {
   text: string;
   step: number;
+  keyword: string;
+  setKeyword: (v: string) => void;
 }
-export default function DiaryStep2({text, step}: Props) {
+
+export default function DiaryStep2({text, step, keyword, setKeyword}: Props) {
   const userName = '홍길동'; // TODO 가져오기
-  console.log(text);
+  const [nextStep, setNextStep] = useState<boolean>(false);
+  const [isKeyword, setIsKeyword] = useState<boolean>(false);
+  const textInputRef = useRef();
+  let keywordArr: Array<string> = [];
+  {
+    /* 생성된 키워드 */
+  }
+  const hihi = () => {
+    keywordArr.push(keyword);
+    KeywordView;
+    console.log(keywordArr);
+  };
+  const renderItem = ({item, index}: {item: string; index: number}) => {
+    console.log('여기옴');
+    console.log(item);
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: 67,
+          height: 29,
+          borderRadius: 7,
+          backgroundColor: colors.sectionGray,
+        }}>
+        <NText.SB13 text={item} color={colors.textMiddle} />
+        <Margin.CustomWidth margin={17} />
+        <Ionicons name="close-outline" size={20} color={colors.buttonGray} />
+      </View>
+    );
+  };
+  const KeywordView = () => {
+    return (
+      <>
+        <FlatList
+          data={keywordArr}
+          renderItem={renderItem}
+          horizontal={true}
+          ItemSeparatorComponent={() => <Margin.CustomWidth margin={12} />}
+          ListHeaderComponent={() => <Margin.CustomWidth margin={29} />}
+          showsHorizontalScrollIndicator={false}
+          style={{width: '95%', height: '100%'}}
+        />
+      </>
+    );
+  };
+
+  {
+    /* 키워드 생성 */
+  }
+  const MakeKeyword = () => {
+    return (
+      <KeyboardAvoidingView>
+        <SafeAreaView
+          style={{
+            borderRadius: 5,
+            backgroundColor: colors.primaryLight,
+            padding: 3,
+            width: '30%',
+            marginLeft: 29,
+          }}>
+          <View style={{flexDirection: 'row', padding: 5}}>
+            <Ionicons name="add-outline" size={25} color={colors.textTop} />
+            <Margin.CustomWidth margin={10} />
+            <TextInput
+              value={keyword}
+              placeholder={'키워드'}
+              onChangeText={v => setKeyword(v)}
+              autoFocus={true}
+              returnKeyType="next"
+              onSubmitEditing={hihi}
+              maxLength={5}
+              autoCorrect={false}
+              style={{padding: 3}}
+            />
+          </View>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    );
+  };
+
   return (
     <>
       <View style={{alignItems: 'center'}}>
@@ -111,18 +203,39 @@ export default function DiaryStep2({text, step}: Props) {
         style={{marginLeft: 36}}
       />
       <Margin._13 />
-      <TouchableOpacity
-        style={{
-          width: 316,
-          height: 50,
-          borderRadius: 5,
-          backgroundColor: colors.primaryLight,
-          alignSelf: 'center',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Ionicons name="add-outline" size={35} color={colors.primary} />
-      </TouchableOpacity>
+      {nextStep ? (
+        <>
+          {keyword && isKeyword ? (
+            <>
+              <KeywordView />
+              <Margin._30 />
+              <MakeKeyword />
+              <Margin.BottomSpace />
+            </>
+          ) : (
+            <>
+              <MakeKeyword />
+              <Margin.BottomSpace />
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          <TouchableOpacity
+            onPress={() => setNextStep(true)}
+            style={{
+              width: 316,
+              height: 50,
+              borderRadius: 5,
+              backgroundColor: colors.primaryLight,
+              alignSelf: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Ionicons name="add-outline" size={35} color={colors.primary} />
+          </TouchableOpacity>
+        </>
+      )}
     </>
   );
 }

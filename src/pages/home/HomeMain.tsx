@@ -13,9 +13,8 @@ import styled from 'styled-components/native';
 import NotRecordModal from './NotRecordModal';
 import YearNMonthModal from './YearNMonthModal';
 
-const timeTableHeight = 92;
 const EyeWash = styled.TouchableOpacity`
-  height: ${timeTableHeight};
+  height: 92;
   width: 13%;
   border-left-width: 1px;
   border-top-width: 1px;
@@ -218,7 +217,7 @@ export default function HomeMain({navigation}: any) {
                     onPress={() => setDay(i)}
                     key={'daysColumn' + i}
                     style={{
-                      height: timeTableHeight,
+                      height: 92,
                       width: '13%',
                       borderTopWidth: 0.5,
                       borderRightWidth: 0.5,
