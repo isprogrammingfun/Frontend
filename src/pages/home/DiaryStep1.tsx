@@ -91,10 +91,13 @@ export default function DiaryStep1({text, setText, step, textNum}: Props) {
           />
           <TextInput
             value={text}
-            placeholder={`나날이의 영양분이 될,\n당신의 하루를 이야기 해주세요!`}
+            placeholder={`나날이의 영양분이 될,\n\n당신의 하루를 이야기 해주세요!`}
             onChangeText={v => setText(v)}
             maxLength={300}
             multiline={true}
+            returnKeyLabel={'완료'}
+            returnKeyType="done"
+            onSubmitEditing={() => Keyboard.dismiss()}
             style={{
               flexShrink: 1,
               paddingHorizontal: 21,
