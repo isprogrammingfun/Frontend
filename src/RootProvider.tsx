@@ -1,9 +1,11 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useMemo, useState} from 'react';
 import type {FC} from 'react';
 import {Theme} from '@react-navigation/native';
 import {DarkTheme, DayTheme} from './Themes';
+import axios, {AxiosInstance} from 'axios';
+import getAxiosInstance from './api/Api';
 
-export type ContextType = {
+type ContextType = {
   user: {
     token: string;
     username: string;
@@ -13,18 +15,20 @@ export type ContextType = {
     theme: Theme;
   };
   setSetting: any;
+  api: AxiosInstance;
 };
 
 const defaultContext = {
   user: {
     token: '',
-    usernae: '',
+    username: '',
   },
   setUser: undefined,
   setting: {
     theme: DarkTheme,
   },
   setSetting: undefined,
+  api: axios.create(),
 };
 
 const RootContext = createContext<ContextType>(defaultContext);
@@ -35,7 +39,8 @@ export const RootProvider: FC<{}> = ({children}) => {
     username: '',
   });
   const [setting, setSetting] = useState({theme: DayTheme});
-  const value = {user, setUser, setting, setSetting};
+  const api = useMemo(() => getAxiosInstance(user.token), [user.token]);
+  const value = {user, setUser, setting, setSetting, api};
   return <RootContext.Provider value={value}>{children}</RootContext.Provider>;
 };
 export const useRootContext = () => {
