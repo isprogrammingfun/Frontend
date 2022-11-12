@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, SafeAreaView, View} from 'react-native';
+import {Image, SafeAreaView, ScrollView, View} from 'react-native';
 import styled from 'styled-components/native';
 import {Header, Margin, NText, SRowContainer} from '../../components';
 import {colors} from '../../components';
@@ -23,54 +23,56 @@ export default function Notice({navigation}: any) {
   ];
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      <Header
-        hasGoBack={true}
-        onPressGoBack={() => navigation.goBack()}
-        headerCenterCmpnt={
+      <ScrollView>
+        <Header
+          hasGoBack={true}
+          onPressGoBack={() => navigation.goBack()}
+          headerCenterCmpnt={
+            <>
+              <NText.SB18 text="알림" color={colors.black} />
+            </>
+          }
+        />
+        {/* 알림 텍스트 */}
+        <View style={{paddingHorizontal: 29}}>
           <>
-            <NText.SB18 text="알림" color={colors.black} />
+            {notWatchedTextArr.map((text, index) => {
+              return (
+                <>
+                  <Margin._17 />
+                  <NText.SM14 text={text} color={colors.black} />
+                  <Margin._6 />
+                  <SRowContainer>
+                    <Divider borderColor={colors.primary} />
+                    <Margin.CustomWidth margin={9} />
+                    <NText.SM11 text="05/15 23:57" color={colors.primary} />
+                  </SRowContainer>
+                </>
+              );
+            })}
+            {watchedTextArr.map((text, index) => {
+              return (
+                <>
+                  <Margin._17 />
+                  <NText.SM14 text={text} color={colors.textUnavailableGray} />
+                  <Margin._6 />
+                  <SRowContainer>
+                    <Divider borderColor={colors.lineGray} />
+                    <Margin.CustomWidth margin={9} />
+                    <NText.SM11 text="05/15 23:57" color={'#CFCFCF'} />
+                  </SRowContainer>
+                </>
+              );
+            })}
           </>
-        }
-      />
-      {/* 알림 텍스트 */}
-      <View style={{paddingHorizontal: 29}}>
-        <>
-          {notWatchedTextArr.map((text, index) => {
-            return (
-              <>
-                <Margin._17 />
-                <NText.SM14 text={text} color={colors.black} />
-                <Margin._6 />
-                <SRowContainer>
-                  <Divider borderColor={colors.primary} />
-                  <Margin.CustomWidth margin={9} />
-                  <NText.SM11 text="05/15 23:57" color={colors.primary} />
-                </SRowContainer>
-              </>
-            );
-          })}
-          {watchedTextArr.map((text, index) => {
-            return (
-              <>
-                <Margin._17 />
-                <NText.SM14 text={text} color={colors.textUnavailableGray} />
-                <Margin._6 />
-                <SRowContainer>
-                  <Divider borderColor={colors.lineGray} />
-                  <Margin.CustomWidth margin={9} />
-                  <NText.SM11 text="05/15 23:57" color={'#CFCFCF'} />
-                </SRowContainer>
-              </>
-            );
-          })}
-        </>
-      </View>
-      <Margin._200 />
-      <Image
-        source={require('../../assets/image/nanal_icon.png')}
-        resizeMode="contain"
-        style={{width: 57, height: 57, alignSelf: 'center'}}
-      />
+        </View>
+        <Margin._200 />
+        <Image
+          source={require('../../assets/image/nanal_icon.png')}
+          resizeMode="contain"
+          style={{width: 57, height: 57, alignSelf: 'center'}}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 }
