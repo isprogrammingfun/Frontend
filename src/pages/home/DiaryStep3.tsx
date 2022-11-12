@@ -1,13 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  Image,
-  Keyboard,
-  TextInput,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {Image, View} from 'react-native';
 import styled from 'styled-components/native';
 import {colors, Margin, NText, SRowContainer} from '../../components';
 

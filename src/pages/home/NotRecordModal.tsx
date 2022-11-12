@@ -43,7 +43,7 @@ export default function NotRecordModal({
             borderRadius: 6,
           }}>
           <Image
-            source={require('../../assets/image/right_malang.png')}
+            source={require('../../assets/image/right_nanal.png')}
             style={{
               width: 318,
               height: 175,
