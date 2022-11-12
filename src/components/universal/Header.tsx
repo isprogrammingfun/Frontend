@@ -3,6 +3,7 @@ import {Image, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {Source} from 'react-native-fast-image';
 import styled from 'styled-components/native';
 import {ImageIcon} from './Basic';
+import {pixel} from './Margin';
 import {NText} from './NText';
 
 interface HeaderContainerProps {
@@ -17,7 +18,7 @@ const HeaderContainer = styled.View<HeaderContainerProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: ${props => props.height};
+  height: ${pixel(48)}px;
   padding-left: ${props => (props.hasGoBack ? 0 : headerPaddingHorizontal)};
   padding-right: 14px;
   background-color: ${props => props.backgroundColor};
@@ -42,6 +43,7 @@ interface HeaderProps {
 export const Header = ({
   title,
   titleImgSource,
+  height,
   hasGoBack,
   onPressGoBack,
   headerLeftCmpnt,
@@ -59,7 +61,7 @@ export const Header = ({
   );
   const goBackButtonStyle: ViewStyle = useMemo(
     () => ({
-      height: 48,
+      height,
       justifyContent: 'center',
       paddingLeft: 20,
       paddingRight: 10,
@@ -75,7 +77,7 @@ export const Header = ({
   );
   const leftCmpntStyle: ViewStyle = useMemo(
     () => ({
-      height: 48,
+      height,
       flex: 1, // headerCenter, headerRight 사용 안한다고 가정하고 flex: 1 로 잡음.
       justifyContent: 'center',
     }),
@@ -85,7 +87,7 @@ export const Header = ({
     () => ({
       position: 'absolute',
       width: '100%',
-      height: 48,
+      height,
       justifyContent: 'center',
       alignItems: 'center',
     }),
@@ -97,10 +99,7 @@ export const Header = ({
   );
 
   return (
-    <HeaderContainer
-      height={48}
-      backgroundColor={backgroundColor}
-      hasGoBack={hasGoBack}>
+    <HeaderContainer backgroundColor={backgroundColor} hasGoBack={hasGoBack}>
       {/* 뒤로가기 & 타이틀 */}
       <View style={goBackBoxView}>
         {hasGoBack && (
