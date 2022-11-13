@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import NotRecordModal from './NotRecordModal';
 import YearNMonthModal from './YearNMonthModal';
 import {getCalendarColumns} from '../../components/calendar';
+import dayjs from 'dayjs';
 
 export default function HomeMain({navigation}: any) {
   // state
@@ -25,6 +26,7 @@ export default function HomeMain({navigation}: any) {
     day,
     setDay,
     filledColumns,
+    thisWeekStartDay,
   } = getCalendarColumns();
 
   const [isYearNMonthModalVisible, setIsYearNMonthModalVisible] =
@@ -46,10 +48,6 @@ export default function HomeMain({navigation}: any) {
   const onPressNextYear = () => {
     setYear(year + 1);
     setNow(now.add(1, 'year'));
-  };
-  const onPressMonth = () => {
-    setMonth(month + 1);
-    setNow(now.add(1, 'month'));
   };
   const onPressNotRecordModal = () => {
     setIsNotRecordModalVisible(true);
@@ -166,6 +164,7 @@ export default function HomeMain({navigation}: any) {
               />
             ))}
           </View>
+
           {/* 날짜 */}
           <View
             style={{
@@ -177,9 +176,24 @@ export default function HomeMain({navigation}: any) {
               flexWrap: 'wrap',
             }}>
             {filledColumns.map((day, index) => {
+              const date = day.get('date');
+              const thisMonth = dayjs().add(1, 'month').get('month');
+              // 이번주
+              const thisWeek =
+                month === thisMonth &&
+                (date === thisWeekStartDay ||
+                  date === thisWeekStartDay + 1 ||
+                  date === thisWeekStartDay + 2 ||
+                  date === thisWeekStartDay + 3 ||
+                  date === thisWeekStartDay + 4 ||
+                  date === thisWeekStartDay + 5 ||
+                  date === thisWeekStartDay + 6);
+              // 이번주 && 일기 안쓴 날 TODO 일기 안쓴 날 가져오기
+              const thisWeekNnotRecord = thisWeek && date === 18;
+
               return (
                 <TouchableOpacity
-                  onPress={() => console.log(day)}
+                  onPress={() => console.log(date)}
                   key={'dateColumn' + index}
                   style={{
                     height: 92,
@@ -191,9 +205,47 @@ export default function HomeMain({navigation}: any) {
                     borderColor: '#EFEFEF',
                     paddingTop: 9,
                     paddingLeft: 6,
-                    backgroundColor: 'rgba(255, 245, 229, 0.7)',
+                    backgroundColor: thisWeek
+                      ? 'rgba(255, 245, 229, 0.7)'
+                      : thisWeekNnotRecord
+                      ? 'rgba(255, 165, 22, 0.36)'
+                      : colors.white,
                   }}>
-                  <NText.B12 text={day.get('date')} color={colors.lightgray} />
+                  <NText.B12
+                    text={day.get('date')}
+                    color={thisWeek ? colors.textMiddle : colors.lightgray}
+                  />
+
+                  {/* 주의 첫날에만 */}
+                  {/* {fixIndex && (
+                      <Image
+                        source={require('../../assets/image/calendar_bg.png')}
+                        style={{width: 310, height: 48}}
+                      />
+                    )} */}
+
+                  {/* 기록 안한 날 + 버튼 */}
+                  {thisWeekNnotRecord && (
+                    <TouchableOpacity
+                      onPress={onPressNotRecordModal}
+                      style={{
+                        height: 39,
+                        width: 37,
+                        marginTop: 2,
+                        backgroundColor: colors.white,
+                        borderTopRightRadius: 6,
+                        borderBottomLeftRadius: 6,
+                        borderBottomRightRadius: 6,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Ionicons
+                        name="add-outline"
+                        color={colors.primary}
+                        size={30}
+                      />
+                    </TouchableOpacity>
+                  )}
                 </TouchableOpacity>
               );
             })}

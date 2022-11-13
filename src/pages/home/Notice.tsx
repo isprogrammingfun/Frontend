@@ -38,7 +38,7 @@ export default function Notice({navigation}: any) {
           <>
             {notWatchedTextArr.map((text, index) => {
               return (
-                <>
+                <View key={'notWatchedTextArr' + index}>
                   <Margin._17 />
                   <NText.SM14 text={text} color={colors.black} />
                   <Margin._6 />
@@ -47,12 +47,12 @@ export default function Notice({navigation}: any) {
                     <Margin.CustomWidth margin={9} />
                     <NText.SM11 text="05/15 23:57" color={colors.primary} />
                   </SRowContainer>
-                </>
+                </View>
               );
             })}
             {watchedTextArr.map((text, index) => {
               return (
-                <>
+                <View key={'watchedTextArr' + index}>
                   <Margin._17 />
                   <NText.SM14 text={text} color={colors.textUnavailableGray} />
                   <Margin._6 />
@@ -61,7 +61,7 @@ export default function Notice({navigation}: any) {
                     <Margin.CustomWidth margin={9} />
                     <NText.SM11 text="05/15 23:57" color={'#CFCFCF'} />
                   </SRowContainer>
-                </>
+                </View>
               );
             })}
           </>

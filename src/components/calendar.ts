@@ -39,6 +39,7 @@ export const getCalendarColumns = (): {
   day: number;
   setDay: (v: number) => void;
   filledColumns: dayjs.Dayjs[];
+  thisWeekStartDay: number;
 } => {
   const [now, setNow] = useState<Dayjs>(dayjs());
   const start = dayjs(now).startOf('month');
@@ -47,12 +48,12 @@ export const getCalendarColumns = (): {
   const [year, setYear] = useState<number>(start.get('year'));
   const [month, setMonth] = useState<number>(start.get('month') + 1);
   const [day, setDay] = useState<number>(start.get('day') + 1);
+  const thisWeekStartDay = now.startOf('week').get('date');
   const columns = [];
   for (let i = 0; i < endDate; i += 1) {
     const date = dayjs(start).add(i, 'day');
     columns.push(date);
   }
-
   const filledColumns = fillEmptyColumns(columns, start, end);
   return {
     now,
@@ -64,6 +65,7 @@ export const getCalendarColumns = (): {
     day,
     setDay,
     filledColumns,
+    thisWeekStartDay,
   };
 };
 
