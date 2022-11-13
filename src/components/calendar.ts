@@ -1,4 +1,5 @@
 import dayjs, {Dayjs} from 'dayjs';
+import {useState} from 'react';
 
 export const fillEmptyColumns = (
   columns: dayjs.Dayjs[],
@@ -28,11 +29,24 @@ export const fillEmptyColumns = (
 
   return filledColumns;
 };
-export const getCalendarColumns = (now: Dayjs) => {
+export const getCalendarColumns = (): {
+  now: Dayjs;
+  setNow: (v: Dayjs) => void;
+  year: number;
+  setYear: (v: number) => void;
+  month: number;
+  setMonth: (v: number) => void;
+  day: number;
+  setDay: (v: number) => void;
+  filledColumns: dayjs.Dayjs[];
+} => {
+  const [now, setNow] = useState<Dayjs>(dayjs());
   const start = dayjs(now).startOf('month');
   const end = dayjs(now).endOf('month');
   const endDate = dayjs(end).get('date');
-
+  const [year, setYear] = useState<number>(start.get('year'));
+  const [month, setMonth] = useState<number>(start.get('month') + 1);
+  const [day, setDay] = useState<number>(start.get('day') + 1);
   const columns = [];
   for (let i = 0; i < endDate; i += 1) {
     const date = dayjs(start).add(i, 'day');
@@ -40,7 +54,17 @@ export const getCalendarColumns = (now: Dayjs) => {
   }
 
   const filledColumns = fillEmptyColumns(columns, start, end);
-  return filledColumns;
+  return {
+    now,
+    setNow,
+    year,
+    setYear,
+    month,
+    setMonth,
+    day,
+    setDay,
+    filledColumns,
+  };
 };
 
 const SUN_IDX = 0;

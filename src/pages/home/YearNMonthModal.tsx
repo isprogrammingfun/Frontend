@@ -1,4 +1,6 @@
-import React from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import dayjs from 'dayjs';
+import React, {useEffect} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
@@ -18,6 +20,8 @@ interface Props {
   year: number;
   month: number;
   setMonth: (v: number) => void;
+  now: dayjs.Dayjs;
+  setNow: (v: dayjs.Dayjs) => void;
 }
 export default function YearNMonthModal({
   isVisible,
@@ -27,6 +31,8 @@ export default function YearNMonthModal({
   year,
   month,
   setMonth,
+  now,
+  setNow,
 }: Props) {
   const monthArray = [
     {monthNumber: 1, monthName: '1월'},
@@ -102,7 +108,14 @@ export default function YearNMonthModal({
                   alignItems: 'center',
                   justifyContent: 'space-around',
                 }}>
-                <TouchableOpacity onPress={() => setMonth(element.monthNumber)}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setMonth(element.monthNumber);
+                    const monthDiff = month - element.monthNumber;
+                    if (monthDiff > 0)
+                      return setNow(now.subtract(monthDiff, 'month'));
+                    else return setNow(now.add(Math.abs(monthDiff), 'month'));
+                  }}>
                   <NText.SM15
                     text={element.monthName}
                     color={

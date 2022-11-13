@@ -9,62 +9,47 @@ import {
 } from 'react-native';
 import {colors, Margin, NText} from '../../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import styled from 'styled-components/native';
 import NotRecordModal from './NotRecordModal';
 import YearNMonthModal from './YearNMonthModal';
-
-const EyeWash = styled.TouchableOpacity`
-  height: 92;
-  width: 13%;
-  border-left-width: 1px;
-  border-top-width: 1px;
-  border-color: #efefef;
-  padding-top: 9px;
-  padding-left: 6px;
-`;
+import {getCalendarColumns} from '../../components/calendar';
 
 export default function HomeMain({navigation}: any) {
-  const week: number[] = [];
-  const days: number[] = [];
-  const DayArr = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  // state
+  const {
+    now,
+    setNow,
+    year,
+    setYear,
+    month,
+    setMonth,
+    day,
+    setDay,
+    filledColumns,
+  } = getCalendarColumns();
 
   const [isYearNMonthModalVisible, setIsYearNMonthModalVisible] =
     useState<boolean>(false);
   const [isNotRecordModalVisible, setIsNotRecordModalVisible] =
     useState<boolean>(false);
-  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
-  const [year, setYear] = useState<number>(new Date().getFullYear());
-  const [day, setDay] = useState<number>(0);
-  const monthLastDate = new Date(year, month, 0);
-  const calendaronthLastDate = monthLastDate.getDate();
-  const monthStartDate = new Date(year, month, 1);
-  const calendarMonthStartDate = monthStartDate.getDate();
-  const calendarWeekCount = Math.ceil(
-    (calendarMonthStartDate + calendaronthLastDate) / 7,
-  );
 
-  for (let i = 0; i < calendarWeekCount; i++) {
-    // 주 계산
-    week.push(i);
-  }
-
-  for (let i = 1; i <= calendaronthLastDate + 1; i++) {
-    if (calendarMonthStartDate < calendaronthLastDate) {
-      days.push(i);
-    }
-  }
+  // vals
+  const DayArr = ['SUN', 'MON', 'TUE', 'WED', 'THR', 'FRI', 'SAT'];
 
   // func
   const onBackdropPress = () => {
     setIsYearNMonthModalVisible(false);
   };
   const onPressPrevYear = () => {
-    setMonth(0);
     setYear(year - 1);
+    setNow(now.subtract(1, 'year'));
   };
   const onPressNextYear = () => {
-    setMonth(0);
     setYear(year + 1);
+    setNow(now.add(1, 'year'));
+  };
+  const onPressMonth = () => {
+    setMonth(month + 1);
+    setNow(now.add(1, 'month'));
   };
   const onPressNotRecordModal = () => {
     setIsNotRecordModalVisible(true);
@@ -171,6 +156,7 @@ export default function HomeMain({navigation}: any) {
             }}>
             {DayArr.map((v, i) => (
               <NText.B10
+                key={'dayColumn' + i}
                 text={v}
                 color={
                   i === DayArr.length - 1
@@ -190,84 +176,25 @@ export default function HomeMain({navigation}: any) {
               width: '96%',
               flexWrap: 'wrap',
             }}>
-            <EyeWash>
-              <NText.B12 text="30" color={colors.textUnavailableGray} />
-              <Image
-                source={require('../../assets/image/calendar_bg.png')}
-                style={{width: 310, height: 48}}
-              />
-            </EyeWash>
-            <EyeWash>
-              <NText.B12 text="31" color={colors.textUnavailableGray} />
-            </EyeWash>
-            {days.map((v, i) => {
-              const firstIndex = i === 0;
-              const fixIndex = i === 6 || i === 13 || i === 20 || i === 27;
-              const notRecordIndex = i === 25;
-              const prosWeek =
-                i === 20 ||
-                i === 21 ||
-                i === 22 ||
-                i === 23 ||
-                i === 24 ||
-                i === 26;
+            {filledColumns.map((day, index) => {
               return (
-                !firstIndex && (
-                  <TouchableOpacity
-                    onPress={() => setDay(i)}
-                    key={'daysColumn' + i}
-                    style={{
-                      height: 92,
-                      width: '13%',
-                      borderTopWidth: 0.5,
-                      borderRightWidth: 0.5,
-                      borderBottomWidth: 0.5,
-                      borderLeftWidth: 0.5,
-                      borderColor: '#EFEFEF',
-                      paddingTop: 9,
-                      paddingLeft: 6,
-                      backgroundColor:
-                        (prosWeek && 'rgba(255, 245, 229, 0.7)') ||
-                        (notRecordIndex && 'rgba(255, 165, 22, 0.7)'),
-                    }}>
-                    <NText.B12
-                      text={i.toString()}
-                      color={
-                        prosWeek || notRecordIndex
-                          ? colors.textMiddle
-                          : colors.lightgray
-                      }
-                    />
-                    {fixIndex && (
-                      <Image
-                        source={require('../../assets/image/calendar_bg.png')}
-                        style={{width: 310, height: 48}}
-                      />
-                    )}
-                    {/* 기록 안한 날 + 버튼 */}
-                    {notRecordIndex && (
-                      <TouchableOpacity
-                        onPress={onPressNotRecordModal}
-                        style={{
-                          height: 39,
-                          width: 37,
-                          marginTop: 2,
-                          backgroundColor: colors.white,
-                          borderTopRightRadius: 6,
-                          borderBottomLeftRadius: 6,
-                          borderBottomRightRadius: 6,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
-                        <Ionicons
-                          name="add-outline"
-                          color={colors.primary}
-                          size={30}
-                        />
-                      </TouchableOpacity>
-                    )}
-                  </TouchableOpacity>
-                )
+                <TouchableOpacity
+                  onPress={() => console.log(day)}
+                  key={'dateColumn' + index}
+                  style={{
+                    height: 92,
+                    width: '13%',
+                    borderTopWidth: 0.5,
+                    borderRightWidth: 0.5,
+                    borderBottomWidth: 0.5,
+                    borderLeftWidth: 0.5,
+                    borderColor: '#EFEFEF',
+                    paddingTop: 9,
+                    paddingLeft: 6,
+                    backgroundColor: 'rgba(255, 245, 229, 0.7)',
+                  }}>
+                  <NText.B12 text={day.get('date')} color={colors.lightgray} />
+                </TouchableOpacity>
               );
             })}
           </View>
@@ -283,6 +210,8 @@ export default function HomeMain({navigation}: any) {
         year={year}
         month={month}
         setMonth={setMonth}
+        setNow={setNow}
+        now={now}
       />
       {/* 기록 안한 날 모달 */}
       <NotRecordModal
