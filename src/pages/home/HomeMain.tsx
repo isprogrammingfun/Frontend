@@ -193,7 +193,10 @@ export default function HomeMain({navigation}: any) {
 
               return (
                 <TouchableOpacity
-                  onPress={() => console.log(date)}
+                  onPress={() => {
+                    console.log(date);
+                    setDay(date);
+                  }}
                   key={'dateColumn' + index}
                   style={{
                     height: 92,
@@ -205,11 +208,12 @@ export default function HomeMain({navigation}: any) {
                     borderColor: '#EFEFEF',
                     paddingTop: 9,
                     paddingLeft: 6,
-                    backgroundColor: thisWeek
-                      ? 'rgba(255, 245, 229, 0.7)'
-                      : thisWeekNnotRecord
-                      ? 'rgba(255, 165, 22, 0.36)'
-                      : colors.white,
+                    backgroundColor:
+                      thisWeek && !thisWeekNnotRecord
+                        ? 'rgba(255, 245, 229, 0.7)'
+                        : thisWeek && thisWeekNnotRecord
+                        ? 'rgba(255, 165, 22, 0.36)'
+                        : colors.white,
                   }}>
                   <NText.B12
                     text={day.get('date')}

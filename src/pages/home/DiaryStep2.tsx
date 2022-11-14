@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   KeyboardAvoidingView,
@@ -17,56 +18,71 @@ interface Props {
   step: number;
   keyword: string;
   setKeyword: (v: string) => void;
+  keywordArr: string[];
+  setKeywordArr: (v: string[]) => void;
 }
 
-export default function DiaryStep2({text, step, keyword, setKeyword}: Props) {
+export default function DiaryStep2({
+  text,
+  step,
+  keyword,
+  setKeyword,
+  keywordArr,
+  setKeywordArr,
+}: Props) {
   const userName = '홍길동'; // TODO 가져오기
   const [nextStep, setNextStep] = useState<boolean>(false);
   const [isKeyword, setIsKeyword] = useState<boolean>(false);
-  const textInputRef = useRef();
-  let keywordArr: Array<string> = [];
   {
     /* 생성된 키워드 */
   }
-  const hihi = () => {
-    keywordArr.push(keyword);
-    KeywordView;
-    console.log(keywordArr);
-  };
+
   const renderItem = ({item, index}: {item: string; index: number}) => {
-    console.log('여기옴');
-    console.log(item);
+    if (index > 4) {
+      Alert.alert('키워드는 최대 5개까지 가능합니다.');
+    }
     return (
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          width: 67,
-          height: 29,
+          width: 111,
+          height: 33,
           borderRadius: 7,
           backgroundColor: colors.sectionGray,
         }}>
         <NText.SB13 text={item} color={colors.textMiddle} />
         <Margin.CustomWidth margin={17} />
-        <Ionicons name="close-outline" size={20} color={colors.buttonGray} />
+        <TouchableOpacity
+          onPress={() => {
+            keywordArr.concat(keywordArr[index]);
+          }}>
+          <Ionicons name="close-outline" size={20} color={colors.buttonGray} />
+        </TouchableOpacity>
       </View>
     );
   };
+
   const KeywordView = () => {
     return (
       <>
         <FlatList
-          data={keywordArr}
+          data={keywordArr.slice(0, 5)}
           renderItem={renderItem}
-          horizontal={true}
-          ItemSeparatorComponent={() => <Margin.CustomWidth margin={12} />}
+          ItemSeparatorComponent={() => <Margin.CustomWidth margin={10} />}
           ListHeaderComponent={() => <Margin.CustomWidth margin={29} />}
+          horizontal={true}
           showsHorizontalScrollIndicator={false}
-          style={{width: '95%', height: '100%'}}
         />
       </>
     );
+  };
+
+  const onSubmitEditing = () => {
+    setKeywordArr([...keywordArr, keyword]);
+    setIsKeyword(true);
+    setKeyword('');
   };
 
   {
@@ -92,7 +108,7 @@ export default function DiaryStep2({text, step, keyword, setKeyword}: Props) {
               onChangeText={v => setKeyword(v)}
               autoFocus={true}
               returnKeyType="next"
-              onSubmitEditing={hihi}
+              onSubmitEditing={onSubmitEditing}
               maxLength={5}
               autoCorrect={false}
               style={{padding: 3}}
@@ -205,7 +221,7 @@ export default function DiaryStep2({text, step, keyword, setKeyword}: Props) {
       <Margin._13 />
       {nextStep ? (
         <>
-          {keyword && isKeyword ? (
+          {isKeyword ? (
             <>
               <KeywordView />
               <Margin._30 />
@@ -222,7 +238,10 @@ export default function DiaryStep2({text, step, keyword, setKeyword}: Props) {
       ) : (
         <>
           <TouchableOpacity
-            onPress={() => setNextStep(true)}
+            onPress={() => {
+              setNextStep(true);
+              setKeyword('');
+            }}
             style={{
               width: 316,
               height: 50,

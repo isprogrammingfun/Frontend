@@ -24,6 +24,7 @@ export default function DiaryMain({route, navigation}: any) {
 
   const [text, setText] = useState<string>('');
   const [keyword, setKeyword] = useState('');
+  const [keywordArr, setKeywordArr] = useState<string[]>([]);
 
   // vals
   const stepOne = step === 1;
@@ -86,51 +87,51 @@ export default function DiaryMain({route, navigation}: any) {
           }
         />
         <Margin._12 />
-        <ScrollView style={{height: '100%'}}>
-          {/* 년 월 일 */}
-          <View
-            style={{
-              borderRadius: 7,
-              borderWidth: 1,
-              borderColor: colors.lineGray,
-              paddingHorizontal: 25,
-              paddingVertical: 7,
-              alignItems: 'center',
-              marginHorizontal: 115,
-            }}>
-            <NText.SM12
-              text={`${year}년 ${month}월 ${day}일`}
-              color={colors.textMiddle}
-            />
-          </View>
-          <Margin._11 />
-
-          {/* 일기 쓰기 or 핵심만 쏙! or 감정어 획득! */}
-          {stepOne ? (
-            <DiaryStep1
-              text={text}
-              setText={setText}
-              step={step}
-              textNum={textNum}
-            />
-          ) : stepTwo ? (
-            <DiaryStep2
-              text={text}
-              keyword={keyword}
-              step={step}
-              setKeyword={setKeyword}
-            />
-          ) : stepThree ? (
-            <DiaryStep3
-              text={text}
-              setText={setText}
-              step={step}
-              textNum={textNum}
-            />
-          ) : (
-            <DiaryStep4 />
-          )}
-        </ScrollView>
+        {/* 년 월 일 */}
+        <View
+          style={{
+            borderRadius: 7,
+            borderWidth: stepFour ? 0 : 1,
+            borderColor: colors.lineGray,
+            paddingHorizontal: 25,
+            paddingVertical: 7,
+            alignItems: 'center',
+            marginHorizontal: 115,
+          }}>
+          <NText.SM12
+            text={`${year}년 ${month}월 ${day}일`}
+            color={colors.textMiddle}
+          />
+        </View>
+        <Margin._11 />
+        {/* 일기 쓰기 or 핵심만 쏙! or 감정어 획득! */}
+        {stepOne ? (
+          <DiaryStep1
+            text={text}
+            setText={setText}
+            step={step}
+            textNum={textNum}
+          />
+        ) : stepTwo ? (
+          <DiaryStep2
+            text={text}
+            keyword={keyword}
+            step={step}
+            setKeyword={setKeyword}
+            keywordArr={keywordArr}
+            setKeywordArr={setKeywordArr}
+          />
+        ) : stepThree ? (
+          <DiaryStep3
+            text={text}
+            setText={setText}
+            step={step}
+            textNum={textNum}
+            keywordArr={keywordArr}
+          />
+        ) : (
+          <DiaryStep4 />
+        )}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
