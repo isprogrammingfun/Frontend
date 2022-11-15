@@ -595,6 +595,27 @@ export const NText = {
       />
     );
   },
+  SM13: ({
+    style,
+    color,
+    text,
+    numberOfLines,
+    lineHeightMultipleValue,
+    onTextLayout,
+  }: NTextProps) => {
+    return (
+      <SpoqaHanSansNeo
+        style={style}
+        color={color}
+        weight={'M'}
+        text={text}
+        lineHeightMultipleValue={lineHeightMultipleValue}
+        numberOfLines={numberOfLines}
+        onTextLayout={onTextLayout}
+        fontSize={13}
+      />
+    );
+  },
   SM12: ({
     style,
     color,

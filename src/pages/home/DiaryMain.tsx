@@ -77,7 +77,7 @@ export default function DiaryMain({route, navigation}: any) {
                 <NText.SB16
                   text={stepThree ? '완료' : !stepFour && '다음'}
                   color={
-                    (text && step === 1) || keyword
+                    (text && step === 1) || keywordArr
                       ? colors.primary
                       : colors.textUnavailableGray
                   }
@@ -104,6 +104,7 @@ export default function DiaryMain({route, navigation}: any) {
           />
         </View>
         <Margin._11 />
+
         {/* 일기 쓰기 or 핵심만 쏙! or 감정어 획득! */}
         {stepOne ? (
           <DiaryStep1

@@ -1,17 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Alert,
   FlatList,
   Image,
   KeyboardAvoidingView,
   SafeAreaView,
+  ScrollView,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {colors, Divider, Margin, NText, SRowContainer} from '../../components';
+import {colors, Margin, NText, SRowContainer} from '../../components';
 
 interface Props {
   text: string;
@@ -47,13 +48,13 @@ export default function DiaryStep2({
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          width: 111,
+          width: 100,
           height: 33,
           borderRadius: 7,
           backgroundColor: colors.sectionGray,
         }}>
         <NText.SB13 text={item} color={colors.textMiddle} />
-        <Margin.CustomWidth margin={17} />
+        <Margin.CustomWidth margin={26} />
         <TouchableOpacity
           onPress={() => {
             keywordArr.concat(keywordArr[index]);
@@ -66,7 +67,7 @@ export default function DiaryStep2({
 
   const KeywordView = () => {
     return (
-      <>
+      <KeyboardAvoidingView>
         <FlatList
           data={keywordArr.slice(0, 5)}
           renderItem={renderItem}
@@ -75,7 +76,7 @@ export default function DiaryStep2({
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         />
-      </>
+      </KeyboardAvoidingView>
     );
   };
 
@@ -90,37 +91,35 @@ export default function DiaryStep2({
   }
   const MakeKeyword = () => {
     return (
-      <KeyboardAvoidingView>
-        <SafeAreaView
-          style={{
-            borderRadius: 5,
-            backgroundColor: colors.primaryLight,
-            padding: 3,
-            width: '30%',
-            marginLeft: 29,
-          }}>
-          <View style={{flexDirection: 'row', padding: 5}}>
-            <Ionicons name="add-outline" size={25} color={colors.textTop} />
-            <Margin.CustomWidth margin={10} />
-            <TextInput
-              value={keyword}
-              placeholder={'키워드'}
-              onChangeText={v => setKeyword(v)}
-              autoFocus={true}
-              returnKeyType="next"
-              onSubmitEditing={onSubmitEditing}
-              maxLength={5}
-              autoCorrect={false}
-              style={{padding: 3}}
-            />
-          </View>
-        </SafeAreaView>
-      </KeyboardAvoidingView>
+      <SafeAreaView
+        style={{
+          borderRadius: 5,
+          backgroundColor: colors.primaryLight,
+          padding: 3,
+          width: '30%',
+          marginLeft: 29,
+        }}>
+        <View style={{flexDirection: 'row', padding: 5}}>
+          <Ionicons name="add-outline" size={25} color={colors.textTop} />
+          <Margin.CustomWidth margin={10} />
+          <TextInput
+            value={keyword}
+            placeholder={'키워드'}
+            onChangeText={v => setKeyword(v)}
+            autoFocus={true}
+            returnKeyType="next"
+            onSubmitEditing={onSubmitEditing}
+            maxLength={5}
+            autoCorrect={false}
+            style={{padding: 3}}
+          />
+        </View>
+      </SafeAreaView>
     );
   };
 
   return (
-    <>
+    <ScrollView style={{marginBottom: 90}}>
       <View style={{alignItems: 'center'}}>
         <NText.SM12
           text={'앞에서 쓴 내용 중에서 남기고 싶은 단어를 작성해 주시면'}
@@ -255,6 +254,6 @@ export default function DiaryStep2({
           </TouchableOpacity>
         </>
       )}
-    </>
+    </ScrollView>
   );
 }

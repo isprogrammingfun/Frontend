@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Image,
   Keyboard,
+  ScrollView,
   TextInput,
   TouchableWithoutFeedback,
   View,
@@ -17,7 +18,7 @@ interface Props {
 }
 export default function DiaryStep1({text, setText, step, textNum}: Props) {
   return (
-    <>
+    <ScrollView style={{height: '100%'}}>
       <SRowContainer justifyContent="center" alignItems="center">
         <NText.SB12 text={'홍길동'} color={colors.primary} />
         <NText.SM12
@@ -58,7 +59,7 @@ export default function DiaryStep1({text, setText, step, textNum}: Props) {
           height: 25,
           position: 'absolute',
           left: 40,
-          top: 140,
+          top: 95,
         }}
       />
       <Margin._15 />
@@ -106,6 +107,6 @@ export default function DiaryStep1({text, setText, step, textNum}: Props) {
           />
         </View>
       </TouchableWithoutFeedback>
-    </>
+    </ScrollView>
   );
 }

@@ -13,7 +13,7 @@ interface Props {
   isVisible: boolean;
   onBackdropPress: () => void;
 }
-export default function KeywordModal({isVisible, onBackdroupPress}: Props) {
+export default function KeywordModal({isVisible, onBackdropPress}: Props) {
   return (
     <BaseModal>
       <View style={{paddingTop: 32}}>
