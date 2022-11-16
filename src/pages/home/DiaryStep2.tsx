@@ -39,25 +39,22 @@ export default function DiaryStep2({
   }
 
   const renderItem = ({item, index}: {item: string; index: number}) => {
-    if (index > 4) {
-      Alert.alert('키워드는 최대 5개까지 가능합니다.');
-    }
     return (
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          width: 100,
+          width: 110,
           height: 33,
           borderRadius: 7,
           backgroundColor: colors.sectionGray,
         }}>
         <NText.SB13 text={item} color={colors.textMiddle} />
-        <Margin.CustomWidth margin={26} />
+        <Margin.CustomWidth margin={15} />
         <TouchableOpacity
           onPress={() => {
-            keywordArr.concat(keywordArr[index]);
+            keywordArr.slice(item);
           }}>
           <Ionicons name="close-outline" size={20} color={colors.buttonGray} />
         </TouchableOpacity>
@@ -69,7 +66,7 @@ export default function DiaryStep2({
     return (
       <KeyboardAvoidingView>
         <FlatList
-          data={keywordArr.slice(0, 5)}
+          data={keywordArr}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <Margin.CustomWidth margin={10} />}
           ListHeaderComponent={() => <Margin.CustomWidth margin={29} />}
@@ -81,8 +78,12 @@ export default function DiaryStep2({
   };
 
   const onSubmitEditing = () => {
-    setKeywordArr([...keywordArr, keyword]);
-    setIsKeyword(true);
+    if (keywordArr.length < 5) {
+      setKeywordArr([...keywordArr, keyword]);
+      setIsKeyword(true);
+    } else {
+      Alert.alert('키워드는 최대 5개까지 가능합니다.');
+    }
     setKeyword('');
   };
 
