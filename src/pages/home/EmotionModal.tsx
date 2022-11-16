@@ -4,7 +4,6 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {
   Alert,
   FlatList,
-  Image,
   ImageBackground,
   TouchableOpacity,
   View,
@@ -36,30 +35,96 @@ export default function EmotionModal({
   setEmotionBlock,
   setIsVisibleEmotionModal,
 }: Props) {
-  // setEmotionBlock({keyword: keywordArr, emotion: DataType});
+  const [allItems, setAllItems] = useState([
+    {
+      id: 1,
+      name: '행복',
+      selected: false,
+    },
+    {
+      id: 2,
+      name: '여유',
+      selected: false,
+    },
+    {
+      id: 3,
+      name: '안심',
+      selected: false,
+    },
+    {
+      id: 4,
+      name: '슬픔',
+      selected: false,
+    },
+    {
+      id: 5,
+      name: '복잡',
+      selected: false,
+    },
+    {
+      id: 6,
+      name: '즐거움',
+      selected: false,
+    },
+    {
+      id: 7,
+      name: '의욕',
+      selected: false,
+    },
+    {
+      id: 8,
+      name: '쏘쏘',
+      selected: false,
+    },
+    {
+      id: 9,
+      name: '아쉬움',
+      selected: false,
+    },
+    {
+      id: 10,
+      name: '화남',
+      selected: false,
+    },
+    {
+      id: 11,
+      name: '기대',
+      selected: false,
+    },
+    {
+      id: 12,
+      name: '놀람',
+      selected: false,
+    },
+    {
+      id: 13,
+      name: '외로움',
+      selected: false,
+    },
+    {
+      id: 14,
+      name: '짜증',
+      selected: false,
+    },
+    {
+      id: 15,
+      name: '힘듦',
+      selected: false,
+    },
+  ]);
 
-  const DataType = [
-    '행복',
-    '여유',
-    '안심',
-    '슬픔',
-    '복잡',
-    '즐거움',
-    '의욕',
-    '쏘쏘',
-    '아쉬움',
-    '화남',
-    '기대',
-    '놀람',
-    '외로움',
-    '짜증',
-    '힘듦',
-    '뿌듯',
-    '상쾌',
-    '불안',
-    '부담',
-    '피곤',
-  ];
+  const [selectedItem, setSelectedItem] = useState<string[]>([]);
+
+  const selectedItemList = item => {
+    if (selectedItem.length < 3) {
+      setSelectedItem([...selectedItem, item]);
+      let temp = allItems.filter(parentItem => parentItem.id !== item.id);
+      item.selected = !item.selected;
+      temp = temp.concat(item);
+      temp.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+      setAllItems(temp);
+    }
+  };
 
   const onPressComplete = () => {
     setEmotionBlockNum(0);
@@ -76,6 +141,7 @@ export default function EmotionModal({
     return (
       <TouchableOpacity
         onPress={() => {
+          selectedItemList(item);
           emotionBlock.push(item);
           setEmotionBlockNum(emotionBlockNum + 1);
           if (emotionBlock.length > 3) {
@@ -83,7 +149,11 @@ export default function EmotionModal({
           }
         }}>
         <ImageBackground
-          source={require('../../assets/image/emotion_bg.png')}
+          source={
+            selectedItem.includes(item)
+              ? require('../../assets/image/emotion_color_bg.png')
+              : require('../../assets/image/emotion_bg.png')
+          }
           style={{
             width: 52,
             height: 52,
@@ -99,7 +169,7 @@ export default function EmotionModal({
   return (
     <BaseModal
       isVisible={isVisibleEmotionModal}
-      onBackdropPress={onBackdropPress}
+      onBackdropPress={() => setIsVisibleEmotionModal(false)}
       style={{
         width: '100%',
         height: 350,
@@ -153,7 +223,7 @@ export default function EmotionModal({
         />
         <Margin._18 />
         <FlatList
-          data={DataType}
+          data={allItems.map(i => i.name)}
           renderItem={renderItem}
           numColumns={5}
           ItemSeparatorComponent={() => <Margin._13 />}

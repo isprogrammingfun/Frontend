@@ -91,11 +91,11 @@ export default function DiaryStep3({step, keywordArr}: Props) {
           return (
             <KeywordBlock
               backgroundColor={
-                emotionBlock.length > 0 ? colors.primary : colors.primaryLight
+                emotionBlock.length > 2 ? colors.primary : colors.primaryLight
               }
               onPress={() => setIsVisibleEmotionModal(true)}>
               <SRowContainer>
-                {emotionBlock.length > 0 ? (
+                {emotionBlock.length > 2 ? (
                   <>
                     <NText.SB15
                       text={item}
@@ -131,6 +131,9 @@ export default function DiaryStep3({step, keywordArr}: Props) {
                         height: 52,
                         alignItems: 'center',
                         justifyContent: 'center',
+                        position: 'absolute',
+                        top: -2,
+                        right: 115,
                       }}>
                       <NText.SM13
                         text={emotionBlock[0]}
@@ -145,6 +148,9 @@ export default function DiaryStep3({step, keywordArr}: Props) {
                         height: 52,
                         alignItems: 'center',
                         justifyContent: 'center',
+                        position: 'absolute',
+                        top: -2,
+                        right: 57,
                       }}>
                       <NText.SM13
                         text={emotionBlock[1]}
@@ -159,6 +165,9 @@ export default function DiaryStep3({step, keywordArr}: Props) {
                         height: 52,
                         alignItems: 'center',
                         justifyContent: 'center',
+                        position: 'absolute',
+                        top: -2,
+                        right: 0,
                       }}>
                       <NText.SM13
                         text={emotionBlock[2]}
