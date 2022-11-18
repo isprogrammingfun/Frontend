@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {type} from 'os';
-import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Alert,
   FlatList,
@@ -21,7 +20,7 @@ interface Props {
   emotionBlockNum: number;
   setEmotionBlockNum: (v: number) => void;
   emotionBlock: string[];
-  setEmotionBlock: Dispatch<SetStateAction<never[]>>;
+  setEmotionBlock: (v: string[]) => void;
   setIsVisibleEmotionModal: (v: boolean) => void;
 }
 export default function EmotionModal({
@@ -111,11 +110,9 @@ export default function EmotionModal({
     },
   ]);
 
-  const [selectedItem, setSelectedItem] = useState<string[]>([]);
-
   const selectedItemList = item => {
-    if (selectedItem.length < 3) {
-      setSelectedItem([...selectedItem, item]);
+    if (emotionBlock.length < 3) {
+      setEmotionBlock([...emotionBlock, item]);
       let temp = allItems.filter(parentItem => parentItem.id !== item.id);
       item.selected = !item.selected;
       temp = temp.concat(item);
@@ -131,10 +128,6 @@ export default function EmotionModal({
     }
   };
 
-  // useEffect(() => {
-  //   console.log(emotionBlock);
-  // }, [emotionBlock]);
-
   const renderItem = ({item, index}: {item: string; index: number}) => {
     return (
       <TouchableOpacity
@@ -148,7 +141,7 @@ export default function EmotionModal({
         }}>
         <ImageBackground
           source={
-            selectedItem.includes(item)
+            emotionBlock.includes(item)
               ? require('../../assets/image/emotion_color_bg.png')
               : require('../../assets/image/emotion_bg.png')
           }
@@ -170,7 +163,6 @@ export default function EmotionModal({
       onBackdropPress={() => {
         setIsVisibleEmotionModal(false);
         setEmotionBlock([]); // 일기쓰기에 보이는 키워드 step 3
-        setSelectedItem([]); // 모달에서 선택된 item
       }}
       style={{
         width: '100%',
@@ -205,7 +197,7 @@ export default function EmotionModal({
             <NText.SB15
               text="선택 완료"
               color={
-                selectedItem.length > 0
+                emotionBlock.length > 0
                   ? colors.primary
                   : colors.textUnavailableGray
               }
