@@ -15,8 +15,6 @@ interface Props {
 
 const KeywordBlock = styled.TouchableOpacity`
   background-color: ${props => props.backgroundColor};
-  margin-left: 30px;
-  margin-right: 30px;
   border-radius: 6px;
   height: 50px;
 `;

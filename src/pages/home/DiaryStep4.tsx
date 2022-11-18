@@ -1,18 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, TouchableOpacity, View} from 'react-native';
 import {Buttons, colors, Margin, NText, SRowContainer} from '../../components';
 
 export default function DiaryStep4() {
   const navigation = useNavigation();
+  const [record, setRecord] = useState<boolean>(true);
 
   // func
   const onPressComplete = () => {
     // TODO api post 요청
 
     // homeMain으로 이동
-    navigation.navigate('HomeMain');
+    navigation.navigate('HomeMain', {record: record});
   };
 
   return (
