@@ -16,7 +16,7 @@ interface Props {
   month: number;
   day: number;
   isVisibleDiaryEditModal: boolean;
-  setIsVisibleDiaryEditModal: (v: boolean) => void;
+  onBackdropPress: () => void;
   keywordArr: string[];
   emotionBlock: string[];
 }
@@ -25,7 +25,7 @@ export default function DiaryEditModal({
   month,
   day,
   isVisibleDiaryEditModal,
-  setIsVisibleDiaryEditModal,
+  onBackdropPress,
   keywordArr,
   emotionBlock,
 }: Props) {
@@ -53,9 +53,7 @@ export default function DiaryEditModal({
   return (
     <BaseModal
       isVisible={isVisibleDiaryEditModal}
-      onBackdropPress={() => {
-        setIsVisibleDiaryEditModal(false);
-      }}
+      onBackdropPress={onBackdropPress}
       style={{
         width: '100%',
         height: 350,
@@ -78,7 +76,7 @@ export default function DiaryEditModal({
           />
 
           {/* TODO 수정하기 클릭시 수정 api 요청 */}
-          <TouchableOpacity onPress={() => setIsVisibleDiaryEditModal(false)}>
+          <TouchableOpacity onPress={onBackdropPress}>
             <NText.SB15 text="수정하기" color={colors.primary} />
           </TouchableOpacity>
         </SRowContainer>

@@ -299,7 +299,7 @@ export default function HomeMain({route, navigation}: any) {
         month={month}
         day={day}
         isVisibleDiaryEditModal={isVisibleDiaryEditModal}
-        setIsVisibleDiaryEditModal={setIsNotRecordModalVisible}
+        onBackdropPress={() => setIsVisibleDiaryEditModal(false)}
         emotionBlock={['행복', '의욕', '뿌듯']}
         keywordArr={['키워드1', '키워드2', '키워드3']}
       />
