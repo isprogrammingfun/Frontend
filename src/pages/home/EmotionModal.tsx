@@ -17,7 +17,6 @@ import {BaseModal, NText, colors, Margin, Divider} from '../../components';
 // };
 interface Props {
   isVisibleEmotionModal: boolean;
-  onBackdropPress: () => void;
   keywordArr: string[];
   emotionBlockNum: number;
   setEmotionBlockNum: (v: number) => void;
@@ -27,7 +26,6 @@ interface Props {
 }
 export default function EmotionModal({
   isVisibleEmotionModal,
-  onBackdropPress,
   keywordArr,
   emotionBlockNum,
   setEmotionBlockNum,
@@ -169,7 +167,11 @@ export default function EmotionModal({
   return (
     <BaseModal
       isVisible={isVisibleEmotionModal}
-      onBackdropPress={() => setIsVisibleEmotionModal(false)}
+      onBackdropPress={() => {
+        setIsVisibleEmotionModal(false);
+        setEmotionBlock([]); // 일기쓰기에 보이는 키워드 step 3
+        setSelectedItem([]); // 모달에서 선택된 item
+      }}
       style={{
         width: '100%',
         height: 350,
@@ -203,7 +205,7 @@ export default function EmotionModal({
             <NText.SB15
               text="선택 완료"
               color={
-                emotionBlockNum > 0
+                selectedItem.length > 0
                   ? colors.primary
                   : colors.textUnavailableGray
               }
