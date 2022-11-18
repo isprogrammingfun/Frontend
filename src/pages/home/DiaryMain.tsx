@@ -75,7 +75,7 @@ export default function DiaryMain({route, navigation}: any) {
           headerRightCmpnt={
             <>
               <TouchableOpacity
-                disabled={!text && keywordArr.length === 0}
+                disabled={!text || keywordArr.length === 0}
                 style={{paddingRight: 24}}
                 onPress={onPressNext}>
                 <NText.SB16
@@ -128,8 +128,6 @@ export default function DiaryMain({route, navigation}: any) {
           />
         ) : stepThree ? (
           <DiaryStep3
-            text={text}
-            setText={setText}
             step={step}
             textNum={textNum}
             keywordArr={keywordArr}
