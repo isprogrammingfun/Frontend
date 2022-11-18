@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Alert,
   FlatList,
@@ -34,6 +34,7 @@ export default function DiaryStep2({
   const userName = '홍길동'; // TODO 가져오기
   const [nextStep, setNextStep] = useState<boolean>(false);
   const [isKeyword, setIsKeyword] = useState<boolean>(false);
+  const keywordId = useRef(0);
   {
     /* 생성된 키워드 */
   }
@@ -54,7 +55,7 @@ export default function DiaryStep2({
         <Margin.CustomWidth margin={15} />
         <TouchableOpacity
           onPress={() => {
-            keywordArr.slice(item);
+            item === item[index] && keywordArr.splice(index, 1);
           }}>
           <Ionicons name="close-outline" size={20} color={colors.buttonGray} />
         </TouchableOpacity>
@@ -223,15 +224,15 @@ export default function DiaryStep2({
         <>
           {isKeyword ? (
             <>
-              <KeywordView />
-              <Margin._30 />
               <MakeKeyword />
-              <Margin.BottomSpace />
+              <Margin._30 />
+              <KeywordView />
+              <Margin.HalfBottomSpace />
             </>
           ) : (
             <>
               <MakeKeyword />
-              <Margin.BottomSpace />
+              <Margin.HalfBottomSpace />
             </>
           )}
         </>
