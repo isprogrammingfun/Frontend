@@ -1,13 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  View,
-  ScrollView,
-} from 'react-native';
+import {KeyboardAvoidingView, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors, Header, Margin, NText} from '../../components';
+import {getCalendarColumns} from '../../components/calendar';
 import DiaryStep1 from './DiaryStep1';
 import DiaryStep2 from './DiaryStep2';
 import DiaryStep3 from './DiaryStep3';
@@ -21,10 +17,12 @@ export default function DiaryMain({route, navigation}: any) {
   const [step, setStep] = useState<number>(1);
   const [isKeywordModalVisible, setIsKeywordModalVisible] =
     useState<boolean>(false);
+  const {now} = getCalendarColumns();
 
   const [text, setText] = useState<string>('');
   const [keyword, setKeyword] = useState('');
   const [keywordArr, setKeywordArr] = useState<string[]>([]);
+  const [emotionBlock, setEmotionBlock] = useState<string[]>([]);
 
   // vals
   const stepOne = step === 1;
@@ -34,14 +32,17 @@ export default function DiaryMain({route, navigation}: any) {
 
   useEffect(() => {
     setTextNum(text.length);
-
+    if (step === 4) {
+      // TODO post 요청
+      // console.log('text', text);
+      // console.log('keyword', keywordArr);
+      // console.log('emotion', emotionBlock);
+      // console.log('now', now);
+    }
     if (step === 5) return setStep(1);
-  }, [text, step, setStep]);
+  }, [text, step, setStep, emotionBlock, keywordArr, now]);
 
   const onPressNext = () => {
-    if (step === 3) {
-      setIsKeywordModalVisible(true);
-    }
     setStep(step + 1);
   };
   const onPressGoBack = () => {
@@ -74,17 +75,13 @@ export default function DiaryMain({route, navigation}: any) {
           headerRightCmpnt={
             <>
               <TouchableOpacity
-                disabled={!text}
+                disabled={!text && keywordArr.length === 0}
                 style={{paddingRight: 24}}
                 onPress={onPressNext}>
                 <NText.SB16
                   text={stepThree ? '완료' : !stepFour && '다음'}
                   color={
-                    step === 1
-                      ? text
-                        ? colors.primary
-                        : colors.textUnavailableGray
-                      : keywordArr
+                    (stepOne && text) || keywordArr.length > 0
                       ? colors.primary
                       : colors.textUnavailableGray
                   }
@@ -136,6 +133,8 @@ export default function DiaryMain({route, navigation}: any) {
             step={step}
             textNum={textNum}
             keywordArr={keywordArr}
+            emotionBlock={emotionBlock}
+            setEmotionBlock={setEmotionBlock}
           />
         ) : (
           <DiaryStep4 />
