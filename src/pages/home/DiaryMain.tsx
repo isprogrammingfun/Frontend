@@ -25,10 +25,11 @@ export default function DiaryMain({route, navigation}: any) {
   const [emotionBlock, setEmotionBlock] = useState<string[]>([]);
 
   // vals
-  const stepOne = step === 1;
-  const stepTwo = step === 2;
-  const stepThree = step === 3;
-  const stepFour = step === 4;
+  const stepOne = step === 1; // 일기 쓰기
+  const stepTwo = step === 2; // 키워드 입력
+  const stepThree = step === 3; // 키워드 보여주고 감정 선택
+  const stepFour = step === 4; // 키워드 확인 모달
+  const stepFive = step === 5; // 일기가 저장되었어요!
 
   useEffect(() => {
     setTextNum(text.length);
@@ -38,8 +39,9 @@ export default function DiaryMain({route, navigation}: any) {
       // console.log('keyword', keywordArr);
       // console.log('emotion', emotionBlock);
       // console.log('now', now);
+      setIsKeywordModalVisible(true);
     }
-    if (step === 5) return setStep(1);
+    if (step === 6) return setStep(1);
   }, [text, step, setStep, emotionBlock, keywordArr, now]);
 
   const onPressNext = () => {
@@ -59,27 +61,23 @@ export default function DiaryMain({route, navigation}: any) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <KeyboardAvoidingView style={{height: '100%'}} behavior="position">
-        <KeywordModal
-          isVisible={isKeywordModalVisible}
-          onBackdropPress={() => setIsKeywordModalVisible(false)}
-        />
         <Header
           backgroundColor={colors.white}
           hasGoBack={true}
           onPressGoBack={onPressGoBack}
           headerCenterCmpnt={
-            <>
+            <View style={{marginLeft: 7}}>
               <NText.SB18 text="일기쓰기" color={colors.textTop} />
-            </>
+            </View>
           }
           headerRightCmpnt={
             <>
               <TouchableOpacity
-                disabled={!text || keywordArr.length === 0}
+                disabled={!text}
                 style={{paddingRight: 24}}
                 onPress={onPressNext}>
                 <NText.SB16
-                  text={stepThree ? '완료' : !stepFour && '다음'}
+                  text={stepThree ? '완료' : !stepFive && '다음'}
                   color={
                     (stepOne && text) || keywordArr.length > 0
                       ? colors.primary
@@ -95,7 +93,7 @@ export default function DiaryMain({route, navigation}: any) {
         <View
           style={{
             borderRadius: 7,
-            borderWidth: stepFour ? 0 : 1,
+            borderWidth: stepFive ? 0 : 1,
             borderColor: colors.lineGray,
             paddingHorizontal: 25,
             paddingVertical: 7,
@@ -133,6 +131,16 @@ export default function DiaryMain({route, navigation}: any) {
             keywordArr={keywordArr}
             emotionBlock={emotionBlock}
             setEmotionBlock={setEmotionBlock}
+          />
+        ) : stepFour ? (
+          <KeywordModal
+            isVisible={isKeywordModalVisible}
+            onBackdropPress={() => {
+              setIsKeywordModalVisible(false);
+              setStep(step - 1);
+            }}
+            keywordArr={keywordArr}
+            onPressNext={() => setStep(step + 1)}
           />
         ) : (
           <DiaryStep4 />

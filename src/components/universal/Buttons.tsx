@@ -14,7 +14,7 @@ const PrimaryBtn = ({text, width, height}: BtnProps) => {
     <View
       style={{
         paddingVertical: 15,
-        paddingHorizontal: 93,
+        paddingHorizontal: 69,
         backgroundColor: colors.primary,
         width: width,
         height: height,
