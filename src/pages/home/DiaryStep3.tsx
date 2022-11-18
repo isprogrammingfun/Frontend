@@ -6,11 +6,11 @@ import {colors, Margin, NText, SRowContainer} from '../../components';
 import EmotionModal from './EmotionModal';
 
 interface Props {
-  text: string;
-  setText: (v: string) => void;
   step: number;
   textNum: number; // 글자수
   keywordArr: string[];
+  emotionBlock: string[];
+  setEmotionBlock: (v: string[]) => void;
 }
 
 const KeywordBlock = styled.TouchableOpacity`
@@ -21,10 +21,14 @@ const KeywordBlock = styled.TouchableOpacity`
   height: 50px;
 `;
 
-export default function DiaryStep3({step, keywordArr}: Props) {
+export default function DiaryStep3({
+  step,
+  keywordArr,
+  emotionBlock,
+  setEmotionBlock,
+}: Props) {
   const [isVisibleEmotionModal, setIsVisibleEmotionModal] =
     useState<boolean>(false);
-  const [emotionBlock, setEmotionBlock] = useState([]);
   const [emotionBlockNum, setEmotionBlockNum] = useState<number>(0);
   return (
     <>
@@ -190,9 +194,6 @@ export default function DiaryStep3({step, keywordArr}: Props) {
       <EmotionModal
         isVisibleEmotionModal={isVisibleEmotionModal}
         setIsVisibleEmotionModal={setIsVisibleEmotionModal}
-        onBackdropPress={() => {
-          setEmotionBlock([]);
-        }}
         keywordArr={keywordArr}
         emotionBlock={emotionBlock}
         setEmotionBlock={setEmotionBlock}
