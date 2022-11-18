@@ -48,6 +48,9 @@ export default function DiaryMain({route, navigation}: any) {
     if (step === 1) {
       navigation.goBack();
     } else {
+      if (step === 2 || step === 3) {
+        setKeywordArr([]); // 뒤로 가기 예외처리
+      }
       setStep(step - 1);
     }
   };
@@ -77,7 +80,11 @@ export default function DiaryMain({route, navigation}: any) {
                 <NText.SB16
                   text={stepThree ? '완료' : !stepFour && '다음'}
                   color={
-                    (text && step === 1) || keywordArr
+                    step === 1
+                      ? text
+                        ? colors.primary
+                        : colors.textUnavailableGray
+                      : keywordArr
                       ? colors.primary
                       : colors.textUnavailableGray
                   }
