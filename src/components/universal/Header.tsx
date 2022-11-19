@@ -97,6 +97,16 @@ export const Header = ({
     () => ({height: 48, justifyContent: 'center'}),
     [],
   );
+  const retroCmptStyle: ViewStyle = useMemo(
+    () => ({
+      width: '100%',
+      flex: 1,
+      height: 48,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }),
+    [],
+  );
 
   return (
     <HeaderContainer backgroundColor={backgroundColor} hasGoBack={hasGoBack}>
