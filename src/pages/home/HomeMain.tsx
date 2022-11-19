@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
+import {useRootContext} from '../../RootProvider';
 import {
   SafeAreaView,
   View,
@@ -13,9 +14,19 @@ import NotRecordModal from './NotRecordModal';
 import YearNMonthModal from './YearNMonthModal';
 import {getCalendarColumns} from '../../components/calendar';
 import dayjs from 'dayjs';
+import DiaryEditModal from './DiaryEditModal';
 
-export default function HomeMain({navigation}: any) {
+export default function HomeMain({route, navigation}: any) {
   // state
+  const rootContext = useRootContext();
+  let record: boolean;
+  if (route.params) {
+    try {
+      record = route.params;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const {
     now,
     setNow,
@@ -32,6 +43,8 @@ export default function HomeMain({navigation}: any) {
   const [isYearNMonthModalVisible, setIsYearNMonthModalVisible] =
     useState<boolean>(false);
   const [isNotRecordModalVisible, setIsNotRecordModalVisible] =
+    useState<boolean>(false);
+  const [isVisibleDiaryEditModal, setIsVisibleDiaryEditModal] =
     useState<boolean>(false);
 
   // vals
@@ -65,11 +78,15 @@ export default function HomeMain({navigation}: any) {
           paddingLeft: 25,
           paddingTop: 25,
         }}>
-        <NText.SB23 text="홍길동님의 나날" color={'#2C2C2C'} />
-        <Margin.CustomWidth margin={55} />
+        <NText.SB23
+          text={`${rootContext.user.username}님의 나날`}
+          color={'#2C2C2C'}
+        />
+        <Margin.CustomWidth margin={80} />
         <Image
           source={require('../../assets/image/retro_complete.png')}
           style={{width: 27, height: 9}}
+          resizeMode="contain"
         />
         <Margin.CustomWidth margin={10} />
         <NText.SB15 text="X 19" color="#5E5E5E" />
@@ -127,7 +144,9 @@ export default function HomeMain({navigation}: any) {
             top: 0,
             right: 28,
           }}>
-          <NText.B10 text="내일은 회고의 날" color={colors.primary} />
+          <TouchableOpacity onPress={() => setIsVisibleDiaryEditModal(true)}>
+            <NText.B10 text="내일은 회고의 날" color={colors.primary} />
+          </TouchableOpacity>
         </View>
         <Image
           source={require('../../assets/image/pros_4.png')}
@@ -189,7 +208,8 @@ export default function HomeMain({navigation}: any) {
                   date === thisWeekStartDay + 5 ||
                   date === thisWeekStartDay + 6);
               // 이번주 && 일기 안쓴 날 TODO 일기 안쓴 날 가져오기
-              const thisWeekNnotRecord = thisWeek && date === 18;
+              // const thisWeekNnotRecord = thisWeek && !record;
+              const thisWeekNnotRecord = thisWeek && date === 26;
 
               return (
                 <TouchableOpacity
@@ -217,7 +237,9 @@ export default function HomeMain({navigation}: any) {
                   }}>
                   <NText.B12
                     text={day.get('date')}
-                    color={thisWeek ? colors.textMiddle : colors.lightgray}
+                    color={
+                      thisWeek ? colors.textMiddle : colors.textUnavailableGray
+                    }
                   />
 
                   {/* 주의 첫날에만 */}
@@ -276,6 +298,16 @@ export default function HomeMain({navigation}: any) {
         year={year}
         month={month}
         day={day}
+      />
+      {/* 일기 수정 모달 TODO record가 있을 때(기록) 가져오기 */}
+      <DiaryEditModal
+        year={year}
+        month={month}
+        day={day}
+        isVisibleDiaryEditModal={isVisibleDiaryEditModal}
+        onBackdropPress={() => setIsVisibleDiaryEditModal(false)}
+        emotionBlock={['행복', '의욕', '뿌듯']}
+        keywordArr={['키워드1', '키워드2', '키워드3']}
       />
     </SafeAreaView>
   );

@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import {colors, Margin, NText, SRowContainer} from '../../components';
+import {useRootContext} from '../../RootProvider';
 
 interface Props {
   text: string;
@@ -17,10 +18,11 @@ interface Props {
   textNum: number; // 글자수
 }
 export default function DiaryStep1({text, setText, step, textNum}: Props) {
+  const rootContext = useRootContext();
   return (
     <ScrollView style={{height: '100%'}}>
       <SRowContainer justifyContent="center" alignItems="center">
-        <NText.SB12 text={'홍길동'} color={colors.primary} />
+        <NText.SB12 text={rootContext.user.username} color={colors.primary} />
         <NText.SM12
           text={'님! 오늘은 어떤 하루 였는지, 무슨 일을 했고'}
           color={colors.textUnavailableGray}

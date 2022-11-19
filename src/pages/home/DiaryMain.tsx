@@ -1,9 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
+import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors, Header, Margin, NText} from '../../components';
 import {getCalendarColumns} from '../../components/calendar';
+import {useRootContext} from '../../RootProvider';
 import DiaryStep1 from './DiaryStep1';
 import DiaryStep2 from './DiaryStep2';
 import DiaryStep3 from './DiaryStep3';
@@ -11,6 +13,7 @@ import DiaryStep4 from './DiaryStep4';
 import KeywordModal from './KeywordModal';
 
 export default function DiaryMain({route, navigation}: any) {
+  const rootContext = useRootContext();
   // state
   const {year, month, day} = route.params;
   const [textNum, setTextNum] = useState<number>(0);
@@ -25,22 +28,47 @@ export default function DiaryMain({route, navigation}: any) {
   const [emotionBlock, setEmotionBlock] = useState<string[]>([]);
 
   // vals
-  const stepOne = step === 1;
-  const stepTwo = step === 2;
-  const stepThree = step === 3;
-  const stepFour = step === 4;
+  const stepOne = step === 1; // 일기 쓰기
+  const stepTwo = step === 2; // 키워드 입력
+  const stepThree = step === 3; // 키워드 보여주고 감정 선택
+  const stepFour = step === 4; // 키워드 확인 모달
+  const stepFive = step === 5; // 일기가 저장되었어요!
 
   useEffect(() => {
     setTextNum(text.length);
-    if (step === 4) {
-      // TODO post 요청
-      // console.log('text', text);
-      // console.log('keyword', keywordArr);
-      // console.log('emotion', emotionBlock);
-      // console.log('now', now);
+    if (step === 3) {
+      setIsKeywordModalVisible(true);
     }
-    if (step === 5) return setStep(1);
-  }, [text, step, setStep, emotionBlock, keywordArr, now]);
+    if (step === 4) {
+      // 다음 버튼 클릭 시 post 요청
+      rootContext.api
+        .post('http://15.165.88.145:8080/diary', {
+          date: now,
+          content: text,
+          keywords: [
+            {
+              keyword: keywordArr[0],
+              keywordEmotions: [
+                {
+                  emotion: emotionBlock[0],
+                },
+                {
+                  emotion: emotionBlock[1],
+                },
+                {
+                  emotion: emotionBlock[2],
+                },
+              ],
+            },
+          ],
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => console.log(err));
+    }
+    if (step === 6) return setStep(1);
+  }, [text, step, setStep, emotionBlock, keywordArr, now, rootContext]);
 
   const onPressNext = () => {
     setStep(step + 1);
@@ -59,27 +87,23 @@ export default function DiaryMain({route, navigation}: any) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <KeyboardAvoidingView style={{height: '100%'}} behavior="position">
-        <KeywordModal
-          isVisible={isKeywordModalVisible}
-          onBackdropPress={() => setIsKeywordModalVisible(false)}
-        />
         <Header
           backgroundColor={colors.white}
           hasGoBack={true}
           onPressGoBack={onPressGoBack}
           headerCenterCmpnt={
-            <>
+            <View style={{marginLeft: 7}}>
               <NText.SB18 text="일기쓰기" color={colors.textTop} />
-            </>
+            </View>
           }
           headerRightCmpnt={
             <>
               <TouchableOpacity
-                disabled={!text || keywordArr.length === 0}
+                disabled={!text}
                 style={{paddingRight: 24}}
                 onPress={onPressNext}>
                 <NText.SB16
-                  text={stepThree ? '완료' : !stepFour && '다음'}
+                  text={stepFour ? '완료' : !stepFive && '다음'}
                   color={
                     (stepOne && text) || keywordArr.length > 0
                       ? colors.primary
@@ -95,7 +119,7 @@ export default function DiaryMain({route, navigation}: any) {
         <View
           style={{
             borderRadius: 7,
-            borderWidth: stepFour ? 0 : 1,
+            borderWidth: stepFive ? 0 : 1,
             borderColor: colors.lineGray,
             paddingHorizontal: 25,
             paddingVertical: 7,
@@ -127,6 +151,16 @@ export default function DiaryMain({route, navigation}: any) {
             setKeywordArr={setKeywordArr}
           />
         ) : stepThree ? (
+          <KeywordModal
+            isVisible={isKeywordModalVisible}
+            onBackdropPress={() => {
+              setIsKeywordModalVisible(false);
+              setStep(step - 1);
+            }}
+            keywordArr={keywordArr}
+            onPressNext={() => setStep(step + 1)}
+          />
+        ) : stepFour ? (
           <DiaryStep3
             step={step}
             textNum={textNum}
