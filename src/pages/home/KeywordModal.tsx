@@ -93,6 +93,9 @@ export default function KeywordModal({
           <NText.SM11
             text="조금 더 생각해볼래요"
             color={colors.textButtonGray}
+            style={{
+              textDecorationLine: 'underline',
+            }}
           />
         </TouchableOpacity>
         <Margin.BottomSpace />
