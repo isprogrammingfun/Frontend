@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
+import {useRootContext} from '../../RootProvider';
 import {
   SafeAreaView,
   View,
@@ -17,6 +18,7 @@ import DiaryEditModal from './DiaryEditModal';
 
 export default function HomeMain({route, navigation}: any) {
   // state
+  const rootContext = useRootContext();
   let record: boolean;
   if (route.params) {
     try {
@@ -76,11 +78,15 @@ export default function HomeMain({route, navigation}: any) {
           paddingLeft: 25,
           paddingTop: 25,
         }}>
-        <NText.SB23 text="홍길동님의 나날" color={'#2C2C2C'} />
-        <Margin.CustomWidth margin={55} />
+        <NText.SB23
+          text={`${rootContext.user.username}님의 나날`}
+          color={'#2C2C2C'}
+        />
+        <Margin.CustomWidth margin={80} />
         <Image
           source={require('../../assets/image/retro_complete.png')}
           style={{width: 27, height: 9}}
+          resizeMode="contain"
         />
         <Margin.CustomWidth margin={10} />
         <NText.SB15 text="X 19" color="#5E5E5E" />
@@ -203,7 +209,7 @@ export default function HomeMain({route, navigation}: any) {
                   date === thisWeekStartDay + 6);
               // 이번주 && 일기 안쓴 날 TODO 일기 안쓴 날 가져오기
               // const thisWeekNnotRecord = thisWeek && !record;
-              const thisWeekNnotRecord = thisWeek && date === 18;
+              const thisWeekNnotRecord = thisWeek && date === 26;
 
               return (
                 <TouchableOpacity

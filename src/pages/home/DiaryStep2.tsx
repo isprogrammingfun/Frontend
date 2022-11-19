@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors, Margin, NText, SRowContainer} from '../../components';
+import {useRootContext} from '../../RootProvider';
 
 interface Props {
   text: string;
@@ -31,7 +32,7 @@ export default function DiaryStep2({
   keywordArr,
   setKeywordArr,
 }: Props) {
-  const userName = '홍길동'; // TODO 가져오기
+  const rootContext = useRootContext();
   const [nextStep, setNextStep] = useState<boolean>(false);
   const [isKeyword, setIsKeyword] = useState<boolean>(false);
   const keywordId = useRef(0);
@@ -139,7 +140,10 @@ export default function DiaryStep2({
             text={'나날과 함께 '}
             color={colors.textUnavailableGray}
           />
-          <NText.SB12 text={`${userName}`} color={colors.primary} />
+          <NText.SB12
+            text={`${rootContext.user.username}`}
+            color={colors.primary}
+          />
           <NText.SM12
             text={'님의 하루를 정리해 보아요.'}
             color={colors.textUnavailableGray}

@@ -3,10 +3,12 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {Image, TouchableOpacity, View} from 'react-native';
 import {Buttons, colors, Margin, NText, SRowContainer} from '../../components';
+import {useRootContext} from '../../RootProvider';
 
 export default function DiaryStep4() {
   const navigation = useNavigation();
   const [record, setRecord] = useState<boolean>(true);
+  const rootContext = useRootContext();
 
   // func
   const onPressComplete = () => {
@@ -27,7 +29,7 @@ export default function DiaryStep4() {
 
       {/* 텍스트 */}
       <SRowContainer>
-        <NText.SB20 text="홍길동" color={colors.primary} />
+        <NText.SB20 text={rootContext.user.username} color={colors.primary} />
         <NText.SB20 text="님" color={colors.textTop} />
       </SRowContainer>
       <Margin._3 />

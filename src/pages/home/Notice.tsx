@@ -3,6 +3,7 @@ import {Image, SafeAreaView, ScrollView, View} from 'react-native';
 import styled from 'styled-components/native';
 import {Header, Margin, NText, SRowContainer} from '../../components';
 import {colors} from '../../components';
+import {useRootContext} from '../../RootProvider';
 
 const Divider = styled.View`
   width: 80%;
@@ -11,8 +12,10 @@ const Divider = styled.View`
   border-color: ${props => props.borderColor};
 `;
 export default function Notice({navigation}: any) {
+  const rootContext = useRootContext();
+
   const notWatchedTextArr = [
-    '홍길동님! 오늘 나날을 기록해보세요!',
+    `${rootContext.user.username}님! 오늘 나날을 기록해보세요!`,
     '나날 기록을 회고하며 나를 완성해보세요',
     '나날 기록을 회고하며 나를 완성해보세요. 나날 기록을\n회고하며 나를 완성해보세요',
   ];

@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {FlatList, Image, ImageBackground, View} from 'react-native';
 import styled from 'styled-components/native';
 import {colors, Margin, NText, SRowContainer} from '../../components';
+import {useRootContext} from '../../RootProvider';
 import EmotionModal from './EmotionModal';
 
 interface Props {
@@ -17,6 +18,8 @@ const KeywordBlock = styled.TouchableOpacity`
   background-color: ${props => props.backgroundColor};
   border-radius: 6px;
   height: 50px;
+  margin-left: 30px;
+  margin-right: 30px;
 `;
 
 export default function DiaryStep3({
@@ -25,13 +28,14 @@ export default function DiaryStep3({
   emotionBlock,
   setEmotionBlock,
 }: Props) {
+  const rootContext = useRootContext();
   const [isVisibleEmotionModal, setIsVisibleEmotionModal] =
     useState<boolean>(false);
   const [emotionBlockNum, setEmotionBlockNum] = useState<number>(0);
   return (
     <>
       <SRowContainer justifyContent="center" alignItems="center">
-        <NText.SB12 text={'홍길동'} color={colors.primary} />
+        <NText.SB12 text={rootContext.user.username} color={colors.primary} />
         <NText.SM12
           text={'님! 오늘 하루 어떤 감정들을 느꼈는지 돌아볼'}
           color={colors.textUnavailableGray}

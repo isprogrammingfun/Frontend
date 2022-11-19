@@ -1,9 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
+import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors, Header, Margin, NText} from '../../components';
 import {getCalendarColumns} from '../../components/calendar';
+import {useRootContext} from '../../RootProvider';
 import DiaryStep1 from './DiaryStep1';
 import DiaryStep2 from './DiaryStep2';
 import DiaryStep3 from './DiaryStep3';
@@ -11,6 +13,7 @@ import DiaryStep4 from './DiaryStep4';
 import KeywordModal from './KeywordModal';
 
 export default function DiaryMain({route, navigation}: any) {
+  const rootContext = useRootContext();
   // state
   const {year, month, day} = route.params;
   const [textNum, setTextNum] = useState<number>(0);
@@ -33,16 +36,39 @@ export default function DiaryMain({route, navigation}: any) {
 
   useEffect(() => {
     setTextNum(text.length);
-    if (step === 4) {
-      // TODO post 요청
-      // console.log('text', text);
-      // console.log('keyword', keywordArr);
-      // console.log('emotion', emotionBlock);
-      // console.log('now', now);
+    if (step === 3) {
       setIsKeywordModalVisible(true);
     }
+    if (step === 4) {
+      // 다음 버튼 클릭 시 post 요청
+      rootContext.api
+        .post('http://15.165.88.145:8080/diary', {
+          date: now,
+          content: text,
+          keywords: [
+            {
+              keyword: keywordArr[0],
+              keywordEmotions: [
+                {
+                  emotion: emotionBlock[0],
+                },
+                {
+                  emotion: emotionBlock[1],
+                },
+                {
+                  emotion: emotionBlock[2],
+                },
+              ],
+            },
+          ],
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => console.log(err));
+    }
     if (step === 6) return setStep(1);
-  }, [text, step, setStep, emotionBlock, keywordArr, now]);
+  }, [text, step, setStep, emotionBlock, keywordArr, now, rootContext]);
 
   const onPressNext = () => {
     setStep(step + 1);
@@ -77,7 +103,7 @@ export default function DiaryMain({route, navigation}: any) {
                 style={{paddingRight: 24}}
                 onPress={onPressNext}>
                 <NText.SB16
-                  text={stepThree ? '완료' : !stepFive && '다음'}
+                  text={stepFour ? '완료' : !stepFive && '다음'}
                   color={
                     (stepOne && text) || keywordArr.length > 0
                       ? colors.primary
@@ -125,14 +151,6 @@ export default function DiaryMain({route, navigation}: any) {
             setKeywordArr={setKeywordArr}
           />
         ) : stepThree ? (
-          <DiaryStep3
-            step={step}
-            textNum={textNum}
-            keywordArr={keywordArr}
-            emotionBlock={emotionBlock}
-            setEmotionBlock={setEmotionBlock}
-          />
-        ) : stepFour ? (
           <KeywordModal
             isVisible={isKeywordModalVisible}
             onBackdropPress={() => {
@@ -141,6 +159,14 @@ export default function DiaryMain({route, navigation}: any) {
             }}
             keywordArr={keywordArr}
             onPressNext={() => setStep(step + 1)}
+          />
+        ) : stepFour ? (
+          <DiaryStep3
+            step={step}
+            textNum={textNum}
+            keywordArr={keywordArr}
+            emotionBlock={emotionBlock}
+            setEmotionBlock={setEmotionBlock}
           />
         ) : (
           <DiaryStep4 />
