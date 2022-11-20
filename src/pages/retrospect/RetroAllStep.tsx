@@ -43,7 +43,7 @@ export default function RetroAllStep({route}: any) {
           </TouchableOpacity>
         }
         headerCenterCmpnt={
-          <View style={{marginLeft: 30}}>
+          <View style={{marginLeft: 35}}>
             <NText.SB18 text="회고하기" color={colors.textTop} />
           </View>
         }

@@ -8,12 +8,15 @@ import {
   Platform,
   FlatList,
 } from 'react-native';
-import {colors, Header, NText, Margin} from '../../components';
+import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import {colors, Header, NText, Margin} from '../../components';
 import YearNMonthModal from '../home/YearNMonthModal';
 import {getCalendarColumns} from '../../components/calendar';
 
 export default function RetroMain() {
+  const navigation = useNavigation();
   // state
   const {now, setNow, year, setYear, month, setMonth} = getCalendarColumns();
   const [isYearNMonthModalVisible, setIsYearNMonthModalVisible] =
@@ -137,7 +140,8 @@ export default function RetroMain() {
           />
         </TouchableOpacity>
         <Margin.CustomWidth margin={26} />
-        <View
+        <TouchableOpacity
+          onPress={() => navigation.navigate('RetroAllStep')}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -145,7 +149,7 @@ export default function RetroMain() {
           <NText.SB12 text="다음 회고일 까지" color={colors.textMiddle} />
           <Margin.CustomWidth margin={3} />
           <NText.SB12 text="D-3" color={colors.primary} />
-        </View>
+        </TouchableOpacity>
       </View>
       <Margin._15 />
       <Image
