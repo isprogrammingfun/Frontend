@@ -82,7 +82,7 @@ export default function HomeMain({route, navigation}: any) {
           text={`${rootContext.user.username}님의 나날`}
           color={'#2C2C2C'}
         />
-        <Margin.CustomWidth margin={80} />
+        <Margin.CustomWidth margin={70} />
         <Image
           source={require('../../assets/image/retro_complete.png')}
           style={{width: 27, height: 9}}
@@ -90,7 +90,7 @@ export default function HomeMain({route, navigation}: any) {
         />
         <Margin.CustomWidth margin={10} />
         <NText.SB15 text="X 19" color="#5E5E5E" />
-        <Margin.CustomWidth margin={30} />
+        <Margin.CustomWidth margin={20} />
         <TouchableOpacity onPress={() => navigation.navigate('Notice')}>
           <Ionicons
             name="notifications-outline"
