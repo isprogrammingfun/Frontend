@@ -85,18 +85,18 @@ export default function MainNavigator() {
   //   });
   // }, []);
 
-  // if (context.user.token === null || context.user.token === '')
-  //   return (
-  //     <>
-  //       <Stack_OnboardingStack.Navigator>
-  //         <Stack_OnboardingStack.Screen
-  //           name="OnboardingNavigator"
-  //           component={OnboardingNavigator}
-  //           options={{headerShown: false}}
-  //         />
-  //       </Stack_OnboardingStack.Navigator>
-  //     </>
-  //   );
+  if (context.user.token === null || context.user.token === '')
+    return (
+      <>
+        <Stack_OnboardingStack.Navigator>
+          <Stack_OnboardingStack.Screen
+            name="OnboardingNavigator"
+            component={OnboardingNavigator}
+            options={{headerShown: false}}
+          />
+        </Stack_OnboardingStack.Navigator>
+      </>
+    );
 
   return (
     <Tab.Navigator screenOptions={scOpt} initialRouteName={'HomeNavigator'}>

@@ -4,7 +4,8 @@ import axios from 'axios';
 
 export default function getAxiosInstance(token: string) {
   const instance = axios.create({
-    baseURL: '',
+    baseURL: 'http://15.165.88.145:8080/',
+    withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -13,7 +14,7 @@ export default function getAxiosInstance(token: string) {
   instance.interceptors.request.use(
     config => {
       if (token && config.headers) {
-        config.headers['Authorization'] = 'Bearer ' + token;
+        config.headers['Token'] = token;
       }
       return config;
     },
