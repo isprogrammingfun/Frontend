@@ -44,7 +44,7 @@ export default function RetroMain() {
     return (
       <View>
         <View style={{paddingLeft: 16, paddingRight: 29}}>
-          <NText.SB10 text={`${item.id}차 회고`} />
+          <NText.SB10 text={`${item.id}차 회고`} color={colors.buttonGray} />
           <TouchableOpacity
             // onPress={onPressNotRecordModal}
             style={{
@@ -140,7 +140,7 @@ export default function RetroMain() {
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <NText.SB12 text="다음 회고일 까지" />
+          <NText.SB12 text="다음 회고일 까지" color={colors.textMiddle} />
           <NText.SB12 text=" D-3" color={colors.primary} />
         </View>
       </View>
@@ -197,7 +197,7 @@ export default function RetroMain() {
           }}>
           <Ionicons name="add-outline" color={colors.buttonGray} size={30} />
         </TouchableOpacity>
-        <SafeAreaView
+        <View
           style={{
             position: 'absolute',
             top: 19,
@@ -211,7 +211,7 @@ export default function RetroMain() {
             keyExtractor={item => item.id}
             horizontal={true}
           />
-        </SafeAreaView>
+        </View>
       </View>
       {/* 달 & 월 모달 */}
       <YearNMonthModal
