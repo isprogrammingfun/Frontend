@@ -128,6 +128,9 @@ const _17 = (props: TouchableProps) => (
 const _18 = (props: TouchableProps) => (
   <Touchable {...props} height={pixel(18)} />
 );
+const _19 = (props: TouchableProps) => (
+  <Touchable {...props} height={pixel(19)} />
+);
 const _20 = (props: TouchableProps) => (
   <Touchable {...props} height={pixel(20)} />
 );
@@ -266,6 +269,7 @@ export const Margin = {
   _16,
   _17,
   _18,
+  _19,
   _20,
   _22,
   _23,

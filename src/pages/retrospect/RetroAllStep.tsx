@@ -6,15 +6,50 @@ import {colors, Header, Margin, NText} from '../../components';
 import {useRootContext} from '../../RootProvider';
 import RetroStep1 from './RetroStep1';
 import RetroStep2 from './RetroStep2';
+import RetroStep3 from './RetroStep3';
 
+interface keywordType {
+  id: number;
+  name: string;
+  selected: boolean;
+}
 export default function RetroAllStep({route}: any) {
   const rootContext = useRootContext();
   const navigation = useNavigation();
 
   // state
   // const {year, month} = route.params; // TODO
+
+  const [keywordArr, setKeywordArr] = useState([
+    {
+      id: 1,
+      name: '전공시험',
+      selected: false,
+    },
+    {
+      id: 2,
+      name: '노천맥주',
+      selected: false,
+    },
+    {
+      id: 3,
+      name: '전공시험어쩔겨',
+      selected: false,
+    },
+  ]);
+  const [emotionArr, setEmoitonArr] = useState([
+    {
+      name: '행복',
+    },
+    {
+      name: '짜증',
+    },
+    {
+      name: '불안',
+    },
+  ]);
   const [step, setStep] = useState<number>(1);
-  const [retroNum, setRetroNum] = useState<boolean>(1);
+  const [retroNum, setRetroNum] = useState<number>(1);
 
   // vals
   const stepOne = step === 1; // 감정어 보여주기
@@ -43,7 +78,7 @@ export default function RetroAllStep({route}: any) {
           </TouchableOpacity>
         }
         headerCenterCmpnt={
-          <View style={{marginLeft: 30}}>
+          <View style={{marginLeft: 35}}>
             <NText.SB18 text="회고하기" color={colors.textTop} />
           </View>
         }
@@ -88,7 +123,7 @@ export default function RetroAllStep({route}: any) {
         ) : stepTwo ? (
           <RetroStep2 />
         ) : stepThree ? (
-          <></>
+          <RetroStep3 keywordArr={keywordArr} emotionArr={emotionArr} />
         ) : stepFour ? (
           <></>
         ) : (
