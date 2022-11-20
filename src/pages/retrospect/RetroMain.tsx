@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
   SafeAreaView,
@@ -100,6 +101,7 @@ export default function RetroMain() {
       }}>
       <Header
         backgroundColor={colors.white}
+        hasGoBack={false}
         headerRetroCmpnt={
           <>
             <NText.SB18 text="회고" color={colors.textTop} />
@@ -141,15 +143,16 @@ export default function RetroMain() {
             alignItems: 'center',
           }}>
           <NText.SB12 text="다음 회고일 까지" color={colors.textMiddle} />
-          <NText.SB12 text=" D-3" color={colors.primary} />
+          <Margin.CustomWidth margin={3} />
+          <NText.SB12 text="D-3" color={colors.primary} />
         </View>
       </View>
       <Margin._15 />
-      <View>
-        <Image
-          source={require('../../assets/image/banner.png')}
-          resizeMode="cover"></Image>
-      </View>
+      <Image
+        source={require('../../assets/image/banner.png')}
+        style={{width: '100%', height: 98}}
+        resizeMode="stretch"
+      />
       <View
         style={{
           flexDirection: 'column',
