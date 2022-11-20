@@ -6,7 +6,7 @@ import RetroAllStep from './RetroAllStep';
 export default function RetroNavigator() {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="회고" component={RetroMain} />
       <Stack.Screen name="RetroAllStep" component={RetroAllStep} />
     </Stack.Navigator>

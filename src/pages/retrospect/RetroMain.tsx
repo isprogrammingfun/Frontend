@@ -21,6 +21,8 @@ export default function RetroMain() {
     {id: '1', goal: '자아탐색'},
     {id: '2', goal: '관계고민'},
     {id: '3', goal: '성취확인'},
+    {id: '4', goal: '자아탐색'},
+    {id: '5', goal: '성취확인'},
   ];
 
   // func
@@ -38,8 +40,57 @@ export default function RetroMain() {
   const onPressYearNMonthModal = () => {
     setIsYearNMonthModalVisible(true);
   };
-  const Item = ({goal}) => <NText.SB12 text={goal} />;
-  const renderItem = ({item}) => <Item title={item.title} />;
+  const renderItem = ({item}) => {
+    return (
+      <View>
+        <View style={{paddingLeft: 16, paddingRight: 29}}>
+          <NText.SB10 text={`${item.id}차 회고`} />
+          <TouchableOpacity
+            // onPress={onPressNotRecordModal}
+            style={{
+              position: 'absolute',
+              top: 20,
+              height: 74,
+              width: 68,
+              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+              borderRadius: 4,
+              ...Platform.select({
+                ios: {
+                  shadowColor: '#000000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 0,
+                  },
+                  shadowOpacity: 0.15,
+                  shadowRadius: 0.4,
+                },
+                android: {
+                  elevation: 0.5,
+                },
+              }),
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={
+                item.goal === '자아탐색'
+                  ? require('../../assets/image/retro1.png')
+                  : item.goal === '관계고민'
+                  ? require('../../assets/image/retro2.png')
+                  : item.goal === '성취확인'
+                  ? require('../../assets/image/retro3.png')
+                  : require('../../assets/image/retro4.png')
+              }
+              style={{width: 18, height: 18}}
+              resizeMode="contain"
+            />
+            <Margin._12 />
+            <NText.SB12 text={item.goal} color={colors.textMiddle} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView
@@ -127,12 +178,33 @@ export default function RetroMain() {
             width: 56,
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
             borderRadius: 4,
+            ...Platform.select({
+              ios: {
+                shadowColor: '#000000',
+                shadowOffset: {
+                  width: 0,
+                  height: 0,
+                },
+                shadowOpacity: 0.15,
+                shadowRadius: 0.4,
+              },
+              android: {
+                elevation: 0.5,
+              },
+            }),
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Ionicons name="add-outline" color={colors.primary} size={30} />
+          <Ionicons name="add-outline" color={colors.buttonGray} size={30} />
         </TouchableOpacity>
-        <SafeAreaView style={{position: 'absolute', top: 39, left: 116}}>
+        <SafeAreaView
+          style={{
+            position: 'absolute',
+            top: 19,
+            left: 116,
+            height: 94,
+            width: 259,
+          }}>
           <FlatList
             data={retrospectData}
             renderItem={renderItem}
@@ -140,44 +212,6 @@ export default function RetroMain() {
             horizontal={true}
           />
         </SafeAreaView>
-        {/* <View
-          style={{
-            top: 19,
-            left: 132,
-          }}>
-          <NText.SB10 text="1차 회고" />
-        </View>
-        <TouchableOpacity
-          // onPress={onPressNotRecordModal}
-          style={{
-            position: 'absolute',
-            top: 39,
-            left: 116,
-            height: 74,
-            width: 68,
-            backgroundColor: colors.white,
-            opacity: 0.5,
-            borderRadius: 4,
-            ...Platform.select({
-              ios: {
-                shadowColor: '#000000',
-                shadowOffset: {
-                  width: 0,
-                  height: 1,
-                },
-                shadowOpacity: 0.15,
-                shadowRadius: 0.4,
-              },
-              android: {
-                elevation: 2,
-              },
-            }),
-            justifyContent: 'center',
-            alignItems: 'center',
-            // opacity: 0.5,
-          }}>
-          <Ionicons name="add-outline" color={colors.primary} size={30} />
-        </TouchableOpacity> */}
       </View>
       {/* 달 & 월 모달 */}
       <YearNMonthModal
