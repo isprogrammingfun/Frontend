@@ -1,11 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useMemo, useState} from 'react';
 import {AsyncStorage, View} from 'react-native';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {BaseModal, NText, colors, Margin} from '../../components/index';
 import {WEB_CLIENT_ID} from '../../key';
 import OnboardingCmpt from '../../components/OnboardingCmpt';
@@ -17,13 +13,6 @@ interface Props {
   closeModal: () => void;
   onModalHide: () => void;
 }
-
-const onPressNaver = () => {
-  // TODO 기능 추가
-};
-const onPressKakao = () => {
-  // TODO 기능 추가
-};
 
 export default ({isVisible, openModal, closeModal, onModalHide}: Props) => {
   const rootContext = useRootContext();
@@ -39,6 +28,30 @@ export default ({isVisible, openModal, closeModal, onModalHide}: Props) => {
     });
   }, []);
 
+  const onPressNaver = () => {
+    // TODO 기능 추가
+    rootContext.api
+      .get('http://15.165.88.145:8080/oauth2/authorization/naver')
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const onPressKakao = () => {
+    // TODO 기능 추가
+    rootContext.api
+      .get('http://15.165.88.145:8080/oauth2/authorization/kakao')
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   const onPressGoogle = () => {
     GoogleSignin.signIn()
       .then(res => {
@@ -53,6 +66,7 @@ export default ({isVisible, openModal, closeModal, onModalHide}: Props) => {
         console.log(error);
       });
   };
+
   return (
     <BaseModal
       isVisible={isVisible}
