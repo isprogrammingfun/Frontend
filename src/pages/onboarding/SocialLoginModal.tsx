@@ -6,6 +6,7 @@ import {BaseModal, NText, colors, Margin} from '../../components/index';
 import {WEB_CLIENT_ID} from '../../key';
 import OnboardingCmpt from '../../components/OnboardingCmpt';
 import {useRootContext} from '../../RootProvider';
+import axios from 'axios';
 
 interface Props {
   isVisible: boolean;
@@ -17,7 +18,6 @@ interface Props {
 export default ({isVisible, openModal, closeModal, onModalHide}: Props) => {
   const rootContext = useRootContext();
   let accessToken;
-  let email;
   let refreshToken;
 
   useEffect(() => {
@@ -54,13 +54,22 @@ export default ({isVisible, openModal, closeModal, onModalHide}: Props) => {
 
   const onPressGoogle = () => {
     GoogleSignin.signIn()
-      .then(res => {
+      // .then(res => {
+      //   axios.post('http://15.165.88.145:8080/auth/signup', {
+      //     email: res.user.email,
+      //     name: res.user.name,
+      //     provider: 'google',
+      //   });
+      // })
+      .then(function (res) {
+        console.log(res);
         accessToken = res.idToken;
-        email = res.user.email;
         // refreshToken = res.refreshToken;
         rootContext.setUser({token: accessToken, username: res.user.name});
         // AsyncStorage.setItem('accessToken', accessToken);
         // AsyncStorage.setItem('refreshToken', res.data.data.refreshToken)
+        // accessToken = res.data.data.accessToken;
+        // refreshToken = res.data.data.refreshToken;
       })
       .catch(function (error) {
         console.log(error);
