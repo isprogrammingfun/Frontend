@@ -1,10 +1,7 @@
+/* eslint-disable handle-callback-err */
 import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {
-  getFocusedRouteNameFromRoute,
-  ParamListBase,
-  RouteProp,
-} from '@react-navigation/native';
+import {ParamListBase, RouteProp} from '@react-navigation/native';
 import OnboardingNavigator from './pages/onboarding/OnboardingNavigator';
 import HomeNavigator from './pages/home/HomeNavigator';
 import ProfileNavigator from './pages/profile/ProfileNavigator';
@@ -13,7 +10,8 @@ import {useRootContext} from './RootProvider';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {colors} from './components';
-import {AsyncStorage, Image, View} from 'react-native';
+import {Image} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MainNavigator() {
   const Tab = createBottomTabNavigator();
@@ -54,18 +52,18 @@ export default function MainNavigator() {
     };
   };
 
-  // TODO AsyncStroage에 추가
   // useState(() => {
-  //   AsyncStorage.getItem('Token', (err, Token) => {
+  //   AsyncStorage.getItem('accessToken', (err, Token) => {
   //     AsyncStorage.getItem('refreshToken', (err, refreshToken) => {
   //       context.api
-  //         .post('api/user/reissue', {
-  //           Token: Token,
-  //           refreshToken: refreshToken,
+  //         .get('http://15.165.88.145:8080/auth/reissue', {
+  //           headers: {
+  //             RefreshToken: refreshToken,
+  //           },
   //         })
   //         .then(res => {
-  //           AsyncStorage.setItem('Token', res.data.Token);
-  //           AsyncStorage.setItem('refreshToken', res.data.refreshToken);
+  //           AsyncStorage.setItem('accessToken', res.data.result.token);
+  //           AsyncStorage.setItem('refreshToken', res.data.result.refreshToken);
   //           context.setUser(prev => {
   //             const next = JSON.parse(JSON.stringify(prev));
   //             next.token = Token;

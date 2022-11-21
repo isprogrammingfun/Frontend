@@ -1,12 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useMemo, useState} from 'react';
-import {AsyncStorage, View} from 'react-native';
+import {View} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {BaseModal, NText, colors, Margin} from '../../components/index';
 import {WEB_CLIENT_ID} from '../../key';
 import OnboardingCmpt from '../../components/OnboardingCmpt';
 import {useRootContext} from '../../RootProvider';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props {
   isVisible: boolean;
@@ -53,27 +54,29 @@ export default ({isVisible, openModal, closeModal, onModalHide}: Props) => {
   };
 
   const onPressGoogle = () => {
-    GoogleSignin.signIn()
-      // .then(res => {
-      //   axios.post('http://15.165.88.145:8080/auth/signup', {
-      //     email: res.user.email,
-      //     name: res.user.name,
-      //     provider: 'google',
-      //   });
-      // })
-      .then(function (res) {
-        console.log(res);
-        accessToken = res.idToken;
-        // refreshToken = res.refreshToken;
-        rootContext.setUser({token: accessToken, username: res.user.name});
-        // AsyncStorage.setItem('accessToken', accessToken);
-        // AsyncStorage.setItem('refreshToken', res.data.data.refreshToken)
-        // accessToken = res.data.data.accessToken;
-        // refreshToken = res.data.data.refreshToken;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    GoogleSignin.signIn().then(googleRes => {
+      axios
+        .post('http://15.165.88.145:8080/auth/signup', {
+          email: googleRes.user.email,
+          name: googleRes.user.name,
+          provider: 'google',
+        })
+        .then(res => {
+          accessToken = res.data.result.token;
+          refreshToken = res.data.result.refreshToken;
+          console.log(accessToken);
+          console.log(refreshToken);
+          rootContext.setUser({
+            token: accessToken,
+            username: googleRes.user.name,
+          });
+          AsyncStorage.setItem('accessToken', accessToken);
+          AsyncStorage.setItem('refreshToken', refreshToken);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
   };
 
   return (
