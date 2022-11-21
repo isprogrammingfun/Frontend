@@ -31,7 +31,6 @@ export default function DiaryStep3({
   const rootContext = useRootContext();
   const [isVisibleEmotionModal, setIsVisibleEmotionModal] =
     useState<boolean>(false);
-  const [emotionBlockNum, setEmotionBlockNum] = useState<number>(0);
   return (
     <>
       <SRowContainer justifyContent="center" alignItems="center">
@@ -81,7 +80,7 @@ export default function DiaryStep3({
         />
       </SRowContainer>
       <SRowContainer marginLeft={54} alignSelf="flex-end" marginRight="75">
-        <NText.B10 text={`${step}`} color={colors.primary} />
+        <NText.B10 text={`${step - 1}`} color={colors.primary} />
         <NText.B10 text={'/3'} color={colors.lightgray} />
       </SRowContainer>
       <Margin._23 />
@@ -199,8 +198,6 @@ export default function DiaryStep3({
         keywordArr={keywordArr}
         emotionBlock={emotionBlock}
         setEmotionBlock={setEmotionBlock}
-        emotionBlockNum={emotionBlockNum}
-        setEmotionBlockNum={setEmotionBlockNum}
       />
     </>
   );

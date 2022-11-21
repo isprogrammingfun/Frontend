@@ -17,8 +17,6 @@ import {BaseModal, NText, colors, Margin, Divider} from '../../components';
 interface Props {
   isVisibleEmotionModal: boolean;
   keywordArr: string[];
-  emotionBlockNum: number;
-  setEmotionBlockNum: (v: number) => void;
   emotionBlock: string[];
   setEmotionBlock: (v: string[]) => void;
   setIsVisibleEmotionModal: (v: boolean) => void;
@@ -26,8 +24,6 @@ interface Props {
 export default function EmotionModal({
   isVisibleEmotionModal,
   keywordArr,
-  emotionBlockNum,
-  setEmotionBlockNum,
   emotionBlock,
   setEmotionBlock,
   setIsVisibleEmotionModal,
@@ -122,7 +118,6 @@ export default function EmotionModal({
   };
 
   const onPressComplete = () => {
-    setEmotionBlockNum(0);
     if (emotionBlock) {
       setIsVisibleEmotionModal(false);
     }
@@ -134,7 +129,6 @@ export default function EmotionModal({
         onPress={() => {
           selectedItemList(item);
           emotionBlock.push(item);
-          setEmotionBlockNum(emotionBlockNum + 1);
           if (emotionBlock.length > 3) {
             Alert.alert('키워드는 3개만 고를 수 있습니다.');
           }
