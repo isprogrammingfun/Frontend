@@ -35,7 +35,6 @@ export default function DiaryStep2({
   const rootContext = useRootContext();
   const [nextStep, setNextStep] = useState<boolean>(false);
   const [isKeyword, setIsKeyword] = useState<boolean>(false);
-  const keywordId = useRef(0);
   {
     /* 생성된 키워드 */
   }
