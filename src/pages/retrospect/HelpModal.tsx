@@ -1,7 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Image, TouchableOpacity, View} from 'react-native';
-import {BaseModal, colors, Divider, Margin, NText, SRowContainer,} from '../../components';
+import {
+  BaseModal,
+  colors,
+  Divider,
+  Margin,
+  NText,
+  SRowContainer,
+} from '../../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 interface Props {
   isVisible: boolean;
@@ -20,11 +27,11 @@ export default function HelpModal({
       <>
         <View
           style={{
-            paddingHorizontal: 19,
-            paddingTop: 32,
+            width: '100%',
+            paddingHorizontal: 10,
+            paddingTop: 15,
             paddingBottom: 20,
             backgroundColor: colors.white,
-            alignItems: 'center',
             borderRadius: 6,
           }}>
           <Image
@@ -39,46 +46,31 @@ export default function HelpModal({
             }}
           />
           <Margin._25 />
-          <View
-            style={{
-              width: 317,
-              height: 270,
-            }}>
-            <SRowContainer>
-              <TouchableOpacity
-                onPress={onBackdropPress}
-                style={{marginLeft: 24}}>
-                <Ionicons name="close" size={30} color={colors.textMiddle} />
-              </TouchableOpacity>
-              <View
-                style={{
-                  marginLeft: 36,
-                  width: 166,
-                  height: 48,
-                  paddingHorizontal: 2,
-                  paddingTop: 5,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <NText.SB15 text={`${question}`} color={colors.textTop} />
-              </View>
-            </SRowContainer>
-            <Margin._25 />
-            <Divider borderColor={colors.lineGray} />
-            <Margin._24 />
-            <View
-              style={{
-                width: 216,
-                height: 110,
-                marginLeft: 50,
-                marginRight: 50,
-                paddingTop: 5,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <NText.SB13 text={`${help}`} color={colors.textButtonGray} />
-            </View>
-          </View>
+          <SRowContainer>
+            <TouchableOpacity onPress={onBackdropPress}>
+              <Ionicons
+                name="close"
+                size={30}
+                color={colors.textMiddle}
+                style={{paddingLeft: 15}}
+              />
+            </TouchableOpacity>
+            <Margin.CustomWidth margin={40} />
+            <NText.SB15
+              text={`${question}`}
+              color={colors.textTop}
+              style={{textAlign: 'center'}}
+            />
+          </SRowContainer>
+          <Margin._25 />
+          <Divider borderColor={colors.lineGray} />
+          <Margin._24 />
+          <NText.SB13
+            text={`${help}`}
+            color={colors.textButtonGray}
+            style={{textAlign: 'center'}}
+          />
+          <Margin._56 />
         </View>
       </>
     </BaseModal>

@@ -58,7 +58,7 @@ export default function RetroStep4({text, setText, textNum}: Props) {
     `이번주에 가장 많이 느꼈던\n감정은 무엇인가요?`,
   );
   const [help, setHelp] = useState(
-    '감정을 한가지만 고르기 힘들다면 여러가지를 골라주세요. 그 중 어떤 감정들이 가장 자주 있었는지, 강력했는지, 혹은 인상적이었는지도 알려주세요.',
+    `감정을 한가지만 고르기 힘들다면\n여러가지를 골라주세요.\n그 중 어떤 감정들이 가장 자주 있었는지,\n강력했는지, 혹은 인상적이었는지도\n알려주세요.`,
   );
   const [isHelpModalVisible, setIsHelpModalVisible] = useState<boolean>(false);
   const [showEmotionComponent, setShowEmotionComponent] =
