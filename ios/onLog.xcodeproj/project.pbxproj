@@ -19,6 +19,7 @@
 		F896A6D2290D91BA004AFDC4 /* SpoqaHanSansNeo-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F896A6CB290D91BA004AFDC4 /* SpoqaHanSansNeo-Light.otf */; };
 		F896A6D3290D91BA004AFDC4 /* SpoqaHanSansNeo-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F896A6CC290D91BA004AFDC4 /* SpoqaHanSansNeo-Regular.otf */; };
 		F896A6D8290D94AD004AFDC4 /* NanumSquareNeoOTF-bRg.otf in Resources */ = {isa = PBXBuildFile; fileRef = F896A6D7290D94AD004AFDC4 /* NanumSquareNeoOTF-bRg.otf */; };
+		F8AF120E292A0AB100ED7F9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8AF120D292A0AB100ED7F9E /* GoogleService-Info.plist */; };
 		F8E9D414291935B6008D6274 /* NanumSquareNeoOTF-cBd.otf in Resources */ = {isa = PBXBuildFile; fileRef = F8E9D412291935B6008D6274 /* NanumSquareNeoOTF-cBd.otf */; };
 		F8E9D415291935B6008D6274 /* NanumSquareNeoOTF-dEb.otf in Resources */ = {isa = PBXBuildFile; fileRef = F8E9D413291935B6008D6274 /* NanumSquareNeoOTF-dEb.otf */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		F896A6CB290D91BA004AFDC4 /* SpoqaHanSansNeo-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SpoqaHanSansNeo-Light.otf"; path = "Fonts/SpoqaHanSansNeo-Light.otf"; sourceTree = "<group>"; };
 		F896A6CC290D91BA004AFDC4 /* SpoqaHanSansNeo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SpoqaHanSansNeo-Regular.otf"; path = "Fonts/SpoqaHanSansNeo-Regular.otf"; sourceTree = "<group>"; };
 		F896A6D7290D94AD004AFDC4 /* NanumSquareNeoOTF-bRg.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NanumSquareNeoOTF-bRg.otf"; path = "Fonts/NanumSquareNeoOTF-bRg.otf"; sourceTree = "<group>"; };
+		F8AF120D292A0AB100ED7F9E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "onLog/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F8E9D412291935B6008D6274 /* NanumSquareNeoOTF-cBd.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NanumSquareNeoOTF-cBd.otf"; path = "Fonts/NanumSquareNeoOTF-cBd.otf"; sourceTree = "<group>"; };
 		F8E9D413291935B6008D6274 /* NanumSquareNeoOTF-dEb.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NanumSquareNeoOTF-dEb.otf"; path = "Fonts/NanumSquareNeoOTF-dEb.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +132,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F8AF120D292A0AB100ED7F9E /* GoogleService-Info.plist */,
 				F8E9D412291935B6008D6274 /* NanumSquareNeoOTF-cBd.otf */,
 				F8E9D413291935B6008D6274 /* NanumSquareNeoOTF-dEb.otf */,
 				F896A6D7290D94AD004AFDC4 /* NanumSquareNeoOTF-bRg.otf */,
@@ -263,6 +266,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8AF120E292A0AB100ED7F9E /* GoogleService-Info.plist in Resources */,
 				F896A6D8290D94AD004AFDC4 /* NanumSquareNeoOTF-bRg.otf in Resources */,
 				F8E9D414291935B6008D6274 /* NanumSquareNeoOTF-cBd.otf in Resources */,
 				F896A6CE290D91BA004AFDC4 /* SpoqaHanSansNeo-Medium.otf in Resources */,

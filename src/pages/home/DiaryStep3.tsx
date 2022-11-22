@@ -31,7 +31,97 @@ export default function DiaryStep3({
   const rootContext = useRootContext();
   const [isVisibleEmotionModal, setIsVisibleEmotionModal] =
     useState<boolean>(false);
-  const [emotionBlockNum, setEmotionBlockNum] = useState<number>(0);
+  const [selectedItem, setSelectedItem] = useState<string>();
+
+  const renderItem = ({item, index}: {item: string; index: number}) => {
+    const selectkeyword = item === selectedItem;
+    const selecteKeywordNEmoiton = emotionBlock.length > 2 && selectkeyword;
+    return (
+      <KeywordBlock
+        backgroundColor={
+          emotionBlock.length > 2 && selectkeyword
+            ? colors.primary
+            : colors.primaryLight
+        }
+        onPress={() => {
+          if (selecteKeywordNEmoiton) {
+            setEmotionBlock([]);
+          }
+          setSelectedItem(item);
+          setIsVisibleEmotionModal(true);
+        }}>
+        <SRowContainer>
+          <NText.SB15
+            text={item}
+            color={
+              selecteKeywordNEmoiton ? colors.white : colors.textUnavailableGray
+            }
+            style={{
+              alignSelf: 'flex-start',
+              marginRight: 100,
+              paddingVertical: 15,
+              paddingHorizontal: 19,
+            }}
+          />
+          {emotionBlock.length > 0 && selectkeyword && (
+            <>
+              <ImageBackground
+                source={require('../../assets/image/emotion_color_bg.png')}
+                style={{
+                  width: 52,
+                  height: 52,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  top: -2,
+                  right: 115,
+                }}>
+                <NText.SM13
+                  text={emotionBlock[0]}
+                  color={colors.textUnavailableGray}
+                />
+              </ImageBackground>
+              <Margin.CustomWidth margin={6} />
+              <ImageBackground
+                source={require('../../assets/image/emotion_color_bg.png')}
+                style={{
+                  width: 52,
+                  height: 52,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  top: -2,
+                  right: 57,
+                }}>
+                <NText.SM13
+                  text={emotionBlock[1]}
+                  color={colors.textUnavailableGray}
+                />
+              </ImageBackground>
+              <Margin.CustomWidth margin={6} />
+              <ImageBackground
+                source={require('../../assets/image/emotion_color_bg.png')}
+                style={{
+                  width: 52,
+                  height: 52,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  top: -2,
+                  right: 0,
+                }}>
+                <NText.SM13
+                  text={emotionBlock[2]}
+                  color={colors.textUnavailableGray}
+                />
+              </ImageBackground>
+            </>
+          )}
+        </SRowContainer>
+      </KeywordBlock>
+    );
+  };
+
   return (
     <>
       <SRowContainer justifyContent="center" alignItems="center">
@@ -81,7 +171,7 @@ export default function DiaryStep3({
         />
       </SRowContainer>
       <SRowContainer marginLeft={54} alignSelf="flex-end" marginRight="75">
-        <NText.B10 text={`${step}`} color={colors.primary} />
+        <NText.B10 text={`${step - 1}`} color={colors.primary} />
         <NText.B10 text={'/3'} color={colors.lightgray} />
       </SRowContainer>
       <Margin._23 />
@@ -92,100 +182,9 @@ export default function DiaryStep3({
       />
 
       <FlatList
-        data={keywordArr.slice(0, 5)}
-        renderItem={({item, index}: {item: string; index: number}) => {
-          return (
-            <KeywordBlock
-              backgroundColor={
-                emotionBlock.length > 2 ? colors.primary : colors.primaryLight
-              }
-              onPress={() => setIsVisibleEmotionModal(true)}>
-              <SRowContainer>
-                {emotionBlock.length > 2 ? (
-                  <>
-                    <NText.SB15
-                      text={item}
-                      color={colors.white}
-                      style={{
-                        alignSelf: 'flex-start',
-                        marginRight: 100,
-                        paddingVertical: 15,
-                        paddingHorizontal: 19,
-                      }}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <NText.SM15
-                      text={item}
-                      color={colors.textUnavailableGray}
-                      style={{
-                        alignSelf: 'flex-start',
-                        marginRight: 90,
-                        paddingVertical: 15,
-                        paddingHorizontal: 19,
-                      }}
-                    />
-                  </>
-                )}
-                {emotionBlock.length > 0 && (
-                  <>
-                    <ImageBackground
-                      source={require('../../assets/image/emotion_color_bg.png')}
-                      style={{
-                        width: 52,
-                        height: 52,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        position: 'absolute',
-                        top: -2,
-                        right: 115,
-                      }}>
-                      <NText.SM13
-                        text={emotionBlock[0]}
-                        color={colors.textUnavailableGray}
-                      />
-                    </ImageBackground>
-                    <Margin.CustomWidth margin={6} />
-                    <ImageBackground
-                      source={require('../../assets/image/emotion_color_bg.png')}
-                      style={{
-                        width: 52,
-                        height: 52,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        position: 'absolute',
-                        top: -2,
-                        right: 57,
-                      }}>
-                      <NText.SM13
-                        text={emotionBlock[1]}
-                        color={colors.textUnavailableGray}
-                      />
-                    </ImageBackground>
-                    <Margin.CustomWidth margin={6} />
-                    <ImageBackground
-                      source={require('../../assets/image/emotion_color_bg.png')}
-                      style={{
-                        width: 52,
-                        height: 52,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        position: 'absolute',
-                        top: -2,
-                        right: 0,
-                      }}>
-                      <NText.SM13
-                        text={emotionBlock[2]}
-                        color={colors.textUnavailableGray}
-                      />
-                    </ImageBackground>
-                  </>
-                )}
-              </SRowContainer>
-            </KeywordBlock>
-          );
-        }}
+        // data={keywordArr.slice(0, 5)}
+        data={keywordArr}
+        renderItem={renderItem}
         ListHeaderComponent={() => <Margin._14 />}
         ItemSeparatorComponent={() => <Margin._14 />}
         showsVerticalScrollIndicator={false}
@@ -199,8 +198,6 @@ export default function DiaryStep3({
         keywordArr={keywordArr}
         emotionBlock={emotionBlock}
         setEmotionBlock={setEmotionBlock}
-        emotionBlockNum={emotionBlockNum}
-        setEmotionBlockNum={setEmotionBlockNum}
       />
     </>
   );
