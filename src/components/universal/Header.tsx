@@ -36,6 +36,7 @@ interface HeaderProps {
   headerLeftCmpnt?: JSX.Element; // headerCenter, headerRight 사용 안한다고 가정하고 flex: 1 로 잡음.
   headerRightCmpnt?: JSX.Element;
   headerCenterCmpnt?: JSX.Element;
+  headerRetroCmpnt?: JSX.Element;
   backgroundColor?: string;
   onPressTitle?: () => void;
   titleColor?: string;
@@ -49,6 +50,7 @@ export const Header = ({
   headerLeftCmpnt,
   headerRightCmpnt,
   headerCenterCmpnt,
+  headerRetroCmpnt,
   backgroundColor,
   onPressTitle,
 }: HeaderProps) => {
@@ -97,6 +99,16 @@ export const Header = ({
     () => ({height: 48, justifyContent: 'center'}),
     [],
   );
+  const retroCmptStyle: ViewStyle = useMemo(
+    () => ({
+      width: '100%',
+      flex: 1,
+      height: 48,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }),
+    [],
+  );
 
   return (
     <HeaderContainer backgroundColor={backgroundColor} hasGoBack={hasGoBack}>
@@ -142,6 +154,10 @@ export const Header = ({
 
       {headerRightCmpnt ? (
         <View style={rightCmpntStyle}>{headerRightCmpnt}</View>
+      ) : null}
+
+      {headerRetroCmpnt ? (
+        <View style={retroCmptStyle}>{headerRetroCmpnt}</View>
       ) : null}
     </HeaderContainer>
   );
