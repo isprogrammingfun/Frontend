@@ -51,93 +51,100 @@ const Data = [
     emotion: [{feel: '슬픔'}, {feel: '복잡'}, {feel: '짜증'}],
   },
 ];
-export default function RetroStep4({
-  text,
-  setText,
-  textNum,
-// keywordArr,
-// emotionArr,
-}: Props) {
+export default function RetroStep4({text, setText, textNum}: Props) {
   const rootContext = useRootContext();
   const [select, setSelect] = useState<boolean>(false);
   const [question, setQuestion] = useState(
-    '이번주에 가장 많이 느꼈던 감정은 무엇인가요?',
+    `이번주에 가장 많이 느꼈던\n감정은 무엇인가요?`,
   );
   const [help, setHelp] = useState(
     '감정을 한가지만 고르기 힘들다면 여러가지를 골라주세요. 그 중 어떤 감정들이 가장 자주 있었는지, 강력했는지, 혹은 인상적이었는지도 알려주세요.',
   );
   const [isHelpModalVisible, setIsHelpModalVisible] = useState<boolean>(false);
+  const [showEmotionComponent, setShowEmotionComponent] =
+    useState<boolean>(false);
+  const [selectItem, setSelectItem] = useState<string>('');
   // func
   const onPressHelpModal = () => {
     setIsHelpModalVisible(true);
   };
   const ShowEmotion = () => {
     return (
-      <View
-        style={{
-          marginTop: 14,
-          height: 30,
-          backgroundColor: colors.lineGray,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <Divider borderColor={colors.lineGray} style={{width: 330}} />
+      <View style={{alignItems: 'center'}}>
         <Margin._12 />
-        <NText.SB12 text="나는 이때 어떤 감정을 느꼈을까?" />
+        <NText.SB12
+          text="나는 이때 어떤 감정을 느꼈을까?"
+          color={colors.UnavailableGray}
+        />
       </View>
     );
   };
+  const renderItem = ({item}: {item: string}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          if (showEmotionComponent) {
+            setShowEmotionComponent(false);
+          } else {
+            setSelectItem(item);
+            setShowEmotionComponent(true);
+          }
+        }}
+        style={{
+          borderRadius: 4,
+          backgroundColor:
+            selectItem === item ? colors.primary : colors.sectionGray,
+          paddingHorizontal: 13,
+          paddingVertical: 5,
+        }}>
+        <NText.SM13
+          text={item}
+          color={selectItem === item ? colors.white : colors.textTop}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View>
       <SRowContainer justifyContent="space-between" marginHorizontal={31}>
         <FlatList
-          marginTop={19}
-          data={Data}
-          renderItem={({item}) => {
-            return (
-              <TouchableOpacity
-                onPress={ShowEmotion}
-                style={{
-                  borderRadius: 4,
-                  backgroundColor:
-                    select === true ? colors.primary : colors.sectionGray,
-                  paddingHorizontal: 13,
-                  paddingVertical: 5,
-                }}>
-                <NText.SM13
-                  text={item.keyword}
-                  color={select === true ? colors.white : colors.textTop}
-                />
-              </TouchableOpacity>
-            );
-          }}
+          data={Data.map(i => i.keyword)}
+          renderItem={renderItem}
           ItemSeparatorComponent={() => <Margin.CustomWidth margin={8} />}
           horizontal={true}
+          style={{marginTop: 19}}
         />
       </SRowContainer>
       <Margin._14 />
       <Divider borderColor={colors.lineGray} style={{width: 330}} />
+      {showEmotionComponent && <ShowEmotion />}
       <Margin._28 />
       <ScrollView style={{height: '100%'}}>
         <SRowContainer>
-          <View style={{width: 263, height: 106}}>
-            <NText.SB12 text={rootContext.user.username} color="#000000" />
-            <NText.SB23 text={' 님,'} color="#000000" />
-            <NText.SB23
-              text={`${question}`}
-              color="#000000"
-              style={{textAlign: 'left'}}
-            />
-          </View>
-          <TouchableOpacity onPress={onPressHelpModal} style={{marginTop: 12}}>
-            <Ionicons
-              name="help-circle-outline"
-              size={33}
-              color={colors.primary}
+          <NText.SB23 text={rootContext.user.username} color="#000000" />
+          <NText.SB23 text={'님,'} color="#000000" />
+          <TouchableOpacity
+            onPress={onPressHelpModal}
+            style={{
+              width: '70%',
+              alignItems: 'flex-end',
+            }}>
+            <Image
+              source={require('../../assets/image/help.png')}
+              style={{
+                width: 33,
+                height: 33,
+              }}
             />
           </TouchableOpacity>
-          <Margin._3 />
         </SRowContainer>
+        <Margin._3 />
+        <NText.SB23
+          text={`${question}`}
+          color="#000000"
+          style={{textAlign: 'left'}}
+        />
         <Margin._18 />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View
@@ -167,6 +174,8 @@ export default function RetroStep4({
             />
           </View>
         </TouchableWithoutFeedback>
+
+        {/* 도움말 모달 */}
         <HelpModal
           isVisible={isHelpModalVisible}
           onBackdropPress={() => setIsHelpModalVisible(false)}

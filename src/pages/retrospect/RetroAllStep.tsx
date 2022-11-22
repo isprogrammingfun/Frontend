@@ -61,7 +61,9 @@ export default function RetroAllStep({route}: any) {
   const stepFive = step === 5; // 감정 모달
 
   useEffect(() => {
-    setTextNum(text.length);});
+    setTextNum(text.length);
+  }, [text, setTextNum]);
+
   //func
   const onPressNext = () => {
     setStep(step + 1);
@@ -70,7 +72,7 @@ export default function RetroAllStep({route}: any) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <Header
-        backgroundColor={colors.primaryLight}
+        backgroundColor={stepFour ? colors.white : colors.primaryLight}
         hasGoBack={false}
         headerLeftCmpnt={
           <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -131,7 +133,12 @@ export default function RetroAllStep({route}: any) {
         }}>
         {/* 스텝에 따라 달라지는 상태 */}
         {stepOne ? (
-          // <RetroStep1 selectedKeywords={['행복', '여유']} />
+          <RetroStep1 selectedKeywords={['행복', '여유']} />
+        ) : stepTwo ? (
+          <RetroStep2 />
+        ) : stepThree ? (
+          <RetroStep3 keywordArr={keywordArr} emotionArr={emotionArr} />
+        ) : stepFour ? (
           <RetroStep4
             // keywordArr={keywordArr}
             // emotionArr={emotionArr}
@@ -139,13 +146,6 @@ export default function RetroAllStep({route}: any) {
             setText={setText}
             textNum={textNum}
           />
-        ) : stepTwo ? (
-          // <RetroStep2 />
-          <RetroStep3 keywordArr={keywordArr} emotionArr={emotionArr} />
-        ) : stepThree ? (
-          <RetroStep3 keywordArr={keywordArr} emotionArr={emotionArr} />
-        ) : stepFour ? (
-          <></>
         ) : (
           <></>
         )}
