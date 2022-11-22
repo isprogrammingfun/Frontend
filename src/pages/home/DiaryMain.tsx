@@ -155,7 +155,6 @@ export default function DiaryMain({route, navigation}: any) {
             isVisible={isKeywordModalVisible}
             onBackdropPress={() => {
               setIsKeywordModalVisible(false);
-              setKeywordArr([]);
               setStep(step - 1);
             }}
             keywordArr={keywordArr}
