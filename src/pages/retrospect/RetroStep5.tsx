@@ -78,6 +78,10 @@ export default function RetroStep4({text, setText, textNum}: Props) {
           text="나는 이때 어떤 감정을 느꼈을까?"
           color={colors.UnavailableGray}
         />
+        <NText.SB12
+          text="그 당시를 떠올리며 더 생생한 회고록을 작성해봐요!"
+          color={colors.UnavailableGray}
+        />
       </View>
     );
   };

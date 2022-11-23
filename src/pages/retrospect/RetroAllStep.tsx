@@ -140,14 +140,7 @@ export default function RetroAllStep({route}: any) {
         {stepOne ? (
           <RetroStep1 selectedKeywords={['행복', '여유']} />
         ) : stepTwo ? (
-          // <RetroStep2 />
-          <RetroStep4
-            // keywordArr={keywordArr}
-            // emotionArr={emotionArr}
-            text={text}
-            setText={setText}
-            textNum={textNum}
-          />
+          <RetroStep2 />
         ) : stepThree ? (
           <RetroStep3 keywordArr={keywordArr} emotionArr={emotionArr} />
         ) : stepFour ? (
