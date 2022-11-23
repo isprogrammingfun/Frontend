@@ -20,9 +20,8 @@ type ContextType = {
 
 const defaultContext = {
   user: {
-    token:
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ZWJvbTEyMkBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2OTE3MDYwOSwiZXhwIjoxNjY5MTcxMjA5fQ.T-agjD9rRWwi-EfU7MIyu-H7E1hIr0PIDWW1dNyteYY',
-    username: '장세은',
+    token: '',
+    username: '',
   },
   setUser: undefined,
   setting: {
@@ -36,9 +35,8 @@ const RootContext = createContext<ContextType>(defaultContext);
 
 export const RootProvider: FC<{}> = ({children}) => {
   const [user, setUser] = useState({
-    token:
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ZWJvbTEyMkBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2OTE3MDYwOSwiZXhwIjoxNjY5MTcxMjA5fQ.T-agjD9rRWwi-EfU7MIyu-H7E1hIr0PIDWW1dNyteYY',
-    username: '장세은',
+    token: '',
+    username: '',
   });
   const [setting, setSetting] = useState({theme: DayTheme});
   const api = useMemo(() => getAxiosInstance(user.token), [user.token]);
