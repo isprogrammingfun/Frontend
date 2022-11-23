@@ -107,6 +107,7 @@ export default function DiaryStep2({
           <TextInput
             value={keyword}
             placeholder={'키워드'}
+            multiline={true}
             onChangeText={v => setKeyword(v)}
             autoFocus={true}
             returnKeyType="next"

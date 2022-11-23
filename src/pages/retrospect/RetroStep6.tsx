@@ -9,7 +9,6 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  ImageBackground
 } from 'react-native';
 import {colors, Margin, NText, SRowContainer, Divider} from '../../components';
 import {useRootContext} from '../../RootProvider';
@@ -55,12 +54,11 @@ const Data = [
 export default function RetroStep4({text, setText, textNum}: Props) {
   const rootContext = useRootContext();
   const [select, setSelect] = useState<boolean>(false);
-  const [index, setIndex] = useState(0);
   const [question, setQuestion] = useState(
-    `이번주에 가장 많이 느꼈던\n감정은 무엇인가요?`,
+    `다음주는 어떤 감정으로\n살고 싶어요?`,
   );
   const [help, setHelp] = useState(
-    `감정을 한가지만 고르기 힘들다면\n여러가지를 골라주세요.\n그 중 어떤 감정들이 가장 자주 있었는지,\n강력했는지, 혹은 인상적이었는지도\n알려주세요.`,
+    `그 감정을 가지려면 어떤 행동과 생각을 \n해야할지도 생각해보아요.`,
   );
   const [isHelpModalVisible, setIsHelpModalVisible] = useState<boolean>(false);
   const [showEmotionComponent, setShowEmotionComponent] =
@@ -82,17 +80,10 @@ export default function RetroStep4({text, setText, textNum}: Props) {
           text="그 당시를 떠올리며 더 생생한 회고록을 작성해봐요!"
           color={colors.UnavailableGray}
         />
-        <FlatList
-          data={Data.map(i => i.emotion)}
-          renderItem={renderItem2}
-          ItemSeparatorComponent={() => <Margin.CustomWidth margin={8} />}
-          horizontal={true}
-          style={{marginTop: 9}}
-        />
       </View>
     );
   };
-  const renderItem = ({item, index}: {item: string; index: number}) => {
+  const renderItem = ({item}: {item: string}) => {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -100,7 +91,6 @@ export default function RetroStep4({text, setText, textNum}: Props) {
             setShowEmotionComponent(false);
           } else {
             setSelectItem(item);
-            setIndex(item.id - 1);
             setShowEmotionComponent(true);
           }
         }}
@@ -116,36 +106,6 @@ export default function RetroStep4({text, setText, textNum}: Props) {
           color={selectItem === item ? colors.white : colors.textTop}
         />
       </TouchableOpacity>
-    );
-  };
-
-  const renderItem2 = ({item}) => {
-    console.log(item);
-    return (
-      // <View
-      //   style={{
-      //     flex: 1,
-      //     marginLeft: 15,
-      //   }}>
-      <SRowContainer alignItems="center">
-        {/* <Margin.CustomWidth margin={14} /> */}
-        <ImageBackground
-          source={require('../../assets/image/emotion_color_bg.png')}
-          style={{
-            width: 45,
-            height: 45,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginLeft: 13,
-            flex: 1,
-          }}>
-          <NText.SB12
-            text={item.feel}
-            color={colors.primary}
-            style={{paddingRight: 4, paddingTop: 4}}
-          />
-        </ImageBackground>
-      </SRowContainer>
     );
   };
 
