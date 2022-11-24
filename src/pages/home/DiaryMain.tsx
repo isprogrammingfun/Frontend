@@ -39,8 +39,9 @@ export default function DiaryMain({route, navigation}: any) {
     if (step === 3) {
       setIsKeywordModalVisible(true);
     }
-    if (step === 4) {
+    if (step === 5) {
       // 다음 버튼 클릭 시 post 요청
+      console.log(text);
       rootContext.api
         .post('http://15.165.88.145:8080/diary', {
           date: now,

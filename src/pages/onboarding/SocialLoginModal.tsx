@@ -55,7 +55,7 @@ export default ({isVisible, openModal, closeModal, onModalHide}: Props) => {
 
   const onPressGoogle = () => {
     GoogleSignin.signIn().then(googleRes => {
-      axios
+      rootContext.api
         .post('http://15.165.88.145:8080/auth/signup', {
           email: googleRes.user.email,
           name: googleRes.user.name,
@@ -72,6 +72,7 @@ export default ({isVisible, openModal, closeModal, onModalHide}: Props) => {
           });
           AsyncStorage.setItem('accessToken', accessToken);
           AsyncStorage.setItem('refreshToken', refreshToken);
+          console.log(AsyncStorage.getItem(accessToken));
         })
         .catch(function (error) {
           console.log(error);
