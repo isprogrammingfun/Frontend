@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useRootContext} from '../../RootProvider';
 import {
   SafeAreaView,
@@ -16,6 +17,10 @@ import {getCalendarColumns} from '../../components/calendar';
 import dayjs from 'dayjs';
 import DiaryEditModal from './DiaryEditModal';
 
+type DataType = {
+  existDiaryDate: string[];
+};
+
 export default function HomeMain({route, navigation}: any) {
   // state
   const rootContext = useRootContext();
@@ -27,6 +32,7 @@ export default function HomeMain({route, navigation}: any) {
       console.log(error);
     }
   }
+  const [data, setData] = useState<DataType>();
   const {
     now,
     setNow,
@@ -69,6 +75,38 @@ export default function HomeMain({route, navigation}: any) {
     setIsYearNMonthModalVisible(true);
   };
 
+  let diaryDay: string[] = [];
+  let prevRetroDate: number;
+  let postRetroDate: number;
+  let diaryLen: number;
+
+  // useEffect
+  useEffect(
+    useCallback(() => {
+      rootContext.api
+        .get('http://15.165.88.145:8080/diary', {
+          params: {
+            currentDate: now.toDate(),
+            selectDate: now.toDate(),
+          },
+        })
+        .then(res => {
+          // console.log(res);
+          setData(res.data.result.existDiaryDate);
+          prevRetroDate = res.data.result.prevRetroDate;
+          postRetroDate = res.data.result.postRetroDate;
+          diaryLen = diaryDay.length;
+          console.log(diaryLen);
+          console.log(prevRetroDate);
+          console.log(postRetroDate);
+        })
+        .catch(err => console.log(err));
+    }, []),
+    [],
+  );
+
+  // const diaryLen = diaryDay.length;
+  // console.log(diaryLen);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View
@@ -89,7 +127,7 @@ export default function HomeMain({route, navigation}: any) {
           resizeMode="contain"
         />
         <Margin.CustomWidth margin={10} />
-        <NText.SB15 text="X 19" color="#5E5E5E" />
+        <NText.SB15 text={`X ${diaryLen}`} color="#5E5E5E" />
         <Margin.CustomWidth margin={20} />
         <TouchableOpacity onPress={() => navigation.navigate('Notice')}>
           <Ionicons
@@ -210,6 +248,8 @@ export default function HomeMain({route, navigation}: any) {
               // 이번주 && 일기 안쓴 날 TODO 일기 안쓴 날 가져오기
               // const thisWeekNnotRecord = thisWeek && !record;
               const thisWeekNnotRecord = thisWeek && date === 26;
+              // const thisWeekNnotRecord =
+              // thisWeek && !data.existDiaryDate.includes(date);
 
               return (
                 <TouchableOpacity

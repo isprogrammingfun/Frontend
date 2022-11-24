@@ -110,10 +110,10 @@ export default function DiaryStep2({
             multiline={true}
             onChangeText={v => setKeyword(v)}
             autoFocus={true}
+            multiline={true}
             returnKeyType="next"
             onSubmitEditing={onSubmitEditing}
             maxLength={5}
-            autoCorrect={false}
             style={{padding: 3}}
           />
         </View>

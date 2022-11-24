@@ -52,36 +52,36 @@ export default function MainNavigator() {
     };
   };
 
-  // useState(() => {
-  //   AsyncStorage.getItem('accessToken', (err, Token) => {
-  //     AsyncStorage.getItem('refreshToken', (err, refreshToken) => {
-  //       context.api
-  //         .get('http://15.165.88.145:8080/auth/reissue', {
-  //           headers: {
-  //             RefreshToken: refreshToken,
-  //           },
-  //         })
-  //         .then(res => {
-  //           AsyncStorage.setItem('accessToken', res.data.result.token);
-  //           AsyncStorage.setItem('refreshToken', res.data.result.refreshToken);
-  //           context.setUser(prev => {
-  //             const next = JSON.parse(JSON.stringify(prev));
-  //             next.token = Token;
-  //             return next;
-  //           });
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //           Token: '';
-  //           context.setUser(prev => {
-  //             const next = JSON.parse(JSON.stringify(prev));
-  //             next.token = '';
-  //             return next;
-  //           });
-  //         });
-  //     });
-  //   });
-  // }, []);
+  useState(() => {
+    AsyncStorage.getItem('accessToken', (err, Token) => {
+      AsyncStorage.getItem('refreshToken', (err, refreshToken) => {
+        context.api
+          .get('http://15.165.88.145:8080/auth/reissue', {
+            headers: {
+              RefreshToken: refreshToken,
+            },
+          })
+          .then(res => {
+            AsyncStorage.setItem('accessToken', res.data.result.token);
+            AsyncStorage.setItem('refreshToken', res.data.result.refreshToken);
+            context.setUser(prev => {
+              const next = JSON.parse(JSON.stringify(prev));
+              next.token = Token;
+              return next;
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            Token: '';
+            context.setUser(prev => {
+              const next = JSON.parse(JSON.stringify(prev));
+              next.token = '';
+              return next;
+            });
+          });
+      });
+    });
+  }, []);
 
   if (context.user.token === null || context.user.token === '')
     return (
