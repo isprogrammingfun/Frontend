@@ -14,6 +14,7 @@ export default function getAxiosInstance(token: string) {
   instance.interceptors.request.use(
     config => {
       if (token && config.headers) {
+        console.log(token);
         config.headers['Token'] = token;
       }
       return config;
