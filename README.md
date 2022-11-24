@@ -14,4 +14,4 @@
 
 
 
-파일위치:
+파일위치:/Users/sooyeon/onLog/ios/onLog.ipa
