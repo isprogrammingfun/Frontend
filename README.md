@@ -11,7 +11,3 @@
 ## 개발 환경과 사용 기술 스택
 
 <img width="1000" src="https://user-images.githubusercontent.com/80163835/203718659-8ccb8755-5190-44e7-8ade-14731b9c15b4.png">
-
-
-
-파일위치:/Users/sooyeon/onLog/ios/onLog.ipa
