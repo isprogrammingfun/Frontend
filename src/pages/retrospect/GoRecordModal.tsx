@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, TouchableOpacity, View} from 'react-native';
 import {
   BaseModal,
@@ -10,6 +10,8 @@ import {
   NText,
 } from '../../components';
 import {useNavigation} from '@react-navigation/native';
+import {useRootContext} from '../../RootProvider';
+import dayjs from 'dayjs';
 
 interface Props {
   isVisible: boolean;
@@ -26,10 +28,25 @@ export default function RecordModal({
   week,
 }: Props) {
   const navigation = useNavigation();
+  const now = dayjs();
   const RetroAllStep = () => {
     onBackdropPress();
     navigation.navigate('RetroAllStep', {year: year, month: month, week: week});
   };
+  useEffect(() => {
+    // 다음 버튼 클릭 시 post 요청
+    console.log(now.toDate());
+    rootContext.api
+      .get('http://15.165.88.145:8080/retrospect/keyword', {
+        currentDate: now,
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
+  });
+  const rootContext = useRootContext();
+  const [data, setData] = useState<DataType>([]);
   return (
     <BaseModal isVisible={isVisible} onBackdropPress={onBackdropPress}>
       <>
