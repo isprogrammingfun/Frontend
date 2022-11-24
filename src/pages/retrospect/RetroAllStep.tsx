@@ -8,6 +8,9 @@ import RetroStep1 from './RetroStep1';
 import RetroStep2 from './RetroStep2';
 import RetroStep3 from './RetroStep3';
 import RetroStep4 from './RetroStep4';
+import RetroStep5 from './RetroStep5';
+import RetroStep6 from './RetroStep6';
+import RetroStep7 from './RetroStep7';
 
 interface keywordType {
   id: number;
@@ -57,8 +60,10 @@ export default function RetroAllStep({route}: any) {
   const stepOne = step === 1; // 감정어 보여주기
   const stepTwo = step === 2; // 회고 목적 선택
   const stepThree = step === 3; // 기억 고르는 화면
-  const stepFour = step === 4; // 감정 쓰기
-  const stepFive = step === 5; // 감정 모달
+  const stepFour = step === 4; // 감정 쓰기1
+  const stepFive = step === 5; // 감정 쓰기2
+  const stepSix = step === 6; //감정 쓰기3
+  const setpSeven = step === 7;
 
   useEffect(() => {
     setTextNum(text.length);
@@ -146,8 +151,12 @@ export default function RetroAllStep({route}: any) {
             setText={setText}
             textNum={textNum}
           />
+        ) : stepFive ? (
+          <RetroStep5 text={text} setText={setText} textNum={textNum} />
+        ) : stepSix ? (
+          <RetroStep6 text={text} setText={setText} textNum={textNum} />
         ) : (
-          <></>
+          <RetroStep7 />
         )}
       </View>
     </SafeAreaView>

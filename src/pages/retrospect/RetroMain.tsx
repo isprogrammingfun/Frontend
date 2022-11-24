@@ -117,20 +117,20 @@ export default function RetroMain() {
             width: 56,
             backgroundColor: colors.primary,
             borderRadius: 4,
-            ...Platform.select({
-              ios: {
-                shadowColor: '#000000',
-                shadowOffset: {
-                  width: 0,
-                  height: 0,
-                },
-                shadowOpacity: 0.15,
-                shadowRadius: 0.4,
-              },
-              android: {
-                elevation: 0.5,
-              },
-            }),
+            // ...Platform.select({
+            //   ios: {
+            //     shadowColor: '#000000',
+            //     shadowOffset: {
+            //       width: 0,
+            //       height: 0,
+            //     },
+            //     shadowOpacity: 0.15,
+            //     shadowRadius: 0.4,
+            //   },
+            //   android: {
+            //     elevation: 0.5,
+            //   },
+            // }),
             justifyContent: 'center',
             alignItems: 'center',
           }}>
@@ -187,20 +187,20 @@ export default function RetroMain() {
             width: 68,
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
             borderRadius: 4,
-            ...Platform.select({
-              ios: {
-                shadowColor: '#000000',
-                shadowOffset: {
-                  width: 0,
-                  height: 0,
-                },
-                shadowOpacity: 0.15,
-                shadowRadius: 0.4,
-              },
-              android: {
-                elevation: 0.5,
-              },
-            }),
+            // ...Platform.select({
+            //   ios: {
+            //     shadowColor: '#000000',
+            //     shadowOffset: {
+            //       width: 0,
+            //       height: 0,
+            //     },
+            //     shadowOpacity: 0.15,
+            //     shadowRadius: 0.4,
+            //   },
+            //   android: {
+            //     elevation: 0.5,
+            //   },
+            // }),
             justifyContent: 'center',
             alignItems: 'center',
           }}>

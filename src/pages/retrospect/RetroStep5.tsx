@@ -9,7 +9,6 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  ImageBackground
 } from 'react-native';
 import {colors, Margin, NText, SRowContainer, Divider} from '../../components';
 import {useRootContext} from '../../RootProvider';
@@ -55,12 +54,13 @@ const Data = [
 export default function RetroStep4({text, setText, textNum}: Props) {
   const rootContext = useRootContext();
   const [select, setSelect] = useState<boolean>(false);
-  const [index, setIndex] = useState(0);
   const [question, setQuestion] = useState(
-    `이번주에 가장 많이 느꼈던\n감정은 무엇인가요?`,
+    `해당 감정이 많이 들었던\n이유가 있나요?\n당시의 주위 상황을 떠올리며\n감정의 원인을 고민해보세요!`,
   );
   const [help, setHelp] = useState(
-    `감정을 한가지만 고르기 힘들다면\n여러가지를 골라주세요.\n그 중 어떤 감정들이 가장 자주 있었는지,\n강력했는지, 혹은 인상적이었는지도\n알려주세요.`,
+    `감정의 원인은 누구나 파악하기 어려운 것이에요.\n잘 떠오르지 않아도 걱정하지 마세요!\n다음의 것들을 떠올리며 차근차근 생각해보아요.
+    \n-감정이 들었던 순간에 있었던 장소와 시간\n-감정이 들었던 순간 주위의 사람들, 그들의 반응\n-감정이 들었던 순간 내가 지었던 표정
+    -감정이 들었던 직후 내가 했던 말`,
   );
   const [isHelpModalVisible, setIsHelpModalVisible] = useState<boolean>(false);
   const [showEmotionComponent, setShowEmotionComponent] =
@@ -82,17 +82,10 @@ export default function RetroStep4({text, setText, textNum}: Props) {
           text="그 당시를 떠올리며 더 생생한 회고록을 작성해봐요!"
           color={colors.UnavailableGray}
         />
-        <FlatList
-          data={Data.map(i => i.emotion)}
-          renderItem={renderItem2}
-          ItemSeparatorComponent={() => <Margin.CustomWidth margin={8} />}
-          horizontal={true}
-          style={{marginTop: 9}}
-        />
       </View>
     );
   };
-  const renderItem = ({item, index}: {item: string; index: number}) => {
+  const renderItem = ({item}: {item: string}) => {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -100,7 +93,6 @@ export default function RetroStep4({text, setText, textNum}: Props) {
             setShowEmotionComponent(false);
           } else {
             setSelectItem(item);
-            setIndex(item.id - 1);
             setShowEmotionComponent(true);
           }
         }}
@@ -116,36 +108,6 @@ export default function RetroStep4({text, setText, textNum}: Props) {
           color={selectItem === item ? colors.white : colors.textTop}
         />
       </TouchableOpacity>
-    );
-  };
-
-  const renderItem2 = ({item}) => {
-    console.log(item);
-    return (
-      // <View
-      //   style={{
-      //     flex: 1,
-      //     marginLeft: 15,
-      //   }}>
-      <SRowContainer alignItems="center">
-        {/* <Margin.CustomWidth margin={14} /> */}
-        <ImageBackground
-          source={require('../../assets/image/emotion_color_bg.png')}
-          style={{
-            width: 45,
-            height: 45,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginLeft: 13,
-            flex: 1,
-          }}>
-          <NText.SB12
-            text={item.feel}
-            color={colors.primary}
-            style={{paddingRight: 4, paddingTop: 4}}
-          />
-        </ImageBackground>
-      </SRowContainer>
     );
   };
 
