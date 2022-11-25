@@ -8,31 +8,25 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  RefreshControl,
 } from 'react-native';
 import {colors, Margin, NText} from '../../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import NotRecordModal from './NotRecordModal';
 import YearNMonthModal from './YearNMonthModal';
-import {getCalendarColumns} from '../../components/calendar';
+import {getCalendarColumns, SAT_IDX, SUN_IDX} from '../../components/calendar';
 import dayjs from 'dayjs';
 import DiaryEditModal from './DiaryEditModal';
 
 type DataType = {
-  existDiaryDate: string[];
+  existDiaryDate: number;
 };
 
 export default function HomeMain({route, navigation}: any) {
   // state
   const rootContext = useRootContext();
-  let record: boolean;
-  if (route.params) {
-    try {
-      record = route.params;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  const [data, setData] = useState<DataType>();
+  const [data, setData] = useState<DataType[]>([]);
+  const [prevRetroDate, setPrevRetroDate] = useState<number>(0);
   const {
     now,
     setNow,
@@ -52,11 +46,18 @@ export default function HomeMain({route, navigation}: any) {
     useState<boolean>(false);
   const [isVisibleDiaryEditModal, setIsVisibleDiaryEditModal] =
     useState<boolean>(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   // vals
   const DayArr = ['SUN', 'MON', 'TUE', 'WED', 'THR', 'FRI', 'SAT'];
 
   // func
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  }, []);
   const onBackdropPress = () => {
     setIsYearNMonthModalVisible(false);
   };
@@ -75,38 +76,23 @@ export default function HomeMain({route, navigation}: any) {
     setIsYearNMonthModalVisible(true);
   };
 
-  let diaryDay: string[] = [];
-  let prevRetroDate: number;
-  let postRetroDate: number;
-  let diaryLen: number;
-
   // useEffect
-  useEffect(
-    useCallback(() => {
-      rootContext.api
-        .get('http://15.165.88.145:8080/diary', {
-          params: {
-            currentDate: now.toDate(),
-            selectDate: now.toDate(),
-          },
-        })
-        .then(res => {
-          // console.log(res);
-          setData(res.data.result.existDiaryDate);
-          prevRetroDate = res.data.result.prevRetroDate;
-          postRetroDate = res.data.result.postRetroDate;
-          diaryLen = diaryDay.length;
-          console.log(diaryLen);
-          console.log(prevRetroDate);
-          console.log(postRetroDate);
-        })
-        .catch(err => console.log(err));
-    }, []),
-    [],
-  );
+  useEffect(() => {
+    rootContext.api
+      .get('http://15.165.88.145:8080/diary', {
+        params: {
+          currentDate: now.toDate(),
+          selectDate: now.toDate(),
+        },
+      })
+      .then(res => {
+        setData(res.data.result.existDiaryDate);
+        setPrevRetroDate(res.data.result.prevRetroDate);
+      })
+      .catch(err => console.log(err));
+  }, [refreshing, setRefreshing]);
 
-  // const diaryLen = diaryDay.length;
-  // console.log(diaryLen);
+  console.log(data); // for test
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View
@@ -127,7 +113,7 @@ export default function HomeMain({route, navigation}: any) {
           resizeMode="contain"
         />
         <Margin.CustomWidth margin={10} />
-        <NText.SB15 text={`X ${diaryLen}`} color="#5E5E5E" />
+        <NText.SB15 text={`X ${data.length}`} color="#5E5E5E" />
         <Margin.CustomWidth margin={20} />
         <TouchableOpacity onPress={() => navigation.navigate('Notice')}>
           <Ionicons
@@ -170,6 +156,7 @@ export default function HomeMain({route, navigation}: any) {
           marginHorizontal: 5,
           paddingVertical: 55,
         }}>
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         {/* 회고의 날 */}
         <View
           style={{
@@ -183,7 +170,7 @@ export default function HomeMain({route, navigation}: any) {
             right: 28,
           }}>
           <TouchableOpacity onPress={() => setIsVisibleDiaryEditModal(true)}>
-            <NText.B10 text="내일은 회고의 날" color={colors.primary} />
+            <NText.B10 text="오늘은 회고의 날" color={colors.primary} />
           </TouchableOpacity>
         </View>
         <Image
@@ -238,24 +225,24 @@ export default function HomeMain({route, navigation}: any) {
               // 이번주
               const thisWeek =
                 month === thisMonth &&
-                (date === thisWeekStartDay ||
-                  date === thisWeekStartDay + 1 ||
-                  date === thisWeekStartDay + 2 ||
-                  date === thisWeekStartDay + 3 ||
-                  date === thisWeekStartDay + 4 ||
-                  date === thisWeekStartDay + 5 ||
-                  date === thisWeekStartDay + 6);
-              // 이번주 && 일기 안쓴 날 TODO 일기 안쓴 날 가져오기
-              // const thisWeekNnotRecord = thisWeek && !record;
-              const thisWeekNnotRecord = thisWeek && date === 26;
-              // const thisWeekNnotRecord =
-              // thisWeek && !data.existDiaryDate.includes(date);
+                (date === prevRetroDate ||
+                  date === prevRetroDate + 1 ||
+                  date === prevRetroDate + 2 ||
+                  date === prevRetroDate + 3 ||
+                  date === prevRetroDate + 4 ||
+                  date === prevRetroDate + 5 ||
+                  date === prevRetroDate + 6);
+              const rocordDate = data.includes(date);
+              const thisWeekNnotRecord = thisWeek && !data.includes(date);
 
               return (
                 <TouchableOpacity
                   onPress={() => {
                     console.log(date);
                     setDay(date);
+                    if (!thisWeekNnotRecord) {
+                      setIsVisibleDiaryEditModal(true);
+                    }
                   }}
                   key={'dateColumn' + index}
                   style={{
@@ -282,13 +269,41 @@ export default function HomeMain({route, navigation}: any) {
                     }
                   />
 
+                  {rocordDate && !thisWeekNnotRecord && (
+                    <Image
+                      source={require('../../assets/image/circle.png')}
+                      style={{
+                        width: 8,
+                        height: 8,
+                        alignSelf: 'center',
+                        marginTop: 20,
+                        marginRight: 8,
+                        tintColor: !thisWeek && colors.primaryMiddle,
+                      }}
+                      resizeMode="contain"
+                    />
+                  )}
+
                   {/* 주의 첫날에만 */}
-                  {/* {fixIndex && (
-                      <Image
-                        source={require('../../assets/image/calendar_bg.png')}
-                        style={{width: 310, height: 48}}
-                      />
-                    )} */}
+                  {!thisWeekNnotRecord && (
+                    <Image
+                      source={
+                        day.get('d') === SUN_IDX
+                          ? require('../../assets/image/sunday.png')
+                          : day.get('d') === SAT_IDX
+                          ? require('../../assets/image/saturday.png')
+                          : require('../../assets/image/weekday.png')
+                      }
+                      style={{
+                        width: 46,
+                        height: 92,
+                        position: 'absolute',
+                        top: 0,
+                        tintColor: thisWeek && colors.primary,
+                      }}
+                      resizeMode="contain"
+                    />
+                  )}
 
                   {/* 기록 안한 날 + 버튼 */}
                   {thisWeekNnotRecord && (
@@ -347,7 +362,6 @@ export default function HomeMain({route, navigation}: any) {
         isVisibleDiaryEditModal={isVisibleDiaryEditModal}
         onBackdropPress={() => setIsVisibleDiaryEditModal(false)}
         emotionBlock={['행복', '의욕', '뿌듯']}
-        keywordArr={['키워드1', '키워드2', '키워드3']}
       />
     </SafeAreaView>
   );

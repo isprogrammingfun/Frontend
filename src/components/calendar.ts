@@ -69,8 +69,8 @@ export const getCalendarColumns = (): {
   };
 };
 
-const SUN_IDX = 0;
-const SAT_IDX = 6;
+export const SUN_IDX = 0;
+export const SAT_IDX = 6;
 export const getColorByDay = (day: number) => {
   return day === SUN_IDX ? 'pink' : day === SAT_IDX ? 'blue' : '#2b2b2b';
 };

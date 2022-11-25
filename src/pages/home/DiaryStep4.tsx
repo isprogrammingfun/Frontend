@@ -7,7 +7,6 @@ import {useRootContext} from '../../RootProvider';
 
 export default function DiaryStep4() {
   const navigation = useNavigation();
-  const [record, setRecord] = useState<boolean>(true);
   const rootContext = useRootContext();
 
   // func
@@ -15,7 +14,7 @@ export default function DiaryStep4() {
     // TODO api post 요청
 
     // homeMain으로 이동
-    navigation.navigate('HomeMain', {record: record});
+    navigation.navigate('HomeMain');
   };
 
   return (

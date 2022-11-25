@@ -44,7 +44,7 @@ export default function DiaryMain({route, navigation}: any) {
       console.log(text);
       rootContext.api
         .post('http://15.165.88.145:8080/diary', {
-          date: now,
+          date: now.date(day).toDate(),
           content: text,
           keywords: [
             {
