@@ -5,6 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {SafeAreaView, TouchableOpacity, View} from 'react-native';
 import {colors, Header, Margin, NText} from '../../components';
 import {useRootContext} from '../../RootProvider';
+import RetroFinishModal from './RetroFinishModal';
 import RetroStep1 from './RetroStep1';
 import RetroStep2 from './RetroStep2';
 import RetroStep3 from './RetroStep3';
@@ -82,6 +83,8 @@ export default function RetroAllStep({route}: any) {
   ]);
   const [step, setStep] = useState<number>(1);
   const [retroNum, setRetroNum] = useState<number>(1);
+  const [isVisibleFinishModal, setIsVisibleFinishModal] =
+    useState<boolean>(false);
 
   // vals
   const stepOne = step === 1; // 감정어 보여주기
@@ -92,6 +95,7 @@ export default function RetroAllStep({route}: any) {
   const stepSix = step === 6; //감정 쓰기3
   const stepSeven = step === 7; // 추가 질문 받기 / 다음 회고 단계로 넘어가기
   const stepEight = step === 8;
+  const stepNine = step === 9;
 
   const untilStepThree = stepOne || stepTwo || stepThree;
   const diffHeader = stepOne || stepTwo || stepThree || stepFour;
@@ -103,6 +107,9 @@ export default function RetroAllStep({route}: any) {
   //func
   const onPressNext = () => {
     setStep(step + 1);
+    if (stepEight) {
+      setIsVisibleFinishModal(true);
+    }
   };
   const onPressGoBack = () => {
     if (stepOne) {
@@ -172,9 +179,8 @@ export default function RetroAllStep({route}: any) {
         }}>
         {/* 스텝에 따라 달라지는 상태 */}
         {stepOne ? (
-          <RetroStep8 />
-        ) : // <RetroStep1 selectedKeywords={['행복', '여유']} />
-        stepTwo ? (
+          <RetroStep1 selectedKeywords={['행복', '여유']} />
+        ) : stepTwo ? (
           <RetroStep2 />
         ) : stepThree ? (
           <RetroStep3 keywordArr={keywordArr} emotionArr={emotionArr} />
@@ -196,6 +202,13 @@ export default function RetroAllStep({route}: any) {
           <RetroStep8 />
         )}
       </View>
+
+      {/* 회고 마치기 모달 */}
+      <RetroFinishModal
+        isVisible={isVisibleFinishModal}
+        onBackdropPress={() => setIsVisibleFinishModal(false)}
+        retroNum={retroNum}
+      />
     </SafeAreaView>
   );
 }
