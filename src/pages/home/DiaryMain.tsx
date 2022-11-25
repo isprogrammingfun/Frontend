@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';

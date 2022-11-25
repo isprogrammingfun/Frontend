@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   RefreshControl,
+  Pressable,
 } from 'react-native';
 import {colors, Margin, NText} from '../../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -79,7 +80,7 @@ export default function HomeMain({route, navigation}: any) {
   // useEffect
   useEffect(() => {
     rootContext.api
-      .get('http://15.165.88.145:8080/diary', {
+      .get('/diary', {
         params: {
           currentDate: now.toDate(),
           selectDate: now.toDate(),
@@ -236,11 +237,11 @@ export default function HomeMain({route, navigation}: any) {
               const thisWeekNnotRecord = thisWeek && !data.includes(date);
 
               return (
-                <TouchableOpacity
+                <Pressable
                   onPress={() => {
                     console.log(date);
                     setDay(date);
-                    if (!thisWeekNnotRecord) {
+                    if (rocordDate && !thisWeekNnotRecord) {
                       setIsVisibleDiaryEditModal(true);
                     }
                   }}
@@ -269,7 +270,7 @@ export default function HomeMain({route, navigation}: any) {
                     }
                   />
 
-                  {rocordDate && !thisWeekNnotRecord && (
+                  {rocordDate && (
                     <Image
                       source={require('../../assets/image/circle.png')}
                       style={{
@@ -327,7 +328,7 @@ export default function HomeMain({route, navigation}: any) {
                       />
                     </TouchableOpacity>
                   )}
-                </TouchableOpacity>
+                </Pressable>
               );
             })}
           </View>
