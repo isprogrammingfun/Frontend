@@ -54,19 +54,29 @@ export default function RetroAllStep({route}: any) {
   const [textNum, setTextNum] = useState<number>(0);
   const [keywordArr, setKeywordArr] = useState([
     {
-      id: 1,
-      name: '전공시험',
-      selected: false,
+      id: '1',
+      name: '중간고사끝',
+      emotion: [{feel: '행복'}, {feel: '의욕'}, {feel: '뿌듯'}],
     },
     {
-      id: 2,
-      name: '노천맥주',
-      selected: false,
+      id: '2',
+      name: '노천막걸리',
+      emotion: [{feel: '즐거움'}, {feel: '피곤'}, {feel: '뿌듯'}],
     },
     {
-      id: 3,
-      name: '전공시험어쩔겨',
-      selected: false,
+      id: '3',
+      name: '자소서',
+      emotion: [{feel: '복잡'}, {feel: '쏘쏘'}, {feel: '놀람'}],
+    },
+    {
+      id: '4',
+      name: '밋업준비',
+      emotion: [{feel: '슬픔'}, {feel: '복잡'}, {feel: '짜증'}],
+    },
+    {
+      id: '5',
+      name: 'nanal',
+      emotion: [{feel: '슬픔'}, {feel: '복잡'}, {feel: '짜증'}],
     },
   ]);
   console.log(data); // for test
@@ -107,6 +117,7 @@ export default function RetroAllStep({route}: any) {
   //func
   const onPressNext = () => {
     setStep(step + 1);
+    setText('');
     if (stepEight) {
       setIsVisibleFinishModal(true);
     }
