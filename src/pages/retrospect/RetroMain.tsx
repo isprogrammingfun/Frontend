@@ -36,11 +36,11 @@ export default function RetroMain() {
     useState<boolean>(false);
 
   const retrospectData = [
-    {id: '1', goal: '자아탐색'},
-    {id: '2', goal: '관계고민'},
-    {id: '3', goal: '성취확인'},
-    {id: '4', goal: '자아탐색'},
-    {id: '5', goal: '성취확인'},
+    // {id: '1', goal: '자아탐색'},
+    // {id: '2', goal: '관계고민'},
+    // {id: '3', goal: '성취확인'},
+    // {id: '4', goal: '자아탐색'},
+    // {id: '5', goal: '성취확인'},
   ];
 
   const category = [
@@ -122,7 +122,7 @@ export default function RetroMain() {
             marginLeft: 32,
             height: 74,
             width: 56,
-            backgroundColor: colors.primary,
+            backgroundColor: colors.white,
             borderRadius: 4,
             // ...Platform.select({
             //   ios: {
@@ -141,7 +141,7 @@ export default function RetroMain() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Ionicons name="add-outline" color={colors.white} size={30} />
+          <Ionicons name="add-outline" color={colors.primary} size={30} />
         </TouchableOpacity>
       );
     } else {
