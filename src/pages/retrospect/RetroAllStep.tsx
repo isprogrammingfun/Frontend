@@ -178,29 +178,34 @@ export default function RetroAllStep({route}: any) {
           paddingVertical: untilStepThree && 38,
         }}>
         {/* 스텝에 따라 달라지는 상태 */}
-        {stepOne ? (
-          <RetroStep1 selectedKeywords={['행복', '여유']} />
-        ) : stepTwo ? (
-          <RetroStep2 />
-        ) : stepThree ? (
-          <RetroStep3 keywordArr={keywordArr} emotionArr={emotionArr} />
-        ) : stepFour ? (
-          <RetroStep4
-            // keywordArr={keywordArr}
-            // emotionArr={emotionArr}
-            text={text}
-            setText={setText}
-            textNum={textNum}
-          />
-        ) : stepFive ? (
-          <RetroStep5 text={text} setText={setText} textNum={textNum} />
-        ) : stepSix ? (
-          <RetroStep6 text={text} setText={setText} textNum={textNum} />
-        ) : stepSeven ? (
-          <RetroStep7 onPressNext={onPressNext} />
-        ) : (
-          <RetroStep8 />
-        )}
+        {
+          stepOne ? (
+            <RetroStep1 selectedKeywords={['행복', '여유']} />
+          ) : stepTwo ? (
+            <RetroStep2 />
+          ) : stepThree ? (
+            <RetroStep3 keywordArr={keywordArr} emotionArr={emotionArr} />
+          ) : stepFour ? (
+            <RetroStep4
+              // keywordArr={keywordArr}
+              // emotionArr={emotionArr}
+              text={text}
+              setText={setText}
+              textNum={textNum}
+            />
+          ) : stepFive ? (
+            <RetroStep5 text={text} setText={setText} textNum={textNum} />
+          ) : stepSix ? (
+            <RetroStep6 text={text} setText={setText} textNum={textNum} />
+          ) : stepSeven ? (
+            <RetroStep7 onPressNext={onPressNext} />
+          ) : (
+            <RetroStep8 />
+          )
+          // : (
+          // <RetroStep9 />
+          // )
+        }
       </View>
 
       {/* 회고 마치기 모달 */}

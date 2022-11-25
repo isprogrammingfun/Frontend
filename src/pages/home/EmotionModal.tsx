@@ -104,6 +104,31 @@ export default function EmotionModal({
       name: '힘듦',
       selected: false,
     },
+    {
+      id: 16,
+      name: '뿌듯',
+      selected: false,
+    },
+    {
+      id: 17,
+      name: '상쾌',
+      selected: false,
+    },
+    {
+      id: 18,
+      name: '불안',
+      selected: false,
+    },
+    {
+      id: 19,
+      name: '부담',
+      selected: false,
+    },
+    {
+      id: 20,
+      name: '피곤',
+      selected: false,
+    },
   ]);
 
   const selectedItemList = item => {

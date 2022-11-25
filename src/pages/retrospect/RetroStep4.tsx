@@ -33,17 +33,17 @@ interface Props {
 const Data = [
   {
     id: '1',
-    keyword: '회의 준비',
+    keyword: '중간고사끝',
     emotion: [{feel: '행복'}, {feel: '의욕'}, {feel: '뿌듯'}],
   },
   {
     id: '2',
-    keyword: '카페',
+    keyword: '노천막걸리',
     emotion: [{feel: '즐거움'}, {feel: '피곤'}, {feel: '뿌듯'}],
   },
   {
     id: '3',
-    keyword: '살빠짐',
+    keyword: '자소서',
     emotion: [{feel: '복잡'}, {feel: '쏘쏘'}, {feel: '놀람'}],
   },
 ];

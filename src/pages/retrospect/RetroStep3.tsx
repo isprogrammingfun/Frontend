@@ -47,7 +47,7 @@ export default function RetroStep3({keywordArr, emotionArr}: Props) {
       })
       .then(res => {
         setData(res.data.result.keywords);
-        console.log(res.data.result.keywords);
+        // console.log(res.data.result.keywords);
       })
       .catch(err => console.log(err));
   }, []);

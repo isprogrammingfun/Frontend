@@ -49,6 +49,11 @@ export default function RetroMain() {
     {id: '3', cate: '돌아보니 다른 의미로 다가온 기억'},
   ];
 
+  const retroWeekDay = [
+    {id: '1', cate: '노천막걸리'},
+    {id: '2', cate: 'Nanal'},
+  ];
+
   const [day, setDay] = useState(0);
   const [week, setWeek] = useState(1);
 
@@ -225,12 +230,27 @@ export default function RetroMain() {
       </View>
     );
   };
+
+  const retroData = ({item, index}: {item: string; index: number}) => {
+    return (
+      <SRowContainer>
+        <View
+          style={{
+            backgroundColor: colors.sectionGray,
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+          }}>
+          <NText.SB12 text={item} color={colors.textTop} />
+        </View>
+      </SRowContainer>
+    );
+  };
   const renderItem2 = ({item}) => {
+    const happyDay = item === '그때 그대로 의미 있었던 행복한 기억';
     return (
       <View
         style={{
           flexDirection: 'column',
-          alignItems: 'center',
           marginLeft: 30,
           marginRight: 30,
           height: 277,
@@ -241,9 +261,20 @@ export default function RetroMain() {
           borderStyle: 'solid',
         }}>
         <Margin._19 />
-        <NText.SM15 text={item.cate} color={colors.textTop} />
+        <NText.SM15
+          text={item.cate}
+          color={colors.textTop}
+          style={{alignSelf: 'center'}}
+        />
         <Margin._13 />
         <Divider borderColor={colors.lineGray} style={{width: 298}} />
+        <Margin._15 />
+        {/* <FlatList
+          data={retroWeekDay.map(i => i.cate)}
+          renderItem={retroData}
+          horizontal={true}
+          ItemSeparatorComponent={() => <Margin.CustomWidth margin={5} />}
+        /> */}
       </View>
     );
   };
