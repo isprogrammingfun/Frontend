@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -22,9 +22,11 @@ import {
 import YearNMonthModal from '../home/YearNMonthModal';
 import GoRecordModal from './GoRecordModal';
 import {getCalendarColumns} from '../../components/calendar';
+import {useRootContext} from '../../RootProvider';
 
 export default function RetroMain() {
   const navigation = useNavigation();
+
   // state
   const {now, setNow, year, setYear, month, setMonth} = getCalendarColumns();
   const [isYearNMonthModalVisible, setIsYearNMonthModalVisible] =

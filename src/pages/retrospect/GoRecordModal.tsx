@@ -10,8 +10,6 @@ import {
   NText,
 } from '../../components';
 import {useNavigation} from '@react-navigation/native';
-import {useRootContext} from '../../RootProvider';
-import dayjs from 'dayjs';
 
 interface Props {
   isVisible: boolean;
@@ -20,6 +18,7 @@ interface Props {
   month: number;
   week: number;
 }
+
 export default function RecordModal({
   isVisible,
   onBackdropPress,
@@ -28,24 +27,14 @@ export default function RecordModal({
   week,
 }: Props) {
   const navigation = useNavigation();
-  const now = dayjs();
   const RetroAllStep = () => {
     onBackdropPress();
-    navigation.navigate('RetroAllStep', {year: year, month: month, week: week});
+    navigation.navigate('RetroAllStep', {
+      year: year,
+      month: month,
+      week: week,
+    });
   };
-  useEffect(() => {
-    console.log(now.toDate());
-    rootContext.api
-      .get('http://15.165.88.145:8080/retrospect/keyword', {
-        currentDate: now.toDate(),
-      })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-  });
-  const rootContext = useRootContext();
-  const [data, setData] = useState<DataType>([]);
   return (
     <BaseModal isVisible={isVisible} onBackdropPress={onBackdropPress}>
       <>

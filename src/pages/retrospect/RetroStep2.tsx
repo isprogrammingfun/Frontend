@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import {NText, colors, Margin} from '../../components';
@@ -6,12 +7,18 @@ import {useRootContext} from '../../RootProvider';
 
 export default function RetroStep2() {
   const rootContext = useRootContext();
+  const navigation = useNavigation();
+  const [selected, setSelected] = useState<boolean>(false);
   const [retroPurpose, setRetroPurpose] = useState([
-    '자아탐색',
-    '관계고민',
-    '성취확인',
-    '감정정리',
+    {name: '자아탐색', selected: false},
+    {name: '관계고민', selected: false},
+    {name: '성취확인', selected: false},
+    {name: '감정정리', selected: false},
   ]);
+  const onPressPurpose = item => {
+    console.log(item);
+    setSelected(true);
+  };
 
   const renderItem = ({item, index}: {item: string; index: number}) => {
     const retro1 = item === '자아탐색';
@@ -21,6 +28,7 @@ export default function RetroStep2() {
 
     return (
       <TouchableOpacity
+        onPress={() => onPressPurpose(item)}
         style={{
           justifyContent: 'center',
           alignItems: 'center',
@@ -30,6 +38,10 @@ export default function RetroStep2() {
           borderWidth: 2,
           borderColor: colors.sectionGray,
           marginLeft: (retro2 && 27) || (retro4 && 27),
+          backgroundColor:
+            selected && item === '감정정리'
+              ? colors.primaryLight
+              : colors.white,
         }}>
         <Image
           source={
@@ -45,7 +57,12 @@ export default function RetroStep2() {
           resizeMode="contain"
         />
         <Margin._18 />
-        <NText.SM15 text={item} color={colors.textMiddle} />
+        <NText.SM15
+          text={item}
+          color={
+            selected && item === '감정정리' ? colors.primary : colors.textMiddle
+          }
+        />
       </TouchableOpacity>
     );
   };
@@ -60,7 +77,7 @@ export default function RetroStep2() {
       />
       <Margin._32 />
       <FlatList
-        data={retroPurpose}
+        data={retroPurpose.map(i => i.name)}
         renderItem={renderItem}
         numColumns={2}
         ItemSeparatorComponent={() => <Margin._26 />}

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   FlatList,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {NText, colors, Margin, Divider, SRowContainer} from '../../components';
 import {useRootContext} from '../../RootProvider';
+import dayjs, {Dayjs} from 'dayjs';
 
 interface Props {
   keywordArr: {
@@ -22,9 +23,34 @@ interface Props {
   }[];
 }
 
+type DataType = {
+  keywords: {
+    date: Dayjs;
+    keyword: string;
+    keywordEmotions: string[];
+  };
+};
+
 export default function RetroStep3({keywordArr, emotionArr}: Props) {
   const rootContext = useRootContext();
   const [selectedItem, setSelectedItem] = useState<string[]>([]);
+  const [data, setData] = useState<DataType[]>([]);
+  const now = dayjs();
+
+  // useEffect
+  useEffect(() => {
+    rootContext.api
+      .get('/retrospect/keyword', {
+        params: {
+          currentDate: now.toDate(),
+        },
+      })
+      .then(res => {
+        setData(res.data.result.keywords);
+        console.log(res.data.result.keywords);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   // 아이템 선택한 리스트
   const selectedItemList = item => {

@@ -3,6 +3,7 @@ import {Image, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {Source} from 'react-native-fast-image';
 import styled from 'styled-components/native';
 import {ImageIcon} from './Basic';
+import {colors} from './Color';
 import {pixel} from './Margin';
 import {NText} from './NText';
 
@@ -39,6 +40,7 @@ interface HeaderProps {
   backgroundColor?: string;
   onPressTitle?: () => void;
   titleColor?: string;
+  retroHeader?: boolean;
 }
 export const Header = ({
   title,
@@ -52,6 +54,7 @@ export const Header = ({
   headerRetroCmpnt,
   backgroundColor,
   onPressTitle,
+  retroHeader,
 }: HeaderProps) => {
   const goBackBoxView: ViewStyle = useMemo(
     () => ({
@@ -118,7 +121,11 @@ export const Header = ({
             <Image
               source={require('../../assets/image/left_arrow.png')}
               resizeMode="contain"
-              style={{width: 28, height: 28}}
+              style={{
+                width: 28,
+                height: 28,
+                tintColor: retroHeader && colors.primary,
+              }}
             />
           </TouchableOpacity>
         )}

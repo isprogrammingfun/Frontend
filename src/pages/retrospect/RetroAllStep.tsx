@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {useNavigation} from '@react-navigation/native';
+import dayjs, {Dayjs} from 'dayjs';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, TouchableOpacity, View} from 'react-native';
 import {colors, Header, Margin, NText} from '../../components';
@@ -12,6 +13,13 @@ import RetroStep5 from './RetroStep5';
 import RetroStep6 from './RetroStep6';
 import RetroStep7 from './RetroStep7';
 
+type DataType = {
+  keywords: {
+    date: Dayjs;
+    keyword: string;
+    keywordEmotions: string[];
+  };
+};
 interface keywordType {
   id: number;
   name: string;
@@ -20,6 +28,23 @@ interface keywordType {
 export default function RetroAllStep({route}: any) {
   const rootContext = useRootContext();
   const navigation = useNavigation();
+  const [data, setData] = useState<DataType[]>([]);
+  const now = dayjs();
+
+  // useEffect
+  useEffect(() => {
+    rootContext.api
+      .get('/retrospect/keyword', {
+        params: {
+          currentDate: now.toDate(),
+        },
+      })
+      .then(res => {
+        setData(res.data.result.keywords);
+        console.log(res.data.result.keywords);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   // state
   // const {year, month} = route.params; // TODO
@@ -42,6 +67,7 @@ export default function RetroAllStep({route}: any) {
       selected: false,
     },
   ]);
+  console.log(data); // for test
   const [emotionArr, setEmoitonArr] = useState([
     {
       name: '행복',
@@ -65,6 +91,9 @@ export default function RetroAllStep({route}: any) {
   const stepSix = step === 6; //감정 쓰기3
   const setpSeven = step === 7;
 
+  const untilStepThree = stepOne || stepTwo || stepThree;
+  const diffHeader = stepOne || stepTwo || stepThree || stepFour;
+
   useEffect(() => {
     setTextNum(text.length);
   }, [text, setTextNum]);
@@ -73,37 +102,43 @@ export default function RetroAllStep({route}: any) {
   const onPressNext = () => {
     setStep(step + 1);
   };
+  const onPressGoBack = () => {
+    if (stepOne) {
+      navigation.goBack();
+    } else {
+      setStep(step - 1);
+    }
+  };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      <Header
-        backgroundColor={stepFour ? colors.white : colors.primaryLight}
-        hasGoBack={false}
-        headerLeftCmpnt={
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <NText.SB16
-              text="나가기"
-              color={colors.primary}
-              style={{marginLeft: 10}}
-            />
-          </TouchableOpacity>
-        }
-        headerCenterCmpnt={
-          <View style={{marginLeft: 35}}>
-            <NText.SB18 text="회고하기" color={colors.textTop} />
-          </View>
-        }
-        headerRightCmpnt={
-          <TouchableOpacity onPress={onPressNext}>
-            <NText.SB16
-              text="다음"
-              color={colors.primary}
-              style={{marginRight: 20}}
-            />
-          </TouchableOpacity>
-        }
-      />
-      <Margin._12 />
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: !untilStepThree ? colors.white : colors.primaryLight,
+      }}>
+      <View style={{backgroundColor: colors.primaryLight}}>
+        <Header
+          backgroundColor={!untilStepThree ? colors.white : colors.primaryLight}
+          hasGoBack={true}
+          onPressGoBack={onPressGoBack}
+          retroHeader={diffHeader ? true : false}
+          headerCenterCmpnt={
+            <View style={{marginLeft: 35}}>
+              <NText.SB18 text="회고하기" color={colors.textTop} />
+            </View>
+          }
+          headerRightCmpnt={
+            <TouchableOpacity onPress={onPressNext}>
+              <NText.SB16
+                text="다음"
+                color={colors.primary}
+                style={{marginRight: 20}}
+              />
+            </TouchableOpacity>
+          }
+        />
+        {untilStepThree && <Margin._12 />}
+      </View>
       {/* 년 월 일 */}
       <View
         style={{
@@ -117,24 +152,20 @@ export default function RetroAllStep({route}: any) {
           borderColor: colors.lineGray,
           borderWidth: 1,
           borderStyle: 'solid',
-          //바뀌는 부분 끝
-          height: 30,
-          width: 149,
         }}>
         <NText.SM12
           text={`${2022}년 ${11}월 ${retroNum}차`}
           color={colors.textMiddle}
         />
       </View>
-      {/* 스탭4에서 바뀌는 부분 */}
-      {/* <Margin._27 /> */}
       <View
         style={{
           flex: 1,
           backgroundColor: colors.white,
           borderRadius: 20,
+          marginTop: untilStepThree && 27,
           paddingHorizontal: 31,
-          // paddingVertical: 38, 스텝4에서 바뀌는 부분
+          paddingVertical: untilStepThree && 38,
         }}>
         {/* 스텝에 따라 달라지는 상태 */}
         {stepOne ? (
