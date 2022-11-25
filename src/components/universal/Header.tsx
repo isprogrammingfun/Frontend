@@ -12,14 +12,13 @@ interface HeaderContainerProps {
   hasGoBack: boolean;
 }
 
-const headerPaddingHorizontal = 24;
 const HeaderContainer = styled.View<HeaderContainerProps>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: ${pixel(48)}px;
-  padding-left: ${props => (props.hasGoBack ? 0 : headerPaddingHorizontal)};
+  padding-left: ${props => (props.hasGoBack ? 0 : 24)}px;
   padding-right: 14px;
   background-color: ${props => props.backgroundColor};
 `;
