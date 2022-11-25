@@ -34,11 +34,10 @@ export default function RecordModal({
     navigation.navigate('RetroAllStep', {year: year, month: month, week: week});
   };
   useEffect(() => {
-    // 다음 버튼 클릭 시 post 요청
     console.log(now.toDate());
     rootContext.api
       .get('http://15.165.88.145:8080/retrospect/keyword', {
-        currentDate: now,
+        currentDate: now.toDate(),
       })
       .then(res => {
         console.log(res);
