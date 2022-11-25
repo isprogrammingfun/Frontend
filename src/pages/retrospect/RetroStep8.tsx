@@ -62,7 +62,7 @@ export default function RetroStep8() {
 
   // 키워드
   const renderItem = ({item, index}: {item: string; index: number}) => {
-    const allSelected = selectedNum === 3;
+    const allSelected = selectedNum === 5;
     return (
       <TouchableOpacity
         onPress={onPressItem}

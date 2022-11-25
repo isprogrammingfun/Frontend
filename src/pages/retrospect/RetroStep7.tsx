@@ -48,7 +48,7 @@ export default function RetroStep4({onPressNext}: Props) {
   const rootContext = useRootContext();
   const [select, setSelect] = useState<boolean>(false);
   const [question, setQuestion] = useState(
-    `회고를 위한 기초 고민을\n완료하셨어요!\n정서연님의 나날을\n더 돌아보고 싶다면\n추가 질문받기를 눌러주세요.`,
+    `회고를 위한 기초 고민을\n완료하셨어요!\n${rootContext.user.username}님의 나날을\n더 돌아보고 싶다면\n추가 질문받기를 눌러주세요.`,
   );
   const [showEmotionComponent, setShowEmotionComponent] =
     useState<boolean>(false);

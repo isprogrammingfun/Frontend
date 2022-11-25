@@ -97,7 +97,11 @@ export default function RetroStep4({text, setText, textNum}: Props) {
           if (showEmotionComponent) {
             setShowEmotionComponent(false);
           } else {
-            setSelectItem(item);
+            if (selectItem === item) {
+              setSelectItem('');
+            } else {
+              setSelectItem(item);
+            }
             setShowEmotionComponent(true);
           }
         }}

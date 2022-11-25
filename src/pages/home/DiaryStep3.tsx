@@ -9,7 +9,13 @@ import EmotionModal from './EmotionModal';
 interface Props {
   step: number;
   textNum: number; // 글자수
-  keywordArr: string[];
+  keywordArr: {
+    id: string;
+    name: string;
+    emotion: {
+      feel: string;
+    }[];
+  }[];
   emotionBlock: string[];
   setEmotionBlock: (v: string[]) => void;
 }

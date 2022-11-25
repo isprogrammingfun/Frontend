@@ -14,9 +14,11 @@ import dayjs, {Dayjs} from 'dayjs';
 
 interface Props {
   keywordArr: {
-    id: number;
+    id: string;
     name: string;
-    selected: boolean;
+    emotion: {
+      feel: string;
+    }[];
   }[];
   emotionArr: {
     name: string;
@@ -148,10 +150,13 @@ export default function RetroStep3({keywordArr, emotionArr}: Props) {
       />
       <Margin._25 />
       <SRowContainer>
-        <NText.SM12 text={'11월 1일'} color={colors.textUnavailableGray} />
+        <NText.SM12
+          text={'11월 20일 - 11월 26일'}
+          color={colors.textUnavailableGray}
+        />
         <Divider
           borderColor={colors.lineGray}
-          style={{width: 270, marginLeft: 12}}
+          style={{width: 192, marginLeft: 12}}
         />
       </SRowContainer>
       <Margin._15 />

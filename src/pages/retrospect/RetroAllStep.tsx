@@ -56,40 +56,81 @@ export default function RetroAllStep({route}: any) {
     {
       id: '1',
       name: '중간고사끝',
-      emotion: [{feel: '행복'}, {feel: '의욕'}, {feel: '뿌듯'}],
+      emotion: [{feel: '행복'}, {feel: '즐거움'}, {feel: '안심'}],
     },
     {
       id: '2',
-      name: '노천막걸리',
-      emotion: [{feel: '즐거움'}, {feel: '피곤'}, {feel: '뿌듯'}],
+      name: '인턴',
+      emotion: [{feel: '힘듦'}, {feel: '부담'}, {feel: '복잡'}],
     },
     {
       id: '3',
-      name: '자소서',
-      emotion: [{feel: '복잡'}, {feel: '쏘쏘'}, {feel: '놀람'}],
+      name: 'HR직무',
+      emotion: [{feel: '부담'}, {feel: '복잡 '}, {feel: '불안'}],
     },
     {
       id: '4',
-      name: '밋업준비',
-      emotion: [{feel: '슬픔'}, {feel: '복잡'}, {feel: '짜증'}],
+      name: '휴강',
+      emotion: [{feel: '행복'}, {feel: '상쾌'}, {feel: '즐거움'}],
     },
     {
       id: '5',
+      name: '노천막걸리',
+      emotion: [{feel: '즐거움'}, {feel: '여유'}, {feel: '행복'}],
+    },
+    {
+      id: '6',
+      name: '자소서',
+      emotion: [{feel: '부담'}, {feel: '쏘쏘'}, {feel: '피곤'}],
+    },
+    {
+      id: '7',
+      name: '인턴십',
+      emotion: [{feel: '부담'}, {feel: '힘듦'}, {feel: '의욕'}],
+    },
+    {
+      id: '8',
+      name: '아진인턴축',
+      emotion: [{feel: '행복'}, {feel: '쏘쏘'}, {feel: '불안'}],
+    },
+    {
+      id: '9',
+      name: '창업회의',
+      emotion: [{feel: '아쉬움'}, {feel: '복잡'}, {feel: '피곤'}],
+    },
+    {
+      id: '10',
       name: 'nanal',
       emotion: [{feel: '슬픔'}, {feel: '복잡'}, {feel: '짜증'}],
     },
+    {
+      id: '11',
+      name: '밋업준비',
+      emotion: [{feel: '의욕'}, {feel: '쏘쏘'}, {feel: '부담'}],
+    },
+    {
+      id: '12',
+      name: '발표연습',
+      emotion: [{feel: '의욕'}, {feel: '기대'}, {feel: '복잡'}],
+    },
+    {
+      id: '13',
+      name: 'AI면접',
+      emotion: [{feel: '복잡'}, {feel: '부담'}, {feel: '짜증'}],
+    },
+    {
+      id: '14',
+      name: '학회도끝',
+      emotion: [{feel: '뿌듯'}, {feel: '상쾌'}, {feel: '복잡'}],
+    },
   ]);
-  console.log(data); // for test
   const [emotionArr, setEmoitonArr] = useState([
-    {
-      name: '행복',
-    },
-    {
-      name: '짜증',
-    },
-    {
-      name: '불안',
-    },
+    '행복',
+    '짜증',
+    '복잡',
+    '뿌듯',
+    '의욕',
+    '쏘쏘',
   ]);
   const [step, setStep] = useState<number>(1);
   const [retroNum, setRetroNum] = useState<number>(1);
