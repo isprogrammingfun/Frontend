@@ -12,6 +12,7 @@ import RetroStep4 from './RetroStep4';
 import RetroStep5 from './RetroStep5';
 import RetroStep6 from './RetroStep6';
 import RetroStep7 from './RetroStep7';
+import RetroStep8 from './RetroStep8';
 
 type DataType = {
   keywords: {
@@ -89,7 +90,8 @@ export default function RetroAllStep({route}: any) {
   const stepFour = step === 4; // 감정 쓰기1
   const stepFive = step === 5; // 감정 쓰기2
   const stepSix = step === 6; //감정 쓰기3
-  const setpSeven = step === 7;
+  const stepSeven = step === 7; // 추가 질문 받기 / 다음 회고 단계로 넘어가기
+  const stepEight = step === 8;
 
   const untilStepThree = stepOne || stepTwo || stepThree;
   const diffHeader = stepOne || stepTwo || stepThree || stepFour;
@@ -109,7 +111,6 @@ export default function RetroAllStep({route}: any) {
       setStep(step - 1);
     }
   };
-
   return (
     <SafeAreaView
       style={{
@@ -128,13 +129,15 @@ export default function RetroAllStep({route}: any) {
             </View>
           }
           headerRightCmpnt={
-            <TouchableOpacity onPress={onPressNext}>
-              <NText.SB16
-                text="다음"
-                color={colors.primary}
-                style={{marginRight: 20}}
-              />
-            </TouchableOpacity>
+            !stepSeven && (
+              <TouchableOpacity onPress={onPressNext}>
+                <NText.SB16
+                  text="다음"
+                  color={colors.primary}
+                  style={{marginRight: 20}}
+                />
+              </TouchableOpacity>
+            )
           }
         />
         {untilStepThree && <Margin._12 />}
@@ -169,8 +172,9 @@ export default function RetroAllStep({route}: any) {
         }}>
         {/* 스텝에 따라 달라지는 상태 */}
         {stepOne ? (
-          <RetroStep1 selectedKeywords={['행복', '여유']} />
-        ) : stepTwo ? (
+          <RetroStep8 />
+        ) : // <RetroStep1 selectedKeywords={['행복', '여유']} />
+        stepTwo ? (
           <RetroStep2 />
         ) : stepThree ? (
           <RetroStep3 keywordArr={keywordArr} emotionArr={emotionArr} />
@@ -186,8 +190,10 @@ export default function RetroAllStep({route}: any) {
           <RetroStep5 text={text} setText={setText} textNum={textNum} />
         ) : stepSix ? (
           <RetroStep6 text={text} setText={setText} textNum={textNum} />
+        ) : stepSeven ? (
+          <RetroStep7 onPressNext={onPressNext} />
         ) : (
-          <RetroStep7 />
+          <RetroStep8 />
         )}
       </View>
     </SafeAreaView>

@@ -9,7 +9,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
 } from 'react-native';
 import {colors, Margin, NText, SRowContainer, Divider} from '../../components';
 import {useRootContext} from '../../RootProvider';
@@ -46,11 +46,6 @@ const Data = [
     keyword: '살빠짐',
     emotion: [{feel: '복잡'}, {feel: '쏘쏘'}, {feel: '놀람'}],
   },
-  {
-    id: '4',
-    keyword: '쪽잠',
-    emotion: [{feel: '슬픔'}, {feel: '복잡'}, {feel: '짜증'}],
-  },
 ];
 export default function RetroStep4({text, setText, textNum}: Props) {
   const rootContext = useRootContext();
@@ -83,7 +78,7 @@ export default function RetroStep4({text, setText, textNum}: Props) {
           color={colors.UnavailableGray}
         />
         <FlatList
-          data={Data.map(i => i.emotion)}
+          data={Data.map(i => i.emotion.map(i => i.feel))}
           renderItem={renderItem2}
           ItemSeparatorComponent={() => <Margin.CustomWidth margin={8} />}
           horizontal={true}
@@ -119,8 +114,7 @@ export default function RetroStep4({text, setText, textNum}: Props) {
     );
   };
 
-  const renderItem2 = ({item}) => {
-    console.log(item);
+  const renderItem2 = ({item, index}: {item: string; index: number}) => {
     return (
       // <View
       //   style={{
@@ -140,7 +134,7 @@ export default function RetroStep4({text, setText, textNum}: Props) {
             flex: 1,
           }}>
           <NText.SB12
-            text={item.feel}
+            text={item}
             color={colors.primary}
             style={{paddingRight: 4, paddingTop: 4}}
           />

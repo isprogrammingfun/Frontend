@@ -1,30 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
+import {View, FlatList, TouchableOpacity, Pressable} from 'react-native';
 import {
-  Image,
-  Keyboard,
-  ScrollView,
-  TextInput,
-  TouchableWithoutFeedback,
-  View,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
-import {colors, Margin, NText, SRowContainer, Divider} from '../../components';
+  colors,
+  Margin,
+  NText,
+  SRowContainer,
+  Divider,
+  Buttons,
+} from '../../components';
 import {useRootContext} from '../../RootProvider';
 import HelpModal from './HelpModal';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// interface Props {
-//   keywordArr: {
-//     id: number;
-//     name: string;
-//     selected: boolean;
-//   }[];
-//   emotionArr: {
-//     name: string;
-//   }[];
-// }
-const Data = [
+
+export const Data = [
   {
     id: '1',
     keyword: '회의 준비',
@@ -46,7 +35,11 @@ const Data = [
     emotion: [{feel: '슬픔'}, {feel: '복잡'}, {feel: '짜증'}],
   },
 ];
-export default function RetroStep4({text, setText, textNum}: Props) {
+interface Props {
+  onPressNext: () => void;
+}
+
+export default function RetroStep4({onPressNext}: Props) {
   const rootContext = useRootContext();
   const [select, setSelect] = useState<boolean>(false);
   const [question, setQuestion] = useState(
@@ -122,7 +115,18 @@ export default function RetroStep4({text, setText, textNum}: Props) {
         color="#000000"
         style={{textAlign: 'left'}}
       />
-      <Margin._18 />
+      <Margin._150 />
+      <View style={{alignItems: 'center'}}>
+        <Buttons.PrimaryBtn width={242} height={50} text={'추가 질문 받기'} />
+        <Margin._14 />
+        <Pressable onPress={onPressNext}>
+          <Buttons.PrimaryBtn
+            width={242}
+            height={50}
+            text={'다음 회고 단계로 넘어가기'}
+          />
+        </Pressable>
+      </View>
     </View>
   );
 }

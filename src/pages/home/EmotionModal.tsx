@@ -42,9 +42,9 @@ export default function EmotionModal({
     {
       id: 3,
       name: '안심',
-      selected: false,
     },
     {
+      selected: false,
       id: 4,
       name: '슬픔',
       selected: false,
