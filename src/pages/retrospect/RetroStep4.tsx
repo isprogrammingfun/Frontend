@@ -46,6 +46,16 @@ const Data = [
     keyword: '자소서',
     emotion: [{feel: '복잡'}, {feel: '쏘쏘'}, {feel: '놀람'}],
   },
+  {
+    id: '4',
+    keyword: '밋업준비',
+    emotion: [{feel: '슬픔'}, {feel: '복잡'}, {feel: '짜증'}],
+  },
+  {
+    id: '5',
+    keyword: 'nanal',
+    emotion: [{feel: '슬픔'}, {feel: '복잡'}, {feel: '짜증'}],
+  },
 ];
 export default function RetroStep4({text, setText, textNum}: Props) {
   const rootContext = useRootContext();
