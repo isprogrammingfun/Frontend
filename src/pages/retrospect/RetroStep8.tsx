@@ -108,6 +108,23 @@ export default function RetroStep8() {
   return (
     <>
       <View>
+        <Margin._11 />
+        <NText.SB12
+          text="회고를 끝마치며 지난 한 주의 일상을"
+          color={colors.textUnavailableGray}
+          style={{textAlign: 'center'}}
+        />
+        <NText.SB12
+          text="새로이 바라보아요."
+          color={colors.textUnavailableGray}
+          style={{textAlign: 'center'}}
+        />
+        <NText.SB12
+          text="키워드를 클릭하면 기억창고가 열려요!"
+          color={colors.textUnavailableGray}
+          style={{textAlign: 'center'}}
+        />
+        <Margin._30 />
         <NText.SB23
           text={`아래의 기록들이\n어떻게 기록되면 좋겠나요?`}
           color={colors.black}
