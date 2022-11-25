@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import dayjs from 'dayjs';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, ImageBackground, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
@@ -18,10 +18,9 @@ interface Props {
   year: number;
   month: number;
   day: number;
+  emotionBlock: string[];
   isVisibleDiaryEditModal: boolean;
   onBackdropPress: () => void;
-  keywordArr: string[];
-  emotionBlock: string[];
 }
 
 type DataType = {
@@ -38,8 +37,8 @@ export default function DiaryEditModal({
   month,
   day,
   isVisibleDiaryEditModal,
-  onBackdropPress,
   emotionBlock,
+  onBackdropPress,
 }: Props) {
   const rootContext = useRootContext();
   const {now} = getCalendarColumns();
@@ -61,9 +60,6 @@ export default function DiaryEditModal({
         .catch(err => console.log(err));
     }
   }, [isVisibleDiaryEditModal]);
-  // console.log(data);
-  // console.log(keywordData);
-  console.log(keywordData.map(i => i.keywordEmoitons));
 
   const renderItem = ({item, index}: {item: string; index: number}) => {
     return (
@@ -160,58 +156,45 @@ export default function DiaryEditModal({
                     paddingHorizontal: 19,
                   }}
                 />
-                {keywordData.map((v, i) => (
-                  <>
-                    <ImageBackground
-                      source={require('../../assets/image/emotion_color_bg.png')}
-                      style={{
-                        width: 52,
-                        height: 52,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        position: 'absolute',
-                        top: -2,
-                        right: 115,
-                      }}>
-                      <NText.SM13
-                        text={v.keywordEmoitons}
-                        color={colors.primary}
-                      />
-                    </ImageBackground>
-                    <ImageBackground
-                      source={require('../../assets/image/emotion_color_bg.png')}
-                      style={{
-                        width: 52,
-                        height: 52,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        position: 'absolute',
-                        top: -2,
-                        right: 57,
-                      }}>
-                      <NText.SM13
-                        text={v.keywordEmoitons}
-                        color={colors.primary}
-                      />
-                    </ImageBackground>
-                    <ImageBackground
-                      source={require('../../assets/image/emotion_color_bg.png')}
-                      style={{
-                        width: 52,
-                        height: 52,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        position: 'absolute',
-                        top: -2,
-                        right: 0,
-                      }}>
-                      <NText.SM13
-                        text={v.keywordEmoitons}
-                        color={colors.primary}
-                      />
-                    </ImageBackground>
-                  </>
-                ))}
+                <ImageBackground
+                  source={require('../../assets/image/emotion_color_bg.png')}
+                  style={{
+                    width: 52,
+                    height: 52,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    top: -2,
+                    right: 115,
+                  }}>
+                  <NText.SM13 text={emotionBlock[0]} color={colors.primary} />
+                </ImageBackground>
+                <ImageBackground
+                  source={require('../../assets/image/emotion_color_bg.png')}
+                  style={{
+                    width: 52,
+                    height: 52,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    top: -2,
+                    right: 57,
+                  }}>
+                  <NText.SM13 text={emotionBlock[1]} color={colors.primary} />
+                </ImageBackground>
+                <ImageBackground
+                  source={require('../../assets/image/emotion_color_bg.png')}
+                  style={{
+                    width: 52,
+                    height: 52,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    top: -2,
+                    right: 0,
+                  }}>
+                  <NText.SM13 text={emotionBlock[2]} color={colors.primary} />
+                </ImageBackground>
               </SRowContainer>
             );
           }}
