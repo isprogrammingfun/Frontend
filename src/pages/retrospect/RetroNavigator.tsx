@@ -2,6 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RetroMain from './RetroMain';
 import RetroAllStep from './RetroAllStep';
+import RetroCompletion from './RetroCompletion';
 
 export default function RetroNavigator() {
   const Stack = createNativeStackNavigator();
@@ -9,6 +10,7 @@ export default function RetroNavigator() {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="회고" component={RetroMain} />
       <Stack.Screen name="RetroAllStep" component={RetroAllStep} />
+      <Stack.Screen name="RetroCompletion" component={RetroCompletion} />
     </Stack.Navigator>
   );
 }
